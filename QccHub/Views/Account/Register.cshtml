@@ -1,0 +1,308 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <!-- Favicons -->
+    <link href="~/img/favicon.png" rel="icon">
+    <link href="~/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+          rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="~/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendor/icofont/icofont.min.css" rel="stylesheet">
+    <link href="~/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="~/vendor/animate.css/animate.min.css" rel="stylesheet">
+    <link href="~/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="~/vendor/venobox/venobox.css" rel="stylesheet">
+    <link href="~/vendor/aos/aos.css" rel="stylesheet">
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" rel="stylesheet"> -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" rel="stylesheet">
+    <link href="~/css/responsiv.css" rel="stylesheet" />
+
+    <!-- Template Main CSS File -->
+    <link href="~/css/style.css" rel="stylesheet">
+
+</head>
+
+@{ Layout = null;}
+@model QccHub.DTOS.UserRegisteration
+
+<body>
+    <div class="identity">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="form-login-reg">
+                    <section id="tabs-reg" class="project-tab">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12" style="padding: 0;">
+                                    <!-- tabs -->
+                                    <nav>
+                                        <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                                            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab"
+                                               href="#nav-home" role="tab" aria-controls="nav-home"
+                                               aria-selected="true">Register Company</a>
+                                            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab"
+                                               href="#nav-profile" role="tab" aria-controls="nav-profile"
+                                               aria-selected="false">Register User</a>
+                                        </div>
+                                    </nav>
+                                    <div class="tab-content" id="nav-tabContent">
+                                        <!-- first Tab -->
+                                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                                             aria-labelledby="nav-home-tab">
+                                            <!-- company register -->
+                                            <div class="companyReg">
+                                                <div class="headerOfForm">
+                                                    <h3>Welcome</h3>
+                                                    <p>Join to QCCH</p>
+                                                    <img src="~/img/logo-login.png">
+                                                </div>
+                                                <div class="bodyOfForm">
+                                                    <form action="@Url.Content("~/Account/Register")" method="post" role="form">
+                                                        @Html.AntiForgeryToken()
+
+                                                        <input asp-for="RoleId" type="number" required class="form-control" hidden value="2" placeholder="RoleId">
+
+                                                        <div class="form-group">
+                                                            <input type="text" asp-for="CompanyName" required class="form-control" placeholder="Company Name *">
+                                                            <span asp-validation-for="CompanyName" class="text-danger"></span>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <input type="email" asp-for="Email" required class="form-control" placeholder="Email *">
+                                                            <span asp-validation-for="Email" class="text-danger"></span>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <input asp-for="Password" type="password" required class="form-control pass-input" placeholder="Password">
+                                                            <span asp-validation-for="Password" class="text-danger"></span>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <input asp-for="ConfirmPassword" type="password" required class="form-control pass-input" placeholder="Confirm Password">
+                                                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                                        </div>
+
+                                                        <div class="custom-control custom-checkbox"
+                                                             style="margin: 10px">
+                                                            <input type="checkbox" class="custom-control-input"
+                                                                   onclick="myFunction()" id="showPass">
+                                                            <label class="custom-control-label"
+                                                                   for="showPass" style="font-size:15px">
+                                                                Show Password
+                                                            </label>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <input type="text" asp-for="PhoneNumber" required class="form-control" placeholder="Phone Number">
+                                                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                                        </div>
+
+                                                        <div class="custom-control custom-checkbox"
+                                                             style="margin: 10px">
+                                                            <input type="checkbox" class="custom-control-input"
+                                                                   id="defaultLoginFormRemember">
+                                                            <label class="custom-control-label"
+                                                                   for="defaultLoginFormRemember">
+                                                                You agree to the QCCHub
+                                                                User
+                                                                Agreement, Privacy Policy, and Cookie Policy.
+                                                            </label>
+                                                        </div>
+
+                                                        <div class="text-danger">
+                                                            @Html.ValidationSummary()
+                                                        </div>
+
+                                                        <div class="text-center">
+                                                            <button type="submit"
+                                                                    class="btn btn-danger col-md-9">
+                                                                Register
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="footerOfForm">
+                                                    <p style="color: #000;">or login with</p>
+                                                    <div class="social-icons">
+                                                        <div class="row">
+                                                            <div class="col-md-4 text-center">
+                                                                <a href="" style="color: blue;">
+                                                                    <i class="fab fa-facebook-square"></i>
+                                                                </a>
+                                                            </div>
+                                                            <div class="col-md-4 text-center">
+                                                                <a href="" style="color: red;">
+                                                                    <i class="fab fa-google-plus-square"></i>
+                                                                </a>
+                                                            </div>
+                                                            <div class="col-md-4 text-center">
+                                                                <a href="" style="color: royalblue;">
+                                                                    <i class="fab fa-linkedin"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="nav-profile" role="tabpanel"
+                                             aria-labelledby="nav-profile-tab">
+                                            <!-- user register -->
+                                            <div class="companyReg">
+                                                <div class="headerOfForm">
+                                                    <h3>Welcome</h3>
+                                                    <p>Join to QCCH</p>
+                                                    <img src="~/img/logo-login.png">
+                                                </div>
+                                                <div class="bodyOfForm">
+                                                    <form action="@Url.Content("~/Account/Register")" method="post" role="form">
+                                                        @Html.AntiForgeryToken()
+                                                        <input asp-for="RoleId" type="number" required class="form-control" hidden value="3" placeholder="RoleId">
+
+                                                        <div class="form-group">
+                                                            <input type="text" asp-for="FullName" class="form-control mb-4" placeholder="Full Name">
+                                                            @*<span asp-validation-for="FullName" class="text-danger"></span>*@
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <input type="email" asp-for="Email" required class="form-control" placeholder="Email">
+                                                            @*<span asp-validation-for="Email" class="text-danger"></span>*@
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <input asp-for="Password" type="password" required class="form-control pass-input" placeholder="Password">
+                                                            @*<span asp-validation-for="Password" class="text-danger"></span>*@
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <input asp-for="ConfirmPassword" type="password"  required class="form-control pass-input" placeholder="Confirm Password">
+                                                            @*<span asp-validation-for="ConfirmPassword" class="text-danger"></span>*@
+                                                        </div>
+
+                                                        <div class="custom-control custom-checkbox"
+                                                             style="margin: 10px">
+                                                            <input type="checkbox" class="custom-control-input"
+                                                                   id="showPass">
+                                                            <label class="custom-control-label"
+                                                                   for="showPass" style="font-size:15px">
+                                                                Show Password
+                                                            </label>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col-md">
+                                                                <div class="form-group">
+                                                                    <input type="text" asp-for="CompanyName" class="form-control" placeholder="Company Name *">
+                                                                    
+                                                                    <span asp-validation-for="CompanyName" class="text-danger"></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md">
+                                                                <input type="text" asp-for="Position" class="form-control mb-4" placeholder="Position *">
+                                                                
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <input type="text" asp-for="PhoneNumber" required class="form-control" placeholder="Phone Number">
+                                                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                                        </div>
+
+                                                        <div class="custom-control custom-checkbox"
+                                                             style="margin: 10px">
+                                                            <input type="checkbox" class="custom-control-input"
+                                                                   id="defaultLoginFormRemember2">
+                                                            <label class="custom-control-label"
+                                                                   for="defaultLoginFormRemember2">
+                                                                You agree to the QCCHub
+                                                                User
+                                                                Agreement, Privacy Policy, and Cookie Policy.
+                                                            </label>
+                                                        </div>
+
+                                                        <div class="text-danger">
+                                                            @Html.ValidationSummary()
+                                                        </div>
+
+                                                        <div class="form-group text-center">
+                                                            <button type="submit"
+                                                                    class="btn btn-danger col-md-9">
+                                                                Register
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="footerOfForm">
+                                                    <p style="color: #000;">or login with</p>
+                                                    <div class="social-icons">
+                                                        <div class="row">
+                                                            <div class="col-md-4 text-center">
+                                                                <a href="" style="color: blue;">
+                                                                    <i class="fab fa-facebook-square"></i>
+                                                                </a>
+                                                            </div>
+                                                            <div class="col-md-4 text-center">
+                                                                <a href="" style="color: red;">
+                                                                    <i class="fab fa-google-plus-square"></i>
+                                                                </a>
+                                                            </div>
+                                                            <div class="col-md-4 text-center">
+                                                                <a href="" style="color: royalblue;">
+                                                                    <i class="fab fa-linkedin"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vendor JS Files -->
+    <script src="~/vendor/jquery/jquery.min.js"></script>
+    <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/vendor/jquery.easing/jquery.easing.min.js"></script>
+    <script src="~/vendor/php-email-form/validate.js"></script>
+    <script src="~/vendor/waypoints/jquery.waypoints.min.js"></script>
+    <script src="~/vendor/counterup/counterup.min.js"></script>
+    <script src="~/vendor/owl.carousel/owl.carousel.min.js"></script>
+    <script src="~/vendor/venobox/venobox.min.js"></script>
+    <script src="~/vendor/aos/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/js/all.min.js"></script>
+
+    <!-- Template Main JS File -->
+    <script src="~/js/main.js"></script>
+
+    <script>
+        $('#showPass').change(function () {
+            if ($('#showPass').prop('checked')) {
+                $('.pass-input').attr('type', 'text');
+            }
+            else {
+                $('.pass-input').attr('type', 'password');
+            }
+        })
+    </script>
+
+
+</body>
+
+</html>

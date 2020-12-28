@@ -1,0 +1,144 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    string userId = HttpContextAccessor.HttpContext.Session.GetString("UserId");
+    string roleName = HttpContextAccessor.HttpContext.Session.GetString("RoleName");
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>User Profile</title>
+    <meta content="" name="descriptison">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="/img/favicon.png" rel="icon">
+    <link href="/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+          rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="~/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendor/icofont/icofont.min.css" rel="stylesheet">
+    <link href="~/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="~/vendor/animate.css/animate.min.css" rel="stylesheet">
+    <link href="~/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="~/vendor/venobox/venobox.css" rel="stylesheet">
+    <link href="~/vendor/aos/aos.css" rel="stylesheet">
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" rel="stylesheet"> -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" rel="stylesheet">
+    <link href="~/css/responsiv.css" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="~/css/style.css" rel="stylesheet">
+    @RenderSection("Styles", false)
+
+</head>
+
+<body>
+
+    <!-- ======= Header ======= -->
+    <header id="header2" class="">
+        <div class="container-fluid d-flex align-items-center">
+
+
+            <nav class="nav-menu d-none d-lg-block">
+                <ul>
+                    <li>
+                        <a href="index.html" class="logo mr-auto"><img src="/img/logo2.png" alt=""></a>
+                    </li>
+                    <li>
+                        <div class="form-inline">
+                            <input class="form-control form-control-sm ml-3 searchBtn2" type="text" placeholder="Search ..." aria-label="Search">
+                        </div>
+                    </li>
+                    <li class="active">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary btnProfile dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-users"></i> Profile
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background-color: #c18989;">
+                                <a class="dropdown-item" href="@Url.Content("~/account/logout")"> <i class="fas fa-sign-out"></i> Logout</a>
+                            </div>
+                        </div>
+                    </li>
+                    @if (roleName == RolesEnum.User.ToString())
+                    {
+                        <li><a href="@Url.Content("~/jobs/getallNonB2bjobs")"><i class="icofont-search-job"></i> Jobs</a></li>
+                    }
+
+                    <li><a href=""><i class="icofont-library"></i> Library</a></li>
+                    <li><a href="@Url.Content("~/news/getallnews")"><i class="icofont-newspaper"></i> News</a></li>
+                    <li><a href=""><i class="icofont-support-faq"></i> FAQ</a></li>
+                    @if (roleName == RolesEnum.Company.ToString())
+                    {
+                        <li><a href="@Url.Content("~/jobs/getallb2bjobs")"><i class="icofont-handshake-deal"></i> B2B</a></li>
+                    }
+
+                    <li><a href=""><i class="icofont-info-circle"></i> Markting</a></li>
+                    <li><a href=""><i class="icofont-food-basket"></i> Store</a></li>
+                    <li>
+                        <a href="">
+                            <i class="icofont-ui-messaging"></i><span class="badge badge-light notification1">9</span>&nbsp;&nbsp;
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class="icofont-alarm"></i><span class="badge badge-light notification2">9</span>&nbsp;&nbsp;
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Content($"~/account/profile/{userId}")">
+                            <img src="/img/Profile picture.png">
+                            @*<img class="rounded-circle" src="@($"/Profile Pictures/{Model.ProfileImagePath}" ?? "/img/Profile picture.png")" onError="this.onerror=null;this.src='/img/Profile picture.png';" style="height: 41px;">*@
+
+                        </a>
+                    </li>
+                </ul>
+            </nav><!-- .nav-menu -->
+
+
+        </div>
+    </header><!-- End Header -->
+    <!-- breadcrumb -->
+    <nav aria-label="breadcrumb">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active" aria-current="page"><i class="icofont-home"></i></li>
+            </ol>
+        </div>
+    </nav>
+    <!-- Edn breadcrumb -->
+
+    @RenderBody()
+
+
+    <div id="preloader"></div>
+    <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="~/vendor/jquery/jquery.min.js"></script>
+    <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/vendor/jquery.easing/jquery.easing.min.js"></script>
+    <script src="~/vendor/php-email-form/validate.js"></script>
+    <script src="~/vendor/waypoints/jquery.waypoints.min.js"></script>
+    <script src="~/vendor/counterup/counterup.min.js"></script>
+    <script src="~/vendor/owl.carousel/owl.carousel.min.js"></script>
+    <script src="~/vendor/venobox/venobox.min.js"></script>
+    <script src="~/vendor/aos/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/js/all.min.js"></script>
+
+    <!-- Template Main JS File -->
+    <script src="~/js/main.js"></script>
+    @RenderSection("Scripts", false)
+</body>
+
+</html>

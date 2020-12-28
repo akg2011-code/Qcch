@@ -1,0 +1,604 @@
+﻿@model ApplicationUser
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    string userId = HttpContextAccessor.HttpContext.Session.GetString("UserId");
+}
+<div class="head">
+    <div class="container-fluid">
+        <img src="~/img/Rectangle 98.png" class="img-fluid ">
+    </div>
+    <div class="head-button">
+        <div class="container">
+            <div class="row">
+                <div class="col-md text-right">
+                    <img  class="imgCom" src="@($"/Profile Pictures/{Model.ProfileImagePath}" ?? "/img/Rectangle 60.png")" onError="this.onerror=null;this.src='/img/Rectangle 60.png';">
+                    @*<img src="~/img/Rectangle 60.png" class="imgCom">*@
+                </div>
+                <div class="col-md text-right">
+                    <a href="@Model.CompanyInfo?.Website" class="btn btn-danger ">visit website</a>
+                    <button class="btn btn-warning ">follow</button>
+                    <button class="btn btn-info ">share</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<main id="main">
+    <div class="comProfileContent" style="padding-top:100px">
+        <section class="container">
+            <div class="row">
+                <!-- left side -->
+                <div class="col-md-3">
+                    <div class="left all">
+                        <div class="nameUser">
+                            <ul class="list-unstyled list-group p-2">
+                                <li class="list-group-item border-0"><span style="font-size:15px;color:red"> Common Connections : </span>200</li>
+                                <li class="list-group-item border-0"><span style="font-size:15px;color:red"> All Employess : </span>191,11</li>
+                            </ul>
+                            <div style="padding-bottom: 20px;">
+                                <a href="@Url.Content($"~/account/updateinfo/{userId}")" class="btn btn-info " style="border:none;background-color: #00c9a7;">Admin panel</a>
+                            </div>
+                            <hr>
+                            <div class="text-center">
+                                <h5>Overview</h5>
+                            </div>
+                            <hr />
+                            <div>
+                                <ul class="list-unstyled list-group text-left ">
+                                    <li class="list-group-item border-0"> <span style="font-size:15px;color:red">Website : </span><small></small> @Model.CompanyInfo?.Website</li>
+                                    <li class="list-group-item border-0"> <span style="font-size:15px;color:red">Company Size : </span> @Model.CompanyInfo?.Size</li>
+                                    <li class="list-group-item border-0"> <span style="font-size:15px;color:red">Mail : </span><small>@Model.Email</small> </li>
+                                    <li class="list-group-item border-0"> <span style="font-size:15px;color:red">Contact no : </span><small>@Model.PhoneNumber</small> </li>
+                                </ul>
+
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+                <!-- center side -->
+                <div class="col-md-6">
+                    <div class="tabs-comProfile">
+                        <section id="tabs">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-xs-12 ">
+                                        <nav>
+                                            <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                                                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home"
+                                                   role="tab" aria-controls="nav-home" aria-selected="true">About Us</a>
+                                                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
+                                                   role="tab" aria-controls="nav-profile" aria-selected="false">Products</a>
+                                                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact"
+                                                   role="tab" aria-controls="nav-contact" aria-selected="false">Services</a>
+                                                <a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab"
+                                                   aria-controls="nav-about" aria-selected="false">B2B</a>
+                                                <a class="nav-item nav-link" id="nav-career-tab" data-toggle="tab" href="#nav-career"
+                                                   role="tab" aria-controls="nav-career" aria-selected="false">Career</a>
+                                                <a class="nav-item nav-link" id="nav-Cont-tab" data-toggle="tab" href="#nav-Cont" role="tab"
+                                                   aria-controls="nav-Cont" aria-selected="false">Contact</a>
+                                            </div>
+                                        </nav>
+                                        <div class="tab-content" id="nav-tabContent">
+                                            <!-- tab 0 ---- about us -->
+                                            <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                                                 aria-labelledby="nav-home-tab">
+                                                <div class="aboutMe">
+                                                    <h4>Our Mission</h4>
+                                                    <hr>
+                                                    <p>
+                                                        @Model.CompanyInfo?.Mission
+                                                    </p>
+                                                </div>
+
+                                                <div class="aboutMe">
+                                                    <h4>Our Vision</h4>
+                                                    <hr>
+                                                    <p>
+                                                        @Model.CompanyInfo?.Vision
+                                                    </p>
+                                                </div>
+
+                                                <div class="aboutMe">
+                                                    <h4>Overview</h4>
+                                                    <table class="table">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>Type</td>
+                                                                <td>@Model.CompanyInfo?.Type</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Industry</td>
+                                                                <td>@Model.CompanyInfo?.Industry</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Founded At</td>
+                                                                <td>@Model.CompanyInfo?.FoundedYear</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+
+                                            <!-- tab 1 ---- prouduct -->
+                                            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                                <div class="Education details-Edu-Expe-Certi">
+                                                    <div class="row">
+                                                        <div class="col-md">
+                                                            <h4>Products</h4>
+                                                        </div>
+                                                    </div>
+                                                    <hr>
+                                                    <div class="univeristy">
+                                                        <!-- services one -->
+                                                        <div class="uniDeails">
+                                                            <div class="row">
+                                                                <div class="col-md-8">
+                                                                    <div class="row">
+                                                                        <div class="col-md-7">
+                                                                            <h5>End Frams</h5>
+                                                                            <small><i class="fas fa-map-marker-alt"></i> Qatar</small>
+                                                                        </div>
+                                                                        <div class="col-md-5 text-right">
+                                                                            <button type="button" class="btn btn-outline-warning"
+                                                                                    style="font-size: 13px;">
+                                                                                view Product
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div>
+                                                                        <hr>
+                                                                        <p>
+                                                                            Find the most qualified people in the most unexpected places. Information for
+                                                                            applicants to
+                                                                            consider when applying for local positions.
+                                                                        </p>
+                                                                        <hr>
+                                                                        <div class="row">
+                                                                            <div class="col-md">
+                                                                                <small><i class="fas fa-map-marker-alt"></i> Posted 3 days ago</small>
+                                                                            </div>
+                                                                            <div class="col-md text-right">
+                                                                                18 view
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <img src="~/img/Rectangle 82-1.png" class="imgServic">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- services two -->
+                                                        <div class="uniDeails">
+                                                            <div class="row">
+                                                                <div class="col-md-8">
+                                                                    <div class="row">
+                                                                        <div class="col-md-7">
+                                                                            <h5>End Frams</h5>
+                                                                            <small><i class="fas fa-map-marker-alt"></i> Qatar</small>
+                                                                        </div>
+                                                                        <div class="col-md-5 text-right">
+                                                                            <button type="button" class="btn btn-outline-warning"
+                                                                                    style="font-size: 13px;">
+                                                                                view Product
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div>
+                                                                        <hr>
+                                                                        <p>
+                                                                            Find the most qualified people in the most unexpected places. Information for
+                                                                            applicants to
+                                                                            consider when applying for local positions.
+                                                                        </p>
+                                                                        <hr>
+                                                                        <div class="row">
+                                                                            <div class="col-md">
+                                                                                <small><i class="fas fa-map-marker-alt"></i> Posted 3 days ago</small>
+                                                                            </div>
+                                                                            <div class="col-md text-right">
+                                                                                18 view
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <img src="~/img/Rectangle 82-1.png" class="imgServic">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <!-- tab 2 ---- services -->
+                                            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                                                <div class="Education details-Edu-Expe-Certi">
+                                                    <div class="row">
+                                                        <div class="col-md">
+                                                            <h4>Services</h4>
+                                                        </div>
+                                                    </div>
+                                                    <hr>
+                                                    <div class="univeristy">
+                                                        <!-- services one -->
+                                                        <div class="uniDeails">
+                                                            <div class="row">
+                                                                <div class="col-md-8">
+                                                                    <div class="row">
+                                                                        <div class="col-md-7">
+                                                                            <h5>Civil biulding</h5>
+                                                                            <small><i class="fas fa-map-marker-alt"></i> Qatar</small>
+                                                                        </div>
+                                                                        <div class="col-md-5 text-right">
+                                                                            <button type="button" class="btn btn-outline-danger"
+                                                                                    style="font-size: 14px;">
+                                                                                view service
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div>
+                                                                        <hr>
+                                                                        <p>
+                                                                            Find the most qualified people in the most unexpected places. Information for
+                                                                            applicants to
+                                                                            consider when applying for local positions.
+                                                                        </p>
+                                                                        <hr>
+                                                                        <div class="row">
+                                                                            <div class="col-md">
+                                                                                <small><i class="fas fa-map-marker-alt"></i> Posted 3 days ago</small>
+                                                                            </div>
+                                                                            <div class="col-md text-right">
+                                                                                18 view
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <img src="~/img/Rectangle 82-1.png" class="imgServic">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- services two -->
+                                                        <div class="uniDeails">
+                                                            <div class="row">
+                                                                <div class="col-md-8">
+                                                                    <div class="row">
+                                                                        <div class="col-md-7">
+                                                                            <h5>Civil biulding</h5>
+                                                                            <small><i class="fas fa-map-marker-alt"></i> Qatar</small>
+                                                                        </div>
+                                                                        <div class="col-md-5 text-right">
+                                                                            <button type="button" class="btn btn-outline-danger"
+                                                                                    style="font-size: 14px;">
+                                                                                view service
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div>
+                                                                        <hr>
+                                                                        <p>
+                                                                            Find the most qualified people in the most unexpected places. Information for
+                                                                            applicants to
+                                                                            consider when applying for local positions.
+                                                                        </p>
+                                                                        <hr>
+                                                                        <div class="row">
+                                                                            <div class="col-md">
+                                                                                <small><i class="fas fa-map-marker-alt"></i> Posted 3 days ago</small>
+                                                                            </div>
+                                                                            <div class="col-md text-right">
+                                                                                18 view
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <img src="~/img/Rectangle 82-1.png" class="imgServic">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- tab 3 ----- projects -->
+                                            <div class="tab-pane fade" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
+                                                <div class="Education details-Edu-Expe-Certi">
+                                                    <div class="row">
+                                                        <div class="col-md">
+                                                            <h4>B2B</h4>
+                                                        </div>
+                                                    </div>
+                                                    <hr>
+                                                    <div class="univeristy">
+                                                        <!-- services one -->
+                                                        @foreach (var project in Model.JobOffers.Where(j => j.IsB2B))
+                                                        {
+                                                            <div class="uniDeails">
+                                                                <div class="row">
+                                                                    <div class="col-md-8">
+                                                                        <div class="row">
+                                                                            <div class="col-md-7">
+                                                                                <h5>@project.Title</h5>
+                                                                                <small><i class="fas fa-map-marker-alt"></i> @project.Location</small>
+                                                                            </div>
+                                                                            <div class="col-md-5 text-right">
+                                                                                <a href="@Url.Content($"~/jobs/jobdetails/{project.ID}")" class="btn btn-outline-warning"
+                                                                                   style="font-size: 13px;">
+                                                                                    View B2B
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div>
+                                                                            <hr>
+                                                                            <p>
+                                                                                @project.Description
+                                                                            </p>
+                                                                            <hr>
+                                                                            <div class="row">
+                                                                                <div class="col-md">
+                                                                                    <small><i class="fas fa-clock-o"></i> Posted @((int)DateTime.UtcNow.Subtract(project.CreatedDate).TotalDays) days ago</small>
+                                                                                </div>
+                                                                                <div class="col-md text-right">
+                                                                                    18 view
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <img src="~/img/project.png" class="imgServic">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <!-- tab 4 ------ career -->
+                                            <div class="tab-pane fade" id="nav-career" role="tabpanel" aria-labelledby="nav-career-tab">
+                                                <div class="Education details-Edu-Expe-Certi">
+                                                    <div class="row">
+                                                        <div class="col-md">
+                                                            <h4>Careers</h4>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <hr>
+                                                    <div class="univeristy">
+                                                        @foreach (var job in Model.JobOffers.Where(j => !j.IsB2B))
+                                                        {
+                                                            <!-- services one -->
+                                                            <div class="uniDeails">
+                                                                <div class="row">
+                                                                    <div class="col-md-7">
+                                                                        <h5>@job.Title</h5>
+                                                                        <small><i class="fas fa-map-marker-alt"></i> @job.Location</small>
+                                                                    </div>
+                                                                    <div class="col-md-5 text-right">
+                                                                        <a href="@Url.Content($"~/jobs/jobdetails/{job.ID}")" class="btn btn-outline-danger" style="font-size: 13px;">
+                                                                            View Job
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                                <div>
+                                                                    <hr>
+                                                                    <p>
+                                                                        @job.Description
+                                                                    </p>
+                                                                    <hr>
+                                                                    <div class="row">
+                                                                        <div class="col-md">
+                                                                            <small><i class="fas fa-clock-o"></i> Posted @((int)DateTime.UtcNow.Subtract(job.CreatedDate).TotalDays) days ago</small>
+                                                                        </div>
+                                                                        <div class="col-md text-right">
+                                                                            18 view
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        }
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <!-- tab 5 -->
+                                            <div class="tab-pane fade" id="nav-Cont" role="tabpanel" aria-labelledby="nav-Cont-tab">
+                                                <div class="aboutMe">
+                                                    <h4>About us</h4>
+                                                    <hr>
+                                                    <p>
+                                                        It is a long established fact that a reader will be distracted by the readable content of
+                                                        a page when
+                                                        looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
+                                                        distribution of letters, as opposed to using 'Content here, content here', making it look
+                                                        like
+                                                        readable English. Many desktop publishing packages and web page editors now use Lorem
+                                                        Ipsum as their
+                                                        default model text, and a search for 'lorem ipsum' will uncover many web sites still in
+                                                        their infancy.
+                                                        Various versions have evolved over the years, sometimes by accident, sometimes on purpose
+                                                        (injected
+                                                        humour and the like).
+                                                    </p>
+                                                </div>
+
+                                                <div class="aboutMe">
+                                                    <h4>Map</h4>
+                                                    <hr>
+                                                    <div>
+                                                        <iframe style="border:0; width: 100%; height: 350px;"
+                                                                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621"
+                                                                frameborder="0" allowfullscreen></iframe>
+                                                    </div>
+                                                </div>
+
+                                                <div class="aboutMe">
+                                                    <h4>Contact Info</h4>
+                                                    <table class="table">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>Mark</td>
+                                                                <td>Otto</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Jacob</td>
+                                                                <td>Thornton</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Jacob</td>
+                                                                <td>Thornton</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Jacob</td>
+                                                                <td>Thornton</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <!-- ./Tabs -->
+                    </div>
+                </div>
+                <!-- right side -->
+                <div class="col-md-3">
+                    <div class="right all">
+
+                        <div class="people">
+                            <h5>Similar Pages</h5>
+                            <hr>
+                            <!-- peopleViewed  -->
+                            <div class="peopleViewed">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <img src="~/img/Ellipse 18.png" style="height:40px ;">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>Ahmed Lotfi</p>
+                                        <span>Nas Group</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <button type="button" class="btn btn-warning">
+                                            <i class="fas fa-plus "
+                                               style="color: #fff;"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- peopleViewed  -->
+                            <div class="peopleViewed">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <img src="~/img/Ellipse 18.png" style="height:40px ;">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>Ahmed Lotfi</p>
+                                        <span>Nas Group</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <button type="button" class="btn btn-warning">
+                                            <i class="fas fa-plus "
+                                               style="color: #fff;"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- peopleViewed  -->
+                            <div class="peopleViewed">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <img src="~/img/Ellipse 18.png" style="height:40px ;">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>Ahmed Lotfi</p>
+                                        <span>Nas Group</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <button type="button" class="btn btn-warning">
+                                            <i class="fas fa-plus "
+                                               style="color: #fff;"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="people">
+                            <h5>people also viewed</h5>
+                            <hr>
+                            <!-- peopleViewed  -->
+                            <div class="peopleViewed">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <img src="~/img/Ellipse 18.png" style="height:40px ;">
+                                    </div>
+                                    <div class="col-md-6 text-right">
+                                        <p>Ahmed Lotfi</p>
+                                        <span>Nas Group</span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button type="button" class="btn btn-outline-danger" style="font-size: 12px;">Connect</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- peopleViewed  -->
+                            <div class="peopleViewed">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <img src="~/img/Ellipse 18.png" style="height:40px ;">
+                                    </div>
+                                    <div class="col-md-6 text-right">
+                                        <p>Ahmed Lotfi</p>
+                                        <span>Nas Group</span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button type="button" class="btn btn-outline-danger" style="font-size: 12px;">Connect</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- peopleViewed  -->
+                            <div class="peopleViewed">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <img src="~/img/Ellipse 18.png" style="height:40px ;">
+                                    </div>
+                                    <div class="col-md-6 text-right">
+                                        <p>Ahmed Lotfi</p>
+                                        <span>Nas Group</span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button type="button" class="btn btn-outline-danger" style="font-size: 12px;">Connect</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+</main>
+<!-- End #main -->

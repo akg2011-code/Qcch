@@ -1,0 +1,370 @@
+﻿@model ApplicationUser
+<main id="main">
+    <div class="userProfileContent">
+        <section class="container">
+            <div class="row">
+                <!-- left side -->
+                <div class="col-md-3">
+                    <div class="left all">
+                        <div class="nameUser">
+                            <div style="padding-bottom: 50px;padding-top:20px">
+                                <img id="pp" src="@($"/Profile Pictures/{Model.ProfileImagePath}" ?? "/img/Ellipse 9.png")" onError="this.onerror=null;this.src='/img/Ellipse 9.png';" style="height: 130px;">
+                            </div>
+                            <div>
+                                <h3>@(!string.IsNullOrWhiteSpace(Model.FullName) ? Model.FullName : Model.UserName)</h3>
+                            </div>
+                            <div>
+                                <p>@Model.EmployeeJobs.FirstOrDefault(p => p.IsCurrentPosition)?.JobPosition?.Name</p>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md  border-right">
+                                    <h5>358</h5>
+                                    <p>Connections</p>
+                                </div>
+                                <div class="col-md border-left">
+                                    <h5>85</h5>
+                                    <p>Views</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div style="padding-bottom: 20px;">
+                                <a href="@Url.Content($"~/account/updateinfo/{Model.Id}")" style="color:#e72629;">Edit Profile</a>
+                            </div>
+                        </div>
+                        <div class="mainInfo">
+                            <h5>Main Information</h5>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md">
+                                    <ul class="list-unstyled">
+                                        <li><i class="far fa-folder-open"></i> Position</li>
+                                        <li><i class="far fa-user"></i> Gender</li>
+                                        <li><i class="far fa-folder-open"></i> Email</li>
+                                        <li><i class="far fa-folder-open"></i> Contact no</li>
+                                        <li><i class="far fa-folder-open"></i> Nationality</li>
+                                        <li><i class="far fa-folder-open"></i> Birthday</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md">
+                                    <ul class="list-unstyled">
+                                        <li> @(Model.EmployeeJobs.FirstOrDefault(p => p.IsCurrentPosition)?.JobPosition?.Name ?? "Not Specified")</li>
+                                        <li> @(Model.Gender?.Name ?? "Not Specified")</li>
+                                        <li> @Model.Email</li>
+                                        <li> @Model.PhoneNumber</li>
+                                        <li> @(Model.Country?.Name ?? "Not Specified")</li>
+                                        <li> @(Model.DateOfBirth != DateTime.MinValue ? Model.DateOfBirth.ToString("dd-MM-yyyy") : "Not Specified")</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="postJob">
+                            @*<div class="imgCompany">
+                                <img src="~/img/Rectangle 60.png" style="height:176px;">
+                            </div>
+                            <div class="CompanyName">
+                                <h4>
+                                    Swan Global WLL
+                                </h4>
+                                <p>Looking for talent?</p>
+                                <hr>
+                                <button class="btn btn-outline-info">Post A Job</button>
+                            </div>*@
+                        </div>
+                    </div>
+                </div>
+                <!-- center side -->
+                <div class="col-md-6">
+                    <div class="center all">
+                        <div class="aboutMe">
+                            <h4>About Me</h4>
+                            <hr>
+                            <p>
+                                @Model.Bio
+                            </p>
+                            @*<hr>
+                            <div class="btnEdit">
+                                <button class="btn btn-primary">Edit info</button>
+                            </div>*@
+                        </div>
+                        <!-- education-sction -->
+                        <div class="Education details-Edu-Expe-Certi">
+                            <h4>Education</h4>
+                            <hr>
+                            <div class="univeristy">
+                                <!-- university one -->
+                                <div class="uniDeails">
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <h4>Hamad bin Khalifa University</h4>
+                                            <h6>Master’s programmes</h6>
+                                            <span>Oct 2020 - Present (4 year 7 month)</span>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <img src="~/img/Rectangle 86.png" style="height: 46px;">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p>
+                                            Find the most qualified people in the most unexpected places. Information for applicants to
+                                            consider when applying for local positions.
+                                        </p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <!-- university two -->
+                                <div class="uniDeails">
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <h4>Hamad bin Khalifa University</h4>
+                                            <h6>Master’s programmes</h6>
+                                            <span>Oct 2020 - Present (4 year 7 month)</span>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <img src="~/img/Rectangle 86.png" style="height: 46px;">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p>
+                                            Find the most qualified people in the most unexpected places. Information for applicants to
+                                            consider when applying for local positions.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Expireenc-section -->
+                        <div class="Experience details-Edu-Expe-Certi">
+                            <h4>Experience</h4>
+                            <hr>
+                            <div class="Experience details-Edu-Expe-Certi">
+                                <!-- Experience one -->
+                                <div class="experDeails">
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <h4>Community College of Qatar</h4>
+                                            <h6>Master’s programmes</h6>
+                                            <span>Oct 2020 - Present (4 year 7 month)</span>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <img src="~/img/Rectangle 86.png" style="height: 46px;">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p>
+                                            Find the most qualified people in the most unexpected places. Information for applicants to
+                                            consider when applying for local positions.
+                                        </p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <!-- Experience two -->
+                                <div class="experDeails">
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <h4>Hamad bin Khalifa University</h4>
+                                            <h6>Master’s programmes</h6>
+                                            <span>Oct 2020 - Present (4 year 7 month)</span>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <img src="~/img/Rectangle 86.png" style="height: 46px;">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p>
+                                            Find the most qualified people in the most unexpected places. Information for applicants to
+                                            consider when applying for local positions.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Certificates-section -->
+                        <div class="Certificates details-Edu-Expe-Certi">
+                            <h4>Certificates</h4>
+                            <hr>
+                            <div class="Certificates details-Edu-Expe-Certi">
+                                <!-- Certificates one -->
+                                <div class="certiDeails">
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <h4>Community College of Qatar</h4>
+                                            <h6>Master’s programmes</h6>
+                                            <span>Oct 2020 - Present (4 year 7 month)</span>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <img src="~/img/Rectangle 86.png" style="height: 46px;">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p>
+                                            Find the most qualified people in the most unexpected places. Information for applicants to
+                                            consider when applying for local positions.
+                                        </p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <!-- Certificates two -->
+                                <div class="certiDeails">
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <h4>Hamad bin Khalifa University</h4>
+                                            <h6>Master’s programmes</h6>
+                                            <span>Oct 2020 - Present (4 year 7 month)</span>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <img src="~/img/Rectangle 86.png" style="height: 46px;">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p>
+                                            Find the most qualified people in the most unexpected places. Information for applicants to
+                                            consider when applying for local positions.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- gallary -->
+                        <div class="gallary">
+                        </div>
+                    </div>
+                </div>
+                <!-- right side -->
+                <div class="col-md-3">
+                    <div class="right all">
+                        <div class="people">
+                            <h5>Who viewed your profile</h5>
+                            <hr>
+                            <!-- peopleViewed  -->
+                            <div class="peopleViewed">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <img src="~/img/Ellipse 18.png" style="height:40px ;">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>Ahmed Lotfi</p>
+                                        <span>Nas Group</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <button type="button" class="btn btn-warning">
+                                            <i class="fas fa-user-plus "
+                                               style="color: #fff;"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- peopleViewed  -->
+                            <div class="peopleViewed">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <img src="~/img/Ellipse 18.png" style="height:40px ;">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>Ahmed Lotfi</p>
+                                        <span>Nas Group</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <button type="button" class="btn btn-warning">
+                                            <i class="fas fa-user-plus "
+                                               style="color: #fff;"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- peopleViewed  -->
+                            <div class="peopleViewed">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <img src="~/img/Ellipse 18.png" style="height:40px ;">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>Ahmed Lotfi</p>
+                                        <span>Nas Group</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <button type="button" class="btn btn-warning">
+                                            <i class="fas fa-user-plus "
+                                               style="color: #fff;"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="Premium">
+                            <img src="~/img/Rectangle 60.png" style="height: 159px;">
+                            <h4>Swan Global WLL</h4>
+                            <p>Grow & nurture your network</p>
+                            <hr>
+                            <button type="button" class="btn btn-outline-danger">Activate</button>
+                        </div>
+                        <div class="peopleKnow">
+                            <h5>People you might know</h5>
+                            <hr>
+
+                            <div class="item-people">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <h6>Rajan V.</h6>
+                                        <p>Aquaplex FZE, U.A.E.</p>
+                                        <span> <i class="fas fa-map-marker-alt"></i>Qatar</span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <img src="~/img/Rectangle 82.png" style="height: 46px;">
+                                    </div>
+                                </div>
+                                <hr>
+                                <p style="color: #ea222a;">18 connections</p>
+                                <hr>
+                                <span><i class="far fa-clock"></i> Posted 3 Days ago</span>
+                            </div>
+
+                            <div class="item-people">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <h6>Rajan V.</h6>
+                                        <p>Aquaplex FZE, U.A.E.</p>
+                                        <span> <i class="fas fa-map-marker-alt"></i>Qatar</span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <img src="~/img/Rectangle 82.png" style="height: 46px;">
+                                    </div>
+                                </div>
+                                <hr>
+                                <p style="color: #ea222a;">18 connections</p>
+                                <hr>
+                                <span><i class="far fa-clock"></i> Posted 3 Days ago</span>
+                            </div>
+
+
+                            <div class="item-people">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <h6>Rajan V.</h6>
+                                        <p>Aquaplex FZE, U.A.E.</p>
+                                        <span> <i class="fas fa-map-marker-alt"></i>Qatar</span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <img src="~/img/Rectangle 82.png" style="height: 46px;">
+                                    </div>
+                                </div>
+                                <hr>
+                                <p style="color: #ea222a;">18 connections</p>
+                                <hr>
+                                <span><i class="far fa-clock"></i> Posted 3 Days ago</span>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+</main>
+<!-- End #main -->

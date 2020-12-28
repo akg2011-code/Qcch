@@ -1,0 +1,229 @@
+﻿@model IEnumerable<News>
+@section Styles{
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+}
+<main id="main">
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add new</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <form id="newsEditorForm">
+                        <div class="form-group">
+                            <input type="text" name="Title" placeholder="Title" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="Source" placeholder="Source" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <textarea id="newsEditor" name="Details"></textarea>
+                        </div>
+                        <input type="submit" class="btn btn-danger" value="Post" />
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="JobContent">
+        <section class="container">
+            <div class="row">
+                <!-- left side -->
+                <div class="col-md-3">
+                    <div class="left all">
+                        <div class="postJob">
+                            <div class="imgCompany">
+                                <img src="/img/Rectangle 60.png" style="height:158px;">
+                            </div>
+                            <div class="CompanyName">
+                                <h4>
+                                    Swan Global WLL
+                                </h4>
+                                <p>Looking for talent?</p>
+                                <hr>
+                                <button class="btn btn-outline-info">Post A Job</button>
+                            </div>
+                        </div>
+
+                        <div class="yourJobs">
+                            <div class="uniDeails">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <h4>Resident Engineer</h4>
+                                        <h6>Sinopack</h6>
+                                        <small><i class="fas fa-map-marker-alt"></i> Qatar</small>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <img src="/img/Rectangle 86.png" style="height: 46px;">
+                                    </div>
+                                </div>
+                                <div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
+                                        </div>
+                                        <div class="col-md-6" style="font-size: 89%;">
+                                            <small style="color: #ea222a;">3.74</small><small>(567 reviews)</small>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="detailsJob">
+                                        <div class="row text-center">
+                                            <div class="col-md-6">
+                                                <small>Salaries</small>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <small class="label-danger">Open Job</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="yourJobs">
+                            <div class="uniDeails">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <h4>Resident Engineer</h4>
+                                        <h6>Sinopack</h6>
+                                        <small><i class="fas fa-map-marker-alt"></i> Qatar</small>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <img src="/img/Rectangle 86.png" style="height: 46px;">
+                                    </div>
+                                </div>
+                                <div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
+                                        </div>
+                                        <div class="col-md-6" style="font-size: 89%;">
+                                            <small style="color: #ea222a;">3.74</small><small>(567 reviews)</small>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="detailsJob">
+                                        <div class="row text-center">
+                                            <div class="col-md-6">
+                                                <small>Salaries</small>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <small class="label-danger">Open Job</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+                <!-- center side -->
+                <div class="col-md-9">
+                    <div class="center all">
+                        <!-- education-sction -->
+                        <!-- search input -->
+                        <div class="Education details-Edu-Expe-Certi">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Search News..." aria-label="Recipient's username"
+                                       aria-describedby="button-addon2">
+                                <div class="input-group-append">
+                                    <button class="btn btn-danger" type="button" id="button-addon2"><i class="fas fa-search"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        @*add new news*@
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                            Add New
+                        </button>
+
+
+                        @foreach (var item in Model)
+                        {
+                            <div class="Education details-Edu-Expe-Certi" style="padding: 20px 20px 1px 20px;">
+                                <div class="univeristy">
+                                    <!-- job one -->
+                                    <div class="uniDeails">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <img src="~/img/news-1.jpg" style="height: 160px;width: 100%;">
+                                            </div>
+                                            <div class="col-md-8">
+                                                <h4>@item.Title</h4>
+                                                <div class="alert alert-danger" role="alert">
+                                                    <a href="@item.Source" class="alert-link newsSourcPreview">@item.Source</a>.
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md text-right">
+                                                        <a asp-action="GetNewsDetails" asp-route-id="@item.ID" type="button" class="btn btn-warning">Read more</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+<!-- End #main -->
+
+@section Scripts{
+
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#newsEditor').summernote();
+
+            $('#newsEditorForm').on('submit', function (e) {
+                e.preventDefault();
+                //debugger;
+                var data = $('#newsEditorForm').serializeArray();
+                var formData = new FormData();
+                data.forEach(function (item, index) {
+                    formData.append(item.name, item.value)
+                });
+
+
+            $.ajax({
+                method: "POST",
+                data: formData,
+                url: '@Url.Content($"~/news/add")',
+                processData: false,
+                contentType: false,
+                success: function () {
+                    window.location.reload()
+                },
+                error: function (xhr, ajaxSettings, statusCode) {
+                    console.log(xhr.responseText);
+                }
+            });
+        });
+
+        });
+
+    </script>
+
+}

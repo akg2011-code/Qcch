@@ -1,0 +1,411 @@
+﻿@model UpdateInfoVM
+<main id="main">
+    <div class="editUserProfileContent">
+        <section class="container">
+            <div class="row">
+                <!-- left side -->
+                <div class="col-md-4">
+                    <div class="left all">
+                        <div class="nameUser">
+                            <div>
+                                <div class="row">
+                                    <div class="col-md-7">
+                                        <img id="pp" src="@($"/Profile Pictures/{Model.ProfileImagePath}" ?? "/img/Ellipse 9.png")" onError="this.onerror=null;this.src='/img/Ellipse 9.png';" style="height: 130px;">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="profile-picture-uploader" class="btn btn-warning" style="background-color: #00c9a7;">
+                                            <i class="far fa-images " style="color: #fff;"></i>
+                                        </label>
+                                        <input id="profile-picture-uploader" type="file" />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <button type="button" id="btnDeletePP" class="btn btn-warning" style="background-color: #e72629;">
+                                            <i class="far fa-trash-alt" style="color: #fff;"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mainInfo">
+                            <h5>About</h5>
+                            <span>Tell about yourself in two sentences</span>
+                            <hr>
+                            <small>Bio</small>
+                            <form id="bioForm">
+                                <input hidden name="Id" value="@Model.Id">
+                                <div class="input-group">
+                                    <textarea class="form-control" rows="4" name="Bio" placeholder="Write your thoughts......"
+                                              aria-label="With textarea">@Model.Bio</textarea>
+                                </div>
+                                <hr>
+                                <div class="text-center">
+                                    <button class="btn btn-info col-md-6">Save</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="postJob">
+                            @*<div class="socialProfiles">
+                                <h4>
+                                    Social profiles
+                                </h4>
+                                <span>Add links to your profile</span>
+                                <hr>
+                                <div class="text-center">
+                                    <button type="button" class="btn btn-outline-secondary col-md-9 text-left">
+                                        <i class="fab fa-instagram" style="color: #e72629;margin-right: 10px;"></i> Add Instagram
+                                        link
+                                    </button>
+                                    <button type="button" class="btn btn-outline-secondary col-md-9 text-left">
+                                        <i class="fab fa-facebook-square" style="color: #007bfd;margin-right: 10px;"></i> Add facebook
+                                        link
+                                    </button>
+                                    <button type="button" class="btn btn-outline-secondary col-md-9 text-left">
+                                        <i class="fab fa-twitter-square" style="color: #4ae4f8;margin-right: 10px;"></i> Add Twitter
+                                        link
+                                    </button>
+                                    <button type="button" class="btn btn-outline-secondary col-md-9 text-left">
+                                        <i class="fab fa-skype"
+                                           style="color: #0179fe;margin-right: 10px;"></i> Add Skype link
+                                    </button>
+                                    <hr>
+                                    <button class="btn btn-info col-md-9 text-center">UPDATE SOCIAL PROFILES</button>
+                                </div>
+                            </div>*@
+                        </div>
+                    </div>
+                </div>
+            
+            <!-- right side -->
+            <div class="col-md-8">
+                <div class="center all">
+                    <div class="aboutMe">
+                        <h4>Edit Basic Info</h4>
+                        <small>Edit all your important information</small>
+                        <hr>
+                        <form id="basicInfoForm">
+                            <input hidden name="Id" value="@Model.Id"/>
+                            <div class="form-group">
+                                <label asp-for="FullName">Full Name <span class="text-danger">*</span></label>
+                                <input type="text" asp-for="FullName" class="form-control" placeholder="Full name">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label asp-for="Email">Email *</label>
+                                    <input type="email" asp-for="Email" class="form-control" placeholder="Email">
+                                    <span asp-validation-for="Email"></span>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label asp-for="PhoneNumber">Phone Number *</label>
+                                    <input type="text" asp-for="PhoneNumber" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label asp-for="DateOfBirth">Birthdate *</label>
+                                    <input type="date" asp-for='DateOfBirth' class="form-control">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label asp-for="GenderID">Gender</label>
+                                    <select asp-for="GenderID" class="form-control">
+                                        <option value="1" selected>Male</option>
+                                        <option value="2">Female</option>
+                                        <option value="3">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label asp-for="NationalityID">Nationality *</label>
+                                    <select asp-for="NationalityID" asp-items='ViewData["Countries"] as SelectList' class="form-control"></select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label asp-for="Position">Position *</label>
+                                    <input asp-for="Position" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="btnEdit">
+                                <button class="btn btn-primary border-0">Update info</button>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- Qualification-section -->
+                    @*<div class="aboutMe">
+                        <h4>Qualification</h4>
+                        <small>Edit all your important information</small>
+                        <hr>
+                        <form id="qualificationsForm">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputQuali">Qualification</label>
+                                    <input type="text" class="form-control" id="inputQuali" placeholder="">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputPhone">.</label>
+                                    <input type="text" class="form-control" id="inputPhone" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" id="inputPass" placeholder="1/1/2021">
+                                </div>
+                                <label for="inputPass" class="col-md-3 col-form-label">Passing Year</label>
+                                <div class="col-md-5">
+                                    <input type="date" class="form-control" id="inputPass" placeholder="1/1/2021">
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="btnEdit">
+                                <button class="btn btn-primary border-0">Add New</button>
+                            </div>
+                        </form>
+                    </div>*@
+
+                    <!-- Expireenc-section -->
+                    @*<div class="aboutMe">
+                        <h4>Expireenc</h4>
+                        <small>Edit all your important information</small>
+                        <hr>
+                        <form id="experienceForm">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputExpi">Expireenc</label>
+                                    <input type="email" class="form-control" id="inputExpi" placeholder="">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputPhone">.</label>
+                                    <input type="text" class="form-control" id="inputPhone" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="inputName" placeholder="Ahmed Korany">
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="inputPass" class="col-md-2 col-form-label">From</label>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" id="inputPass" placeholder="1/1/2021">
+                                </div>
+                                <label for="inputPass" class="col-md-2 col-form-label">To</label>
+                                <div class="col-md-4">
+                                    <input type="date" class="form-control" id="inputPass" placeholder="1/1/2021">
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="btnEdit">
+                                <button class="btn btn-primary border-0">Add New</button>
+                            </div>
+                        </form>
+                    </div>*@
+
+                    <!-- Certificates-section -->
+                    @*<div class="aboutMe">
+                        <h4>Certificates</h4>
+                        <small>Edit all your important information</small>
+                        <hr>
+                        <form id="certificatesForm">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputExpi">Certificate1</label>
+                                    <input type="email" class="form-control" id="inputExpi" placeholder="">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputPhone">.</label>
+                                    <input type="text" class="form-control" id="inputPhone" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" id="inputPass" placeholder="1/1/2021">
+                                </div>
+                                <div class="custom-file col-md-4">
+                                    <input type="file" class="custom-file-input" style="background: #00c9a7;" id="customFile">
+                                    <label class="custom-file-label border-0" for="customFile">Choose file</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="inputPass" class="col-md-2 col-form-label">From</label>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" id="inputPass" placeholder="1/1/2021">
+                                </div>
+                                <label for="inputPass" class="col-md-2 col-form-label">To</label>
+                                <div class="col-md-4">
+                                    <input type="date" class="form-control" id="inputPass" placeholder="1/1/2021">
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="btnEdit">
+                                <button class="btn btn-primary border-0">Add New</button>
+                            </div>
+                        </form>
+                    </div>*@
+
+                    <!-- Cover Letter-section -->
+                    @*<div class="aboutMe">
+                        <h4>Cover Letter</h4>
+                        <small>Edit all your important information</small>
+                        <hr>
+                        <div class="input-group">
+                            <textarea class="form-control" rows="4" placeholder="Write your thoughts......"
+                                      aria-label="With textarea"></textarea>
+                        </div>
+                    </div>*@
+
+                    <!-- Gallary
+    <div class="aboutMe">
+        <h4>Gallary</h4>
+        <small>Edit all your important information</small>
+        <hr>
+        <div class="form-group row">
+            <div class="custom-file col-md-5">
+                <input type="file" class="custom-file-input" style="background: #00c9a7;" id="customFile">
+                <label class="custom-file-label border-0" for="customFile">Upload Image</label>
+            </div>
+
+            <div class="btnEdit">
+                <button class="btn btn-primary border-0">Add New</button>
+            </div>
+
+        </div>
+        <div class="form-group row">
+            <div class="custom-file col-md-5">
+                <input type="file" class="custom-file-input" style="background: #00c9a7;" id="customFile">
+                <label class="custom-file-label border-0" for="customFile">Upload Video</label>
+            </div>
+
+            <div class="btnEdit">
+                <button class="btn btn-primary border-0">Add New</button>
+            </div>
+
+        </div>
+
+        <div class="form-group row">
+            <div class="custom-file col-md-5">
+                <input type="file" class="custom-file-input" style="background: #00c9a7;" id="customFile">
+                <label class="custom-file-label border-0" for="customFile">Upload Attachment</label>
+            </div>
+
+            <div class="btnEdit">
+                <button class="btn btn-primary border-0">Add New</button>
+            </div>
+
+        </div>
+    </div> -->
+                    <!-- Password-section -->
+                    <div class="aboutMe">
+                        <h4>Update Password</h4>
+                        <small>Edit all your important information</small>
+                        <hr>
+                        <form id="passwordForm">
+                            <input hidden name="Id" value="@Model.Id"/>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <input type="password" class="form-control" name="password" placeholder="password">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <input type="password" class="form-control" name="confirmPassword"
+                                           placeholder="Confirm password">
+                                </div>
+                            </div>
+                            <hr>
+                            <section class="text-right" style="margin-bottom: 30px;">
+                                <button class="btn btn-primary border-0 col-md-2" style="background: #00c9a7;">Update now</button>
+                            </section>
+                        </form>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+    </div>
+
+</main>
+<!-- End #main -->
+
+@section Scripts
+{
+    <script>
+        $("#profile-picture-uploader").change(function () {
+            if ($(this).prop('files').length > 0) {
+                var formdata = new FormData();
+                file = $(this).prop('files')[0];
+                formdata.append("file", file);
+                $.ajax({
+                    method: "POST",
+                    data: formdata,
+                    url: '@Url.Content($"~/account/changeprofilepicture/{Model.Id}")',
+                    processData: false,
+                    contentType: false,
+                    success: function (picturePath) {
+                        $('#pp').prop('src', `/Profile Pictures/${picturePath.replaceAll('"','')}`);
+                    },
+                    error: function (xhr, ajaxSettings, statusCode) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            }
+        });
+
+        $("#btnDeletePP").click(function () {
+            $.ajax({
+                    method: "POST",
+                    url: '@Url.Content($"~/account/deleteprofilepicture/{Model.Id}")',
+                    contentType: false,
+                    success: function () {
+                        $('#pp').prop('src', '');
+                    },
+                    error: function (xhr, ajaxSettings, statusCode) {
+                        console.log(xhr.responseText);
+                    }
+                });
+        });
+
+        $('#basicInfoForm').on('submit', function (e) {
+            e.preventDefault();
+            var data = $('#basicInfoForm').serializeArray();
+            var formData = new FormData();
+            data.forEach(function (item, index) {
+                formData.append(item.name, item.value)
+            })
+
+            $.ajax({
+                method: "POST",
+                data: formData,
+                url: '@Url.Content($"~/account/updatebasicinfo")',
+                processData: false,
+                contentType: false,
+                success: function () {
+                window.location.reload()
+                },
+                error: function (xhr, ajaxSettings, statusCode) {
+                    console.log(xhr.responseText);
+                }
+            });
+        });
+
+        $('#bioForm').on('submit', function (e) {
+            e.preventDefault();
+            var data = $('#bioForm').serializeArray();
+            var formData = new FormData();
+            data.forEach(function (item, index) {
+                formData.append(item.name, item.value)
+            })
+
+            $.ajax({
+                method: "POST",
+                data: formData,
+                url: '@Url.Content($"~/account/updateBio")',
+                processData: false,
+                contentType: false,
+                success: function () {
+                    window.location.reload();
+                },
+                error: function (xhr, ajaxSettings, statusCode) {
+                    console.log(xhr.responseText);
+                }
+            });
+        });
+
+    </script>
+}

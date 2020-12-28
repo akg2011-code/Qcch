@@ -1,0 +1,61 @@
+﻿@media(min-width:320px) and (max-width:480px) {
+    .form-home {
+        height: 700px;
+        width: 338px !important;
+        margin-right: 105px;
+    }
+
+    .featured-services .description {
+        line-height: 22px !important;
+    }
+    .members-img img{
+        margin-bottom:40px
+    }
+    .form-login-reg{
+    width:99% !important;
+    }
+}
+
+
+@media (max-width: 992px) {
+    #hero {
+        height: 130vh !important;
+    }
+
+    #hero .container {
+            margin-top: 100px;
+    }
+    .cta .phone{
+        left:355px
+    }
+    .members-img{
+        text-align:center;
+    }
+    .members-img img {
+        margin-bottom: 30px;
+    }
+
+
+}
+
+@media (max-width: 768px) {
+    #hero h2 {
+        font-size: 28px;
+        padding: 36px;
+    }
+    #hero p {
+        /*padding: 66px;*/
+    }
+}
+
+@media (min-width: 1024px) {
+    #hero .carousel-control-prev, #hero .carousel-control-next {
+        width: 5%;
+    }
+}
+
+@media (max-height: 500px) {
+    #hero {
+        height: 160vh;
+    }
+}
