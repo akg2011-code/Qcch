@@ -44,14 +44,15 @@ namespace QccHub.Data.Models
             PhoneNumber = phoneNumber;
         }
 
-        public void AddNewJobByName(string name, int companyId)
+        public void AddNewJobByName(string name, int companyId, DateTime fromDate, DateTime toDate, bool isCurrent)
         {
             var newJobPosition = new UserJobPosition
             {
                 CompanyId = companyId,
                 EmployeeId = Id,
-                FromDate = DateTime.UtcNow,
-                IsCurrentPosition = true,
+                FromDate = fromDate,
+                ToDate = toDate,
+                IsCurrentPosition = isCurrent,
                 JobPosition = new JobPosition
                 { Name = name }
             };

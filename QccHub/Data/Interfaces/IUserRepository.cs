@@ -14,7 +14,7 @@ namespace QccHub.Data.Interfaces
         Task<List<ApplicationUser>> GetCompanyUsers();
         Task<List<ApplicationUser>> GetEmployeeUsers();
         Task<int> GetUserRole(int userId);
-        UserJobPosition GetCurrentJobPosition(int userId);
+        Task<UserJobPosition> GetCurrentJobPosition(int userId);
         Task<ApplicationUser> GetCompanyByName(string name);
         void AddNewCompany(ApplicationUser company);
         void AddEducation(Education education);

@@ -50,12 +50,12 @@ namespace QccHub.Data.Repository
             return _context.Users.IncludeFilter(u => u.UserRoles.Where(ur => ur.RoleId == (int)RolesEnum.Company)).ToListAsync();
         }
 
-        public UserJobPosition GetCurrentJobPosition(int userId)
+        public Task<UserJobPosition> GetCurrentJobPosition(int userId)
         {
             return _context.UserJobPositions
                             .Include(ujp => ujp.JobPosition)
                             .IncludeFilter(ujp => ujp.Employee.UserRoles.FirstOrDefault(r => r.RoleId == (int)RolesEnum.User))
-                            .FirstOrDefault(ujp => ujp.IsCurrentPosition && ujp.EmployeeId == userId);
+                            .FirstOrDefaultAsync(ujp => ujp.IsCurrentPosition && ujp.EmployeeId == userId);
         }
 
         public Task<List<ApplicationUser>> GetEmployeeUsers()

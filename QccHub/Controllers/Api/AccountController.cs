@@ -232,7 +232,7 @@ namespace QccHub.Controllers.Api
 
             if (user.UserRoles.FirstOrDefault()?.RoleId == (int)RolesEnum.User)
             {
-                model.Position = _userRepo.GetCurrentJobPosition(id)?.JobPosition?.Name;
+                model.Position = (await _userRepo.GetCurrentJobPosition(id))?.JobPosition?.Name;
             }
             else if (user.UserRoles.FirstOrDefault()?.RoleId == (int)RolesEnum.Company)
             {
@@ -393,26 +393,6 @@ namespace QccHub.Controllers.Api
             user.PhoneNumber = model.PhoneNumber;
             user.Gender = model.Gender;
             user.NationalityID = model.NationalityID;
-
-            var currentJobPosition = _userRepo.GetCurrentJobPosition(model.Id);
-            user.ResetJobPositions();
-            //var duplicatedJob = await _jobPosRepo.GetJobPositionByName(model.Position);
-            //if (duplicatedJob == null)
-            //{
-            //    user.AddNewJobByName(model.Position, currentJobPosition.CompanyId);
-            //}
-            //else
-            //{
-            //    user.EmployeeJobs.Add(new UserJobPosition 
-            //    { 
-            //        CompanyId = currentJobPosition.CompanyId,
-            //        JobPositionId = duplicatedJob.ID,
-            //        FromDate = DateTime.UtcNow,
-            //        IsCurrentPosition = true
-            //    }
-            //    );
-            //}
-            //currentJobPosition.ToDate = DateTime.UtcNow;
             await _unitOfWork.SaveChangesAsync();
             return Ok();
         }
@@ -493,5 +473,65 @@ namespace QccHub.Controllers.Api
             return Ok();
         }
 
+        [HttpPatch]
+        public async Task<IActionResult> AddJobPosition(JobPositionDTO model) 
+        {
+            var user = await _userRepo.GetUserByIdAsync(model.UserId);
+            if (user == null)
+                return BadRequest("User not exist");
+
+            var duplicateCompany = await _userRepo.GetCompanyByName(model.CompanyName);
+            var duplicatedJob = await _jobPosRepo.GetJobPositionByName(model.Role);
+
+            if (model.IsCurrent)
+                user.ResetJobPositions();
+
+            if (duplicateCompany == null)
+            {
+                var newCompany = new ApplicationUser { CompanyName = model.CompanyName };
+                newCompany.AddToRole((int)RolesEnum.Company);
+                _userRepo.AddNewCompany(newCompany);
+                await _unitOfWork.SaveChangesAsync();
+
+                if (duplicatedJob == null)
+                {
+                    user.AddNewJobByName(model.Role, newCompany.Id, model.FromDate, model.ToDate, model.IsCurrent);
+                }
+                else
+                {
+                    user.EmployeeJobs.Add(new UserJobPosition
+                    {
+                        CompanyId = newCompany.Id,
+                        JobPositionId = duplicatedJob.ID,
+                        FromDate = model.FromDate,
+                        ToDate = model.ToDate,
+                        IsCurrentPosition = model.IsCurrent
+                    }
+                    );
+                }
+            }
+            else
+            {
+                if (duplicatedJob == null)
+                {
+                    user.AddNewJobByName(model.Role, duplicateCompany.Id, model.FromDate, model.ToDate, model.IsCurrent);
+                }
+                else
+                {
+                    user.EmployeeJobs.Add(new UserJobPosition
+                    {
+                        CompanyId = duplicateCompany.Id,
+                        JobPositionId = duplicatedJob.ID,
+                        FromDate = model.FromDate,
+                        ToDate = model.ToDate,
+                        IsCurrentPosition = model.IsCurrent
+                    }
+                    );
+                }
+            }
+
+            await _unitOfWork.SaveChangesAsync();
+            return Ok();
+        }
     }
 }

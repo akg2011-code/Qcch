@@ -317,5 +317,21 @@ namespace QccHub.Controllers.Website
             }
             return Ok(result);
         }
+
+
+        [HttpPost]
+        public async Task<IActionResult> AddJobPosition(JobPositionDTO model)
+        {
+            var httpClient = _clientFactory.CreateClient("API");
+            var jsonContent = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
+            var response = await httpClient.PatchAsync($"Account/AddJobPosition", jsonContent);
+            var result = await response.Content.ReadAsStringAsync();
+            if (!response.IsSuccessStatusCode)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
     }
 }

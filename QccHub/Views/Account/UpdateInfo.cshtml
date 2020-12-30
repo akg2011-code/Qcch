@@ -158,13 +158,13 @@
                         <small>Edit all your important information</small>
                         <hr>
                         <form id="expForm">
-                            <input hidden name="EmployeeId" value="@Model.Id" />
+                            <input hidden name="UserId" value="@Model.Id" />
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <input type="text" name="CompanyName" class="form-control" placeholder="Company">
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <input type="text" name="Position" class="form-control" placeholder="Role">
+                                    <input type="text" name="Role" class="form-control" placeholder="Role">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -176,6 +176,10 @@
                                     <label>To</label>
                                     <input type="datetime-local" name="ToDate" class="form-control">
                                 </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Is current job</label>
+                                <input type="checkbox" name="IsCurrent" />
                             </div>
                             <hr>
                             <div class="btnEdit">
@@ -434,6 +438,36 @@
             });
         });
 
+        $('input[name=IsCurrent]').change(function () {
+            if ($(this).prop('checked'))
+                $(this).val('True');
+            else
+                $(this).val('False');
+            alert($(this).val())
+        })
+
+        $('#expForm').on('submit', function (e) {
+            e.preventDefault();
+            var data = $('#expForm').serializeArray();
+            var formData = new FormData();
+            data.forEach(function (item, index) {
+                formData.append(item.name, item.value)
+            })
+
+            $.ajax({
+                method: "POST",
+                data: formData,
+                url: '@Url.Content($"~/account/addjobposition")',
+                processData: false,
+                contentType: false,
+                success: function () {
+                    window.location.reload();
+                },
+                error: function (xhr, ajaxSettings, statusCode) {
+                    console.log(xhr.responseText);
+                }
+            });
+        });
 
     </script>
 }
