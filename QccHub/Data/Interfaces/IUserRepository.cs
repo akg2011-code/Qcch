@@ -17,5 +17,7 @@ namespace QccHub.Data.Interfaces
         UserJobPosition GetCurrentJobPosition(int userId);
         Task<ApplicationUser> GetCompanyByName(string name);
         void AddNewCompany(ApplicationUser company);
+        void AddEducation(Education education);
+        void AddCertificate(Certificate certificate);
     }
 }

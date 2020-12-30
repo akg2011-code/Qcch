@@ -290,6 +290,32 @@ namespace QccHub.Controllers.Website
             return Ok(result);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> AddEducation(Education model)
+        {
+            var httpClient = _clientFactory.CreateClient("API");
+            var jsonContent = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
+            var response = await httpClient.PatchAsync($"Account/AddEducation", jsonContent);
+            var result = await response.Content.ReadAsStringAsync();
+            if (!response.IsSuccessStatusCode)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
 
+        [HttpPost]
+        public async Task<IActionResult> AddCertificate(Certificate model)
+        {
+            var httpClient = _clientFactory.CreateClient("API");
+            var jsonContent = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
+            var response = await httpClient.PatchAsync($"Account/AddCertificate", jsonContent);
+            var result = await response.Content.ReadAsStringAsync();
+            if (!response.IsSuccessStatusCode)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
     }
 }

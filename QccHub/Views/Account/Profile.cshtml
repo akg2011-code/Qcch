@@ -49,7 +49,7 @@
                                 <div class="col-md">
                                     <ul class="list-unstyled">
                                         <li> @(Model.EmployeeJobs.FirstOrDefault(p => p.IsCurrentPosition)?.JobPosition?.Name ?? "Not Specified")</li>
-                                        <li> @(Model.Gender?.Name ?? "Not Specified")</li>
+                                        <li> @(Model.Gender)</li>
                                         <li> @Model.Email</li>
                                         <li> @Model.PhoneNumber</li>
                                         <li> @(Model.Country?.Name ?? "Not Specified")</li>
@@ -91,141 +91,97 @@
                         <div class="Education details-Edu-Expe-Certi">
                             <h4>Education</h4>
                             <hr>
-                            <div class="univeristy">
-                                <!-- university one -->
+                            @if (Model.Education.Count > 0)
+                            {
+                        <div class="univeristy">
+                            <!-- university one -->
+                            @foreach (var edu in Model.Education)
+                            {
                                 <div class="uniDeails">
                                     <div class="row">
                                         <div class="col-md-9">
-                                            <h4>Hamad bin Khalifa University</h4>
-                                            <h6>Master’s programmes</h6>
-                                            <span>Oct 2020 - Present (4 year 7 month)</span>
+                                            <h4>@edu.Institute</h4>
+                                            <h6>@edu.Major</h6>
+                                            <span>@edu.Year.ToString("MMM yyyy")</span>
                                         </div>
                                         <div class="col-md-3">
                                             <img src="~/img/Rectangle 86.png" style="height: 46px;">
                                         </div>
                                     </div>
-                                    <div>
-                                        <p>
-                                            Find the most qualified people in the most unexpected places. Information for applicants to
-                                            consider when applying for local positions.
-                                        </p>
-                                    </div>
                                 </div>
-                                <hr>
-                                <!-- university two -->
-                                <div class="uniDeails">
-                                    <div class="row">
-                                        <div class="col-md-9">
-                                            <h4>Hamad bin Khalifa University</h4>
-                                            <h6>Master’s programmes</h6>
-                                            <span>Oct 2020 - Present (4 year 7 month)</span>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <img src="~/img/Rectangle 86.png" style="height: 46px;">
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <p>
-                                            Find the most qualified people in the most unexpected places. Information for applicants to
-                                            consider when applying for local positions.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
+                            }
+
+                            <hr>
+                        </div>
+
+                            }
+                            else
+                            {
+                                @: No Education yet
+                            }
                         </div>
 
                         <!-- Expireenc-section -->
                         <div class="Experience details-Edu-Expe-Certi">
                             <h4>Experience</h4>
                             <hr>
-                            <div class="Experience details-Edu-Expe-Certi">
-                                <!-- Experience one -->
-                                <div class="experDeails">
-                                    <div class="row">
-                                        <div class="col-md-9">
-                                            <h4>Community College of Qatar</h4>
-                                            <h6>Master’s programmes</h6>
-                                            <span>Oct 2020 - Present (4 year 7 month)</span>
+                            @if (Model.EmployeeJobs.Count > 0)
+                            {
+                                <div class="Experience details-Edu-Expe-Certi">
+                                    @foreach (var job in Model.EmployeeJobs)
+                                    {
+                                        <div class="experDeails">
+                                            <div class="row">
+                                                <div class="col-md-9">
+                                                    <h4>@job.Company.CompanyName</h4>
+                                                    <h6>@job.JobPosition.Name</h6>
+                                                    <span>@job.FromDate.ToString("MMM yyyy") - @(job.ToDate == DateTime.MinValue ? "Present":job.ToDate.ToString("MMM yyyy") ) @((int)(job.FromDate - DateTime.Today).TotalDays / 30 + " months")</span>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <img src="~/img/Rectangle 86.png" style="height: 46px;">
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="col-md-3">
-                                            <img src="~/img/Rectangle 86.png" style="height: 46px;">
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <p>
-                                            Find the most qualified people in the most unexpected places. Information for applicants to
-                                            consider when applying for local positions.
-                                        </p>
-                                    </div>
+                                        <hr>
+                                    }
                                 </div>
-                                <hr>
-                                <!-- Experience two -->
-                                <div class="experDeails">
-                                    <div class="row">
-                                        <div class="col-md-9">
-                                            <h4>Hamad bin Khalifa University</h4>
-                                            <h6>Master’s programmes</h6>
-                                            <span>Oct 2020 - Present (4 year 7 month)</span>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <img src="~/img/Rectangle 86.png" style="height: 46px;">
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <p>
-                                            Find the most qualified people in the most unexpected places. Information for applicants to
-                                            consider when applying for local positions.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
+                            }
+                            else
+                            {
+                                @:No jobs yet
+                            }
                         </div>
 
                         <!-- Certificates-section -->
                         <div class="Certificates details-Edu-Expe-Certi">
                             <h4>Certificates</h4>
                             <hr>
-                            <div class="Certificates details-Edu-Expe-Certi">
-                                <!-- Certificates one -->
+                            @if (Model.Certificates.Count > 0)
+                            {
+                        <div class="Certificates details-Edu-Expe-Certi">
+                            @foreach (var certificate in Model.Certificates)
+                            {
                                 <div class="certiDeails">
                                     <div class="row">
                                         <div class="col-md-9">
-                                            <h4>Community College of Qatar</h4>
-                                            <h6>Master’s programmes</h6>
-                                            <span>Oct 2020 - Present (4 year 7 month)</span>
+                                            <h4>@certificate.Institute</h4>
+                                            <h6>@certificate.CourseName</h6>
+                                            <span>@certificate.FromDate.ToString("MMM yyyy") - @(certificate.ToDate == DateTime.MinValue ? "Present" : certificate.ToDate.ToString("MMM yyyy") ) @((int)(certificate.FromDate - DateTime.Today).TotalDays / 30 + " months" )</span>
                                         </div>
                                         <div class="col-md-3">
                                             <img src="~/img/Rectangle 86.png" style="height: 46px;">
                                         </div>
-                                    </div>
-                                    <div>
-                                        <p>
-                                            Find the most qualified people in the most unexpected places. Information for applicants to
-                                            consider when applying for local positions.
-                                        </p>
                                     </div>
                                 </div>
                                 <hr>
-                                <!-- Certificates two -->
-                                <div class="certiDeails">
-                                    <div class="row">
-                                        <div class="col-md-9">
-                                            <h4>Hamad bin Khalifa University</h4>
-                                            <h6>Master’s programmes</h6>
-                                            <span>Oct 2020 - Present (4 year 7 month)</span>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <img src="~/img/Rectangle 86.png" style="height: 46px;">
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <p>
-                                            Find the most qualified people in the most unexpected places. Information for applicants to
-                                            consider when applying for local positions.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
+                            }
+
+                        </div>
+                            }
+                            else
+                            {
+                                @:No certificates yet
+                            }
                         </div>
 
                         <!-- gallary -->

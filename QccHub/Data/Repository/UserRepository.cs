@@ -20,6 +20,16 @@ namespace QccHub.Data.Repository
             _context = context;
         }
 
+        public void AddCertificate(Certificate certificate)
+        {
+            _context.Add(certificate);
+        }
+
+        public void AddEducation(Education education)
+        {
+            _context.Add(education);
+        }
+
         public void AddNewCompany(ApplicationUser company)
         {
             _context.ApplicationUser.Add(company);
@@ -58,10 +68,13 @@ namespace QccHub.Data.Repository
             return _context.Users.Include(u => u.UserRoles)
                                     .Include(u => u.Country)
                                     .Include(u => u.JobOffers)
+                                    .Include(u => u.Education)
+                                    .Include(u => u.Certificates)
                                     //.ThenInclude(jo => jo.JobCategory)
                                     .Include(u => u.CompanyInfo)
                                     .Include(u => u.EmployeeJobs)
-                                    .ThenInclude(ej => ej.JobPosition)
+                                    .Include("EmployeeJobs.Company")
+                                    .Include("EmployeeJobs.JobPosition")
                                     .FirstOrDefaultAsync(u => u.Id == userId);
         }
 
