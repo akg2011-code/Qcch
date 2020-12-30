@@ -105,11 +105,11 @@
                                     <input type="date" asp-for='DateOfBirth' class="form-control">
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label asp-for="GenderID">Gender</label>
-                                    <select asp-for="GenderID" class="form-control">
-                                        <option value="1" selected>Male</option>
-                                        <option value="2">Female</option>
-                                        <option value="3">Other</option>
+                                    <label asp-for="Gender">Gender</label>
+                                    <select asp-for="Gender" class="form-control">
+                                        <option value="Male" selected>Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="NotSpecified">Other</option>
                                     </select>
                                 </div>
                             </div>
@@ -119,10 +119,6 @@
                                     <label asp-for="NationalityID">Nationality *</label>
                                     <select asp-for="NationalityID" asp-items='ViewData["Countries"] as SelectList' class="form-control"></select>
                                 </div>
-                                <div class="form-group col-md-6">
-                                    <label asp-for="Position">Position *</label>
-                                    <input asp-for="Position" type="text" class="form-control">
-                                </div>
                             </div>
                             <div class="btnEdit">
                                 <button class="btn btn-primary border-0">Update info</button>
@@ -130,28 +126,23 @@
                         </form>
                     </div>
                     <!-- Qualification-section -->
-                    @*<div class="aboutMe">
-                        <h4>Qualification</h4>
+                    <div class="aboutMe">
+                        <h4>Education</h4>
                         <small>Edit all your important information</small>
                         <hr>
-                        <form id="qualificationsForm">
+                        <form id="eduForm">
+                            <input hidden name="EmployeeId" value="@Model.Id"/>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="inputQuali">Qualification</label>
-                                    <input type="text" class="form-control" id="inputQuali" placeholder="">
+                                    <input type="text" name="Institute" class="form-control" placeholder="Institute">
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="inputPhone">.</label>
-                                    <input type="text" class="form-control" id="inputPhone" placeholder="">
+                                    <input type="text" name="Major" class="form-control" placeholder="Major">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-4">
-                                    <input type="text" class="form-control" id="inputPass" placeholder="1/1/2021">
-                                </div>
-                                <label for="inputPass" class="col-md-3 col-form-label">Passing Year</label>
-                                <div class="col-md-5">
-                                    <input type="date" class="form-control" id="inputPass" placeholder="1/1/2021">
+                                    <input type="datetime-local" name="Year" class="form-control" placeholder="Year">
                                 </div>
                             </div>
                             <hr>
@@ -159,36 +150,31 @@
                                 <button class="btn btn-primary border-0">Add New</button>
                             </div>
                         </form>
-                    </div>*@
+                    </div>
 
                     <!-- Expireenc-section -->
-                    @*<div class="aboutMe">
-                        <h4>Expireenc</h4>
+                    <div class="aboutMe">
+                        <h4>Experience</h4>
                         <small>Edit all your important information</small>
                         <hr>
-                        <form id="experienceForm">
+                        <form id="expForm">
+                            <input hidden name="EmployeeId" value="@Model.Id" />
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="inputExpi">Expireenc</label>
-                                    <input type="email" class="form-control" id="inputExpi" placeholder="">
+                                    <input type="text" name="CompanyName" class="form-control" placeholder="Company">
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="inputPhone">.</label>
-                                    <input type="text" class="form-control" id="inputPhone" placeholder="">
+                                    <input type="text" name="Position" class="form-control" placeholder="Role">
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="inputName" placeholder="Ahmed Korany">
-                            </div>
-
                             <div class="form-group row">
-                                <label for="inputPass" class="col-md-2 col-form-label">From</label>
-                                <div class="col-md-4">
-                                    <input type="text" class="form-control" id="inputPass" placeholder="1/1/2021">
+                                <div class="col-md-6">
+                                    <label>From</label>
+                                    <input type="datetime-local" name="FromDate" class="form-control">
                                 </div>
-                                <label for="inputPass" class="col-md-2 col-form-label">To</label>
-                                <div class="col-md-4">
-                                    <input type="date" class="form-control" id="inputPass" placeholder="1/1/2021">
+                                <div class="col-md-6">
+                                    <label>To</label>
+                                    <input type="datetime-local" name="ToDate" class="form-control">
                                 </div>
                             </div>
                             <hr>
@@ -196,50 +182,45 @@
                                 <button class="btn btn-primary border-0">Add New</button>
                             </div>
                         </form>
-                    </div>*@
+                    </div>
 
                     <!-- Certificates-section -->
-                    @*<div class="aboutMe">
+                    <div class="aboutMe">
                         <h4>Certificates</h4>
                         <small>Edit all your important information</small>
                         <hr>
                         <form id="certificatesForm">
+                            <input hidden name="EmployeeId" value="@Model.Id" />
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="inputExpi">Certificate1</label>
-                                    <input type="email" class="form-control" id="inputExpi" placeholder="">
+                                    <input type="email" class="form-control" name="CourseName" placeholder="Course">
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="inputPhone">.</label>
-                                    <input type="text" class="form-control" id="inputPhone" placeholder="">
+                                    <input type="text" class="form-control" name="Institute" placeholder="Institute">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <div class="col-md-8">
-                                    <input type="text" class="form-control" id="inputPass" placeholder="1/1/2021">
+                                <div class="col-md-6">
+                                    <label>From</label>
+                                    <input type="datetime-local" name="FromDate" class="form-control">
                                 </div>
-                                <div class="custom-file col-md-4">
-                                    <input type="file" class="custom-file-input" style="background: #00c9a7;" id="customFile">
-                                    <label class="custom-file-label border-0" for="customFile">Choose file</label>
+                                <div class="col-md-6">
+                                    <label>To</label>
+                                    <input type="datetime-local" name="ToDate" class="form-control">
                                 </div>
                             </div>
 
-                            <div class="form-group row">
-                                <label for="inputPass" class="col-md-2 col-form-label">From</label>
-                                <div class="col-md-4">
-                                    <input type="text" class="form-control" id="inputPass" placeholder="1/1/2021">
-                                </div>
-                                <label for="inputPass" class="col-md-2 col-form-label">To</label>
-                                <div class="col-md-4">
-                                    <input type="date" class="form-control" id="inputPass" placeholder="1/1/2021">
-                                </div>
+                            <div  class="form-group row">
+                                <input type="file" name="File" class="custom-file-input" style="background: #00c9a7;">
+                                <label class="custom-file-label border-0">Choose file</label>
                             </div>
+
                             <hr>
                             <div class="btnEdit">
                                 <button class="btn btn-primary border-0">Add New</button>
                             </div>
                         </form>
-                    </div>*@
+                    </div>
 
                     <!-- Cover Letter-section -->
                     @*<div class="aboutMe">
@@ -406,6 +387,53 @@
                 }
             });
         });
+
+        $('#eduForm').on('submit', function (e) {
+            e.preventDefault();
+            var data = $('#eduForm').serializeArray();
+            var formData = new FormData();
+            data.forEach(function (item, index) {
+                formData.append(item.name, item.value)
+            })
+
+            $.ajax({
+                method: "POST",
+                data: formData,
+                url: '@Url.Content($"~/account/addeducation")',
+                processData: false,
+                contentType: false,
+                success: function () {
+                    window.location.reload();
+                },
+                error: function (xhr, ajaxSettings, statusCode) {
+                    console.log(xhr.responseText);
+                }
+            });
+        });
+
+        $('#certificatesForm').on('submit', function (e) {
+            e.preventDefault();
+            var data = $('#certificatesForm').serializeArray();
+            var formData = new FormData();
+            data.forEach(function (item, index) {
+                formData.append(item.name, item.value)
+            })
+
+            $.ajax({
+                method: "POST",
+                data: formData,
+                url: '@Url.Content($"~/account/addcertificate")',
+                processData: false,
+                contentType: false,
+                success: function () {
+                    window.location.reload();
+                },
+                error: function (xhr, ajaxSettings, statusCode) {
+                    console.log(xhr.responseText);
+                }
+            });
+        });
+
 
     </script>
 }

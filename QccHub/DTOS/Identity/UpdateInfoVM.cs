@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using QccHub.Logic.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace QccHub.DTOS
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public int? GenderID { get; set; }
+        public Gender Gender { get; set; }
         public int NationalityID { get; set; }
         public string Bio  { get; set; }
         public string Position  { get; set; }

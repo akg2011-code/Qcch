@@ -51,26 +51,6 @@ namespace QccHub.Data
             }
         }
 
-
-        public void SeedGender()
-        {
-            List<Gender> genders = new List<Gender>
-            {
-                new Gender{Name = "Male",IsDeleted =false , CreatedDate = DateTime.Now},
-                new Gender{Name="Female",IsDeleted =false , CreatedDate = DateTime.Now},
-                new Gender{Name="Other",IsDeleted =false , CreatedDate = DateTime.Now}
-            };
-
-            foreach (var record in genders)
-            {
-                if (!Context.Gender.Any(g => g.Name == record.Name))
-                {
-                    Context.Gender.Add(record);
-                }
-            }
-            Context.SaveChanges();
-        }
-
         public void SeedPaymentStatus()
         {
             List<PaymentStatus> status = new List<PaymentStatus>
@@ -99,7 +79,6 @@ namespace QccHub.Data
             SeedUsers(userManager);
 
             SeedingData data = new SeedingData(context);
-            data.SeedGender();
             data.SeedPaymentStatus();
             if (!context.Country.Any())
             {

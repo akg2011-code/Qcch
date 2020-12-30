@@ -45,7 +45,6 @@ namespace QccHub.Data
         public DbSet<ItemsCategory> ItemsCategory { get; set; }
         public DbSet<Country> Country { get; set; }
         public DbSet<Course> Course { get; set; }
-        public DbSet<Gender> Gender { get; set; }
         public DbSet<Item> Item { get; set; }
         public DbSet<Job> Job { get; set; }
         public DbSet<JobCategory> JobCategory { get; set; }
@@ -57,6 +56,8 @@ namespace QccHub.Data
         public DbSet<Qualification> Qualification { get; set; }
         public DbSet<Question> Question { get; set; }
         public DbSet<JobPosition> JobPositions { get; set; }
+        public DbSet<Education> Education { get; set; }
+        public DbSet<Certificate> Certificates { get; set; }
         public DbSet<UserJobPosition> UserJobPositions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -69,6 +70,20 @@ namespace QccHub.Data
                 .HasMany(x => x.UserRoles)
                 .WithOne()
                 .HasForeignKey(x => x.UserId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<ApplicationUser>()
+                .HasMany(x => x.Education)
+                .WithOne()
+                .HasForeignKey(x => x.EmployeeId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<ApplicationUser>()
+                .HasMany(x => x.Certificates)
+                .WithOne()
+                .HasForeignKey(x => x.EmployeeId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
 

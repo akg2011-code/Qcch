@@ -223,7 +223,7 @@ namespace QccHub.Controllers.Api
                 FullName = user.FullName,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
-                GenderID = user.GenderID,
+                Gender = user.Gender,
                 NationalityID = user.NationalityID ?? 0,
                 ProfileImagePath = user.ProfileImagePath,
                 RoleId = user.UserRoles.FirstOrDefault().RoleId,
@@ -391,27 +391,27 @@ namespace QccHub.Controllers.Api
             user.Email = model.Email;
             user.DateOfBirth = model.DateOfBirth;
             user.PhoneNumber = model.PhoneNumber;
-            user.GenderID = model.GenderID;
+            user.Gender = model.Gender;
             user.NationalityID = model.NationalityID;
 
             var currentJobPosition = _userRepo.GetCurrentJobPosition(model.Id);
             user.ResetJobPositions();
-            var duplicatedJob = await _jobPosRepo.GetJobPositionByName(model.Position);
-            if (duplicatedJob == null)
-            {
-                user.AddNewJobByName(model.Position, currentJobPosition.CompanyId);
-            }
-            else
-            {
-                user.EmployeeJobs.Add(new UserJobPosition 
-                { 
-                    CompanyId = currentJobPosition.CompanyId,
-                    JobPositionId = duplicatedJob.ID,
-                    FromDate = DateTime.UtcNow,
-                    IsCurrentPosition = true
-                }
-                );
-            }
+            //var duplicatedJob = await _jobPosRepo.GetJobPositionByName(model.Position);
+            //if (duplicatedJob == null)
+            //{
+            //    user.AddNewJobByName(model.Position, currentJobPosition.CompanyId);
+            //}
+            //else
+            //{
+            //    user.EmployeeJobs.Add(new UserJobPosition 
+            //    { 
+            //        CompanyId = currentJobPosition.CompanyId,
+            //        JobPositionId = duplicatedJob.ID,
+            //        FromDate = DateTime.UtcNow,
+            //        IsCurrentPosition = true
+            //    }
+            //    );
+            //}
             //currentJobPosition.ToDate = DateTime.UtcNow;
             await _unitOfWork.SaveChangesAsync();
             return Ok();
@@ -458,6 +458,36 @@ namespace QccHub.Controllers.Api
 
             user.UpdateCompanyOverview(model.Website, model.Type, model.Industry, model.Size, model.FoundedYear);
 
+            await _unitOfWork.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        [HttpPatch]
+        public async Task<IActionResult> AddEducation(Education model)
+        {
+            var user = await _userRepo.GetUserByIdAsync(model.EmployeeId);
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+
+            _userRepo.AddEducation(model);
+            await _unitOfWork.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        [HttpPatch]
+        public async Task<IActionResult> AddCertificate(Certificate model)
+        {
+            var user = await _userRepo.GetUserByIdAsync(model.EmployeeId);
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+
+            _userRepo.AddCertificate(model);
             await _unitOfWork.SaveChangesAsync();
 
             return Ok();

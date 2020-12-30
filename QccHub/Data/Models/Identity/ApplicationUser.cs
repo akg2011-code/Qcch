@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
+using QccHub.Logic.Enums;
 
 namespace QccHub.Data.Models
 {
@@ -10,8 +11,6 @@ namespace QccHub.Data.Models
         public bool IsTrusted { get; set; } // for companies
         public string LigitDocument { get; set; } // for companies
         public DateTime DateOfBirth { get; set; }
-        [ForeignKey("Gender")]
-        public int? GenderID { get; set; }
         [ForeignKey("Country")]
         public int? NationalityID { get; set; }
         public string Bio { get; set; }
@@ -24,6 +23,8 @@ namespace QccHub.Data.Models
         public virtual Country Country { get; set; }
         public virtual CompanyInfo CompanyInfo { get; set; }
         public virtual ICollection<UserJobPosition> EmployeeJobs { get; } = new List<UserJobPosition>();
+        public virtual ICollection<Education> Education { get; } = new List<Education>();
+        public virtual ICollection<Certificate> Certificates { get; } = new List<Certificate>();
         public virtual ICollection<UserJobPosition> CompanyJobs { get; } = new List<UserJobPosition>();
         public virtual ICollection<ApplicationUserRole> UserRoles { get; } = new List<ApplicationUserRole>();
         public virtual ICollection<Job> JobOffers { get; } = new List<Job>();
