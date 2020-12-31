@@ -44,7 +44,7 @@ namespace QccHub.Data.Models
             PhoneNumber = phoneNumber;
         }
 
-        public void AddNewJobByName(string name, int companyId, DateTime fromDate, DateTime toDate, bool isCurrent)
+        public void AddNewJobByName(string name, int companyId, DateTime fromDate, DateTime toDate, bool isCurrent = false)
         {
             var newJobPosition = new UserJobPosition
             {

@@ -137,7 +137,7 @@ namespace QccHub.Controllers.Api
 
                     if (duplicatedJob == null)
                     {
-                        user.AddNewJobByName(model.Position, newCompany.Id);
+                        user.AddNewJobByName(model.Position, newCompany.Id, DateTime.UtcNow, DateTime.UtcNow);
                     }
                     else
                     {
@@ -157,7 +157,7 @@ namespace QccHub.Controllers.Api
 
                     if (duplicatedJob == null)
                     {
-                        user.AddNewJobByName(model.Position, duplicateCompany.Id);
+                        user.AddNewJobByName(model.Position, duplicateCompany.Id, DateTime.UtcNow, DateTime.UtcNow);
                     }
                     else
                     {
