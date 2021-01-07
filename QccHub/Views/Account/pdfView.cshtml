@@ -2,7 +2,7 @@
 @{
     Layout = null;
 }
-
+@model ApplicationUser
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,7 +38,7 @@
         body {
             font-family: "Trebuchet MS",Arial,Helvetica,sans-serif;
             background-color: #e1e0db;
-            background-image: url(../images/bg.jpg);
+            background-image: url("/img/bg.jpg");
             background-repeat: repeat;
             font-size: 13px;
             line-height: 17px;
@@ -66,14 +66,14 @@
             width: 969px;
             height: 19px;
             margin: 0 auto;
-            background-image: url(../images/btop.jpg);
+            background-image: url(/img/btop.jpg);
             background-repeat: no-repeat
         }
 
         .wrapper-mid {
             width: 969px;
             margin: 0 auto;
-            background-image: url(../images/bmid.jpg);
+            background-image: url(/img/bmid.jpg);
             background-repeat: repeat-y;
             padding-bottom: 40px
         }
@@ -83,7 +83,7 @@
             height: 22px;
             padding: 0;
             margin: 0 auto;
-            background-image: url(../images/bbottom.jpg);
+            background-image: url(/img/bbottom.jpg);
             background-repeat: no-repeat
         }
 
@@ -95,7 +95,7 @@
         .paper-top {
             width: 828px;
             margin: 0 auto;
-            background-image: url(../images/ptop.jpg);
+            background-image: url(/img/ptop.jpg);
             background-repeat: no-repeat;
             height: 126px
         }
@@ -103,7 +103,7 @@
         #paper-mid {
             width: 828px;
             margin: 0 auto;
-            background-image: url(../images/pmid.jpg);
+            background-image: url(/img/pmid.jpg);
             background-repeat: repeat-y;
             display: block;
             padding: 0;
@@ -116,7 +116,7 @@
             width: 828px;
             height: 18px;
             margin: 0 auto;
-            background-image: url(../images/pbottom.jpg);
+            background-image: url(/img/pbottom.jpg);
             background-repeat: no-repeat
         }
 
@@ -191,7 +191,7 @@
         }
 
         img.portrait {
-            background-image: url(../images/frame.jpg);
+            background-image: url(/img/frame.jpg);
             background-repeat: no-repeat;
             width: 109px;
             height: 109px;
@@ -216,15 +216,15 @@
             }
 
                 .self ul li.mail {
-                    background-image: url(../images/icn-mail.gif)
+                    background-image: url(/img/icn-mail.gif)
                 }
 
                 .self ul li.tel {
-                    background-image: url(../images/icn-tel.gif)
+                    background-image: url(/img/icn-tel.gif)
                 }
 
                 .self ul li.web {
-                    background-image: url(../images/icn-web.gif)
+                    background-image: url(/img/icn-web.gif)
                 }
 
                 .self ul li {
@@ -268,23 +268,23 @@
                 <div id="paper-mid">
                     <div class="entry">
                         <!-- Begin Image -->
-                        <img class="portrait" src="images/image.jpg" alt="Company img" />
+                    <img  class="portrait" alt="Company Image" src="@($"/Profile Pictures/{Model.ProfileImagePath}" ?? "/img/Rectangle 60.png")" onError="this.onerror=null;this.src='/img/Rectangle 60.png';">
                         <!-- End Image -->
                         <!-- Begin Personal Information -->
                         <div class="self">
                             <h1 class="name">
-                                Company Name <br />
-                                <span>Industry</span>
+                                @Model.CompanyName <br />
+                                <span>@Model.CompanyInfo?.Industry</span>
                             </h1>
                             <ul>
-                                <li class="mail">johnsmith@business.com</li>
-                                <li class="tel">+11 444 555 22 33</li>
-                                <li class="web">www.businessweb.com</li>
+                                <li class="mail">@Model.Email</li>
+                                <li class="tel">@Model.PhoneNumber</li>
+                                <li class="web">@Model.CompanyInfo?.Website</li>
                             </ul>
                         </div>
                         <!-- End Personal Information -->
                         <!-- Begin Social -->
-                        <div class="social">
+                        @*<div class="social">
                             <ul>
                                 <li>
                                     <a class='north' href="#" title="Download .pdf">
@@ -299,54 +299,57 @@
                                     </a>
                                 </li>
                             </ul>
-                        </div>
+                        </div>*@
                         <!-- End Social -->
                     </div>
                     <!-- Begin 1st Row -->
                     <div class="entry">
                         <h2>Our Mission</h2>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin
-                            bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus.
+                            @Model.CompanyInfo?.Mission
                         </p>
                     </div>
                     <div class="entry">
                         <h2>Our Vision</h2>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin
-                            bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus.
+                            @Model.CompanyInfo?.Vision
                         </p>
                     </div>
                     <!-- End 1st Row -->
                     <!-- Begin 2nd Row -->
                     <div class="entry">
-                        <h2>B2B</h2>
-                        <div class="content">
-                            <h3>1-1-2021</h3>
-                            <p>
-                                End Frams<br />
-                                <em>Qatar</em>
-                            </p>
-                        </div>
-                        <div class="content">
-                            <h3>11-7-2021</h3>
-                            <p>
-                                Civil biulding<br />
-                                <em>Egypt</em>
-                            </p>
-                        </div>
+                        @if (Model.JobOffers.Where(x => x.IsB2B).Count() > 0)
+                        {
+                            <h2>B2B</h2>
+                            foreach (var project in Model.JobOffers.Where(x => x.IsB2B))
+                            {
+                                <div class="content">
+                                    <h3>@project.CreatedDate</h3>
+                                    <p>
+                                        @project.Title<br />
+                                        <em>@project.Location</em>
+                                    </p>
+                                </div>
+                            }
+                        }
                     </div>
                     <!-- End 2nd Row -->
                     <!-- Begin 3rd Row -->
                     <div class="entry">
-                        <h2>Career</h2>
-                        <div class="content">
-                            <h3>15-12-2020</h3>
-                            <p>
-                                Civil biulding <br />
-                                <em>Egypt</em>
-                            </p>
-                        </div>
+                        @if (Model.JobOffers.Where(x => x.IsB2B).Count() > 0)
+                        {
+                            <h2>B2B</h2>
+                            foreach (var project in Model.JobOffers.Where(x => x.IsB2B))
+                            {
+                                <div class="content">
+                                    <h3>@project.CreatedDate</h3>
+                                    <p>
+                                        @project.Title<br />
+                                        <em>@project.Location</em>
+                                    </p>
+                                </div>
+                            }
+                        }
                     </div>
                     <!-- End 3rd Row -->
                 </div>

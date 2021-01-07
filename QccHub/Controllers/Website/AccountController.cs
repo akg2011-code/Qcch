@@ -333,5 +333,18 @@ namespace QccHub.Controllers.Website
             return Ok(result);
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetPdf(int id) 
+        {
+            var httpClient = _clientFactory.CreateClient("API");
+            var response = await httpClient.GetAsync($"Account/Get/{id}");
+            var result = await response.Content.ReadAsStringAsync();
+            if (!response.IsSuccessStatusCode)
+            {
+                return RedirectToAction("profile","account", new { id = id });
+            }
+            var user = JsonConvert.DeserializeObject<ApplicationUser>(result);
+            return View("pdfView", user);
+        }
     }
 }
