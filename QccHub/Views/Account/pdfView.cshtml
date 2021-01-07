@@ -1,0 +1,363 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Resume</title>
+    <!-- <link type="text/css" rel="stylesheet" href="css/blue.css" /> -->
+    <style>
+        a, body, div, em, h1, h2, h3, html, img, li, p, span, ul {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            outline: 0;
+            font-weight: inherit;
+            font-style: inherit;
+            font-size: 100%;
+            font-family: inherit;
+            vertical-align: baseline
+        }
+
+        :focus {
+            outline: 0
+        }
+
+        body {
+            line-height: 1
+        }
+
+        .clear {
+            clear: both
+        }
+
+        body {
+            font-family: "Trebuchet MS",Arial,Helvetica,sans-serif;
+            background-color: #e1e0db;
+            background-image: url(../images/bg.jpg);
+            background-repeat: repeat;
+            font-size: 13px;
+            line-height: 17px;
+            color: #000
+        }
+
+        a, a:active, a:visited {
+            color: #7b90b5;
+            text-decoration: none
+        }
+
+            a:hover {
+                color: #7b90b5;
+                text-decoration: underline
+            }
+
+        #wrapper {
+            width: 969px;
+            margin: 0 auto;
+            margin-top: 60px;
+            margin-bottom: 100px
+        }
+
+        .wrapper-top {
+            width: 969px;
+            height: 19px;
+            margin: 0 auto;
+            background-image: url(../images/btop.jpg);
+            background-repeat: no-repeat
+        }
+
+        .wrapper-mid {
+            width: 969px;
+            margin: 0 auto;
+            background-image: url(../images/bmid.jpg);
+            background-repeat: repeat-y;
+            padding-bottom: 40px
+        }
+
+        .wrapper-bottom {
+            width: 969px;
+            height: 22px;
+            padding: 0;
+            margin: 0 auto;
+            background-image: url(../images/bbottom.jpg);
+            background-repeat: no-repeat
+        }
+
+        #paper {
+            width: 828px;
+            margin: 0 auto
+        }
+
+        .paper-top {
+            width: 828px;
+            margin: 0 auto;
+            background-image: url(../images/ptop.jpg);
+            background-repeat: no-repeat;
+            height: 126px
+        }
+
+        #paper-mid {
+            width: 828px;
+            margin: 0 auto;
+            background-image: url(../images/pmid.jpg);
+            background-repeat: repeat-y;
+            display: block;
+            padding: 0;
+            overflow: hidden;
+            padding-bottom: 75px;
+            padding-top: 7px
+        }
+
+        .paper-bottom {
+            width: 828px;
+            height: 18px;
+            margin: 0 auto;
+            background-image: url(../images/pbottom.jpg);
+            background-repeat: no-repeat
+        }
+
+        .entry {
+            width: 720px;
+            display: block;
+            padding-top: 55px;
+            clear: both;
+            margin-left: 4px
+        }
+
+        h1 {
+            width: 250px;
+            font-size: 30px;
+            color: #1b4491;
+            margin-bottom: 3px;
+            clear: both
+        }
+
+            h1 span {
+                font-size: 21px;
+                display: block;
+                color: #1b4491;
+                margin-top: 16px
+            }
+
+        h2 {
+            width: 180px;
+            height: 23px;
+            text-align: right;
+            float: left;
+            padding: 0;
+            margin: 0;
+            clear: both;
+            font-size: 22px;
+            color: #1b4491;
+            margin-bottom: -12px
+        }
+
+        p {
+            width: 500px;
+            margin-left: 40px;
+            float: right
+        }
+
+        div.content {
+            clear: both;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+            display: block;
+            padding-top: 32px
+        }
+
+        h3 {
+            width: 180px;
+            text-align: right;
+            float: left;
+            padding: 0;
+            clear: both;
+            font-size: 13px;
+            color: #7b90b5
+        }
+
+        em {
+            font-family: Georgia,"Times New Roman",serif;
+            font-style: italic;
+            color: #777;
+            font-size: 12px;
+            display: block;
+            padding-top: 3px
+        }
+
+        img.portrait {
+            background-image: url(../images/frame.jpg);
+            background-repeat: no-repeat;
+            width: 109px;
+            height: 109px;
+            padding-top: 20px;
+            padding-left: 11px;
+            padding-right: 11px;
+            padding-bottom: 36px;
+            margin-left: 50px;
+            float: left
+        }
+
+        .self {
+            width: 250px;
+            float: left;
+            padding-top: 11px;
+            margin-left: 38px;
+            margin-bottom: 15px
+        }
+
+            .self ul {
+                padding-top: 10px
+            }
+
+                .self ul li.mail {
+                    background-image: url(../images/icn-mail.gif)
+                }
+
+                .self ul li.tel {
+                    background-image: url(../images/icn-tel.gif)
+                }
+
+                .self ul li.web {
+                    background-image: url(../images/icn-web.gif)
+                }
+
+                .self ul li {
+                    background-repeat: no-repeat;
+                    padding-left: 26px;
+                    background-position: 0 .1em;
+                    height: 25px;
+                    display: block;
+                    margin-top: -2px
+                }
+
+        .social {
+            width: 135px;
+            float: right;
+            padding-top: 10px
+        }
+
+            .social ul {
+                list-style: none
+            }
+
+                .social ul li {
+                    float: left;
+                    width: 21px;
+                    height: 24px;
+                    margin: 0;
+                    padding: 0;
+                    margin-left: 6px
+                }
+    </style>
+</head>
+
+<body>
+    <!-- Begin Wrapper -->
+    <div id="wrapper">
+        <div class="wrapper-top"></div>
+        <div class="wrapper-mid">
+            <!-- Begin Paper -->
+            <div id="paper">
+                <div class="paper-top"></div>
+                <div id="paper-mid">
+                    <div class="entry">
+                        <!-- Begin Image -->
+                        <img class="portrait" src="images/image.jpg" alt="Company img" />
+                        <!-- End Image -->
+                        <!-- Begin Personal Information -->
+                        <div class="self">
+                            <h1 class="name">
+                                Company Name <br />
+                                <span>Industry</span>
+                            </h1>
+                            <ul>
+                                <li class="mail">johnsmith@business.com</li>
+                                <li class="tel">+11 444 555 22 33</li>
+                                <li class="web">www.businessweb.com</li>
+                            </ul>
+                        </div>
+                        <!-- End Personal Information -->
+                        <!-- Begin Social -->
+                        <div class="social">
+                            <ul>
+                                <li>
+                                    <a class='north' href="#" title="Download .pdf">
+                                        <img src="images/icn-save.jpg"
+                                             alt="Download the pdf version" />
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class='north' href="javascript:window.print()" title="Print">
+                                        <img src="images/icn-print.jpg"
+                                             alt="" />
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- End Social -->
+                    </div>
+                    <!-- Begin 1st Row -->
+                    <div class="entry">
+                        <h2>Our Mission</h2>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin
+                            bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus.
+                        </p>
+                    </div>
+                    <div class="entry">
+                        <h2>Our Vision</h2>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin
+                            bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus.
+                        </p>
+                    </div>
+                    <!-- End 1st Row -->
+                    <!-- Begin 2nd Row -->
+                    <div class="entry">
+                        <h2>B2B</h2>
+                        <div class="content">
+                            <h3>1-1-2021</h3>
+                            <p>
+                                End Frams<br />
+                                <em>Qatar</em>
+                            </p>
+                        </div>
+                        <div class="content">
+                            <h3>11-7-2021</h3>
+                            <p>
+                                Civil biulding<br />
+                                <em>Egypt</em>
+                            </p>
+                        </div>
+                    </div>
+                    <!-- End 2nd Row -->
+                    <!-- Begin 3rd Row -->
+                    <div class="entry">
+                        <h2>Career</h2>
+                        <div class="content">
+                            <h3>15-12-2020</h3>
+                            <p>
+                                Civil biulding <br />
+                                <em>Egypt</em>
+                            </p>
+                        </div>
+                    </div>
+                    <!-- End 3rd Row -->
+                </div>
+                <div class="clear"></div>
+                <div class="paper-bottom"></div>
+            </div>
+            <!-- End Paper -->
+        </div>
+        <div class="wrapper-bottom"></div>
+    </div>
+    <!-- End Wrapper -->
+</body>
+
+</html>
