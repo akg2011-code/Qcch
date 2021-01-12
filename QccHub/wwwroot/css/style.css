@@ -2351,6 +2351,7 @@ section {
     position: absolute;
     z-index: 1;
     right: -103px;
+    border: 11px #8e8a8a6b groove;
 }
 .comProfileContent .all > div {
     margin-bottom: 10px;

@@ -14,6 +14,7 @@ using System.Linq;
 using QccHub.Logic.Enums;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Rotativa.AspNetCore;
 
 namespace QccHub.Controllers.Website
 {
@@ -344,7 +345,7 @@ namespace QccHub.Controllers.Website
                 return RedirectToAction("profile","account", new { id = id });
             }
             var user = JsonConvert.DeserializeObject<ApplicationUser>(result);
-            return View("pdfView", user);
+            return new ViewAsPdf("pdfView", user) { FileName = $"{user.CompanyName}'s Portfolio.pdf" };
         }
     }
 }

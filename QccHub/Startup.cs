@@ -20,6 +20,7 @@ using System.Text;
 using Newtonsoft.Json;
 using QccHub.Helpers;
 using System.Net.Http.Headers;
+using Rotativa.AspNetCore;
 
 namespace QccHub
 {
@@ -202,6 +203,8 @@ namespace QccHub
                 endpoints.MapDefaultControllerRoute();
                 endpoints.MapControllers();
             });
+
+            RotativaConfiguration.Setup(env.WebRootPath);
         }
 
         //private void InitializeDatabase(IApplicationBuilder app)
