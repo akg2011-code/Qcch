@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
-
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="~/css/adminStyle.css">
     @RenderSection("Styles", false)
@@ -20,9 +20,9 @@
                 <button type="button" id="sidebarCollapse" class="btn btn-primary">
                 </button>
             </div>
-            <div class="img bg-wrap text-center py-4" style="background-image: url(~/img/bg_1.jpg);">
+            <div class="img bg-wrap text-center py-4" style="background-image: url(/img/bg_1.jpg);">
                 <div class="user-logo">
-                    <div class="img" style="background-image: url(~/img/logoAdmin.jpg);"></div>
+                    <div class="img" style="background-image: url(/img/logoAdmin.jpg);"></div>
                     <!-- <h3>Catriona Henderson</h3> -->
                 </div>
             </div>
@@ -54,11 +54,12 @@
 
         <!-- Page Content  -->
         <div id="content" class="p-4 p-md-5 pt-5">
-            @RenderBody();
+            @RenderBody()
         </div>
     </div>
 
     <script src="~/vendor/jquery/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js"></script>
     <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/Admin.js"></script>
     @RenderSection("Scripts", false)

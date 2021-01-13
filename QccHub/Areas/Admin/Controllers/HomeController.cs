@@ -9,7 +9,7 @@ namespace QccHub.Areas.Admin.Controllers
     [Area("Admin")]
     public class HomeController : Controller
     {
-        public IActionResult Index() 
+        public IActionResult News() 
         {
             return View();
         }

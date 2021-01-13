@@ -1,0 +1,87 @@
+﻿
+    <table id="news">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Time</th>
+                <th>Source</th>
+                <th>Created By</th>
+                <th>Created Date</th>
+                <th>Is Deleted</th>
+            </tr>
+        </thead>
+    </table>
+
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            var columns = [
+                {
+                    "data": "title",
+                    "render": function (data, type, row) {
+                        return '<a href="@Url.Content("~/news/GetNewsDetails")?id=' + row.id +'" >' + row.title + '</a>';
+                    }
+                },
+                {
+                    "data": "time"
+                },
+                {
+                    "data": "source"
+                },
+                {
+                    "data": "createdBy"
+                },
+                {
+                    "data": "createdDate"
+                },
+                {
+                    "data": "IsDeleted",
+                    "autoWidth": true,
+                    "render": function (data, type, row) {
+                        var isDeleted = row.isDeleted ? "checked" : "";
+                        return `<input type="checkbox" disabled ${isDeleted} >`;
+                    }
+                }
+                //{
+                //    "render": function (data, type, row) {
+                //        return '<a class="btn btn-primary" href="/Manual/Edit/' + row.Id + '">Edit</a>';
+                //    }
+                //},
+            ];
+
+            var columnDefs = [
+            {
+                "orderable": true,
+                "targets": [0],
+            }];
+
+            var url = '@Url.Content("~/api/news/getallnews")';
+            var order = [[0, 'asc']];
+            PagingList('news', url, columns, columnDefs, order);
+        });
+
+        function PagingList(id,url,columns, columnDefs, order) {
+            return $(`#${id}`).DataTable({
+                "lengthChange": false,
+                "fixedHeader": true,
+                "paging": true,
+                "pageLength": 20,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": true,
+                "responsive": true,
+                "ajax": {
+                    "url": url,
+                    "dataSrc":'',
+                    "async": true
+                },
+                "columnDefs": columnDefs,
+                "columns": columns,
+                "order": order
+            });
+        }
+    </script>
+}
