@@ -56,19 +56,6 @@ namespace QccHub.Controllers.Api
         //    return Ok("news edited");
         //}
 
-        [HttpDelete("{newsID}")]
-        public async Task<IActionResult> DeleteNews(int newsID)
-        {
-            News news = await _newsRepository.GetByIdAsync(newsID);
-            if (news == null && news.IsDeleted == false)
-            {
-                return NotFound("No news for this ID");
-            }
-            news.IsDeleted = true;
-            await _unitOfWork.SaveChangesAsync();
-            return Ok("news is deleted");
-        }
-
         [HttpGet]
         public async Task<IActionResult> GetAllNews()
         {
@@ -160,6 +147,19 @@ namespace QccHub.Controllers.Api
             }
             var result = await _newsRepository.EditComment(commentID, comment);
             return Ok(result);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var news = await _newsRepository.GetByIdAsync(id);
+            if (news == null)
+            {
+                return NotFound("New not found");
+            }
+            _newsRepository.Delete(news);
+            await _unitOfWork.SaveChangesAsync();
+            return Ok();
         }
     }
 }

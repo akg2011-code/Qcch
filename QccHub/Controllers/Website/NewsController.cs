@@ -60,5 +60,19 @@ namespace QccHub.Controllers.Website
 
             return Ok();
         }
+
+        [HttpPost("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var httpClient = _clientFactory.CreateClient("API");
+            var response = await httpClient.DeleteAsync($"News/delete/{id}");
+            var result = await response.Content.ReadAsStringAsync();
+            if (!response.IsSuccessStatusCode)
+            {
+                return BadRequest(result);
+            }
+            return Ok();
+        }
+
     }
 }

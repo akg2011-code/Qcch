@@ -1,31 +1,63 @@
-﻿
-    <table id="news">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Time</th>
-                <th>Source</th>
-                <th>Created By</th>
-                <th>Created Date</th>
-                <th>Is Deleted</th>
-            </tr>
-        </thead>
-    </table>
+﻿@section Styles{
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+}
+<button class="btn btn-primary" data-toggle="modal" data-target="#AddNews">Add</button>
+<!-- Modal -->
+<div class="modal fade" id="AddNews" tabindex="-1" aria-labelledby="AddNewsLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AddNewsLabel">Add</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form id="newsEditorForm">
+                    <div class="form-group">
+                        <input type="text" name="Title" placeholder="Title" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="Source" placeholder="Source" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <textarea id="newsEditor" name="Details"></textarea>
+                    </div>
+                    <input type="submit" class="btn btn-danger" value="Post" />
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<table id="news">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Source</th>
+            <th>Created By</th>
+            <th>Created Date</th>
+            <th>Is Deleted</th>
+            <th></th>
+        </tr>
+    </thead>
+</table>
 
 
 
 @section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
     <script>
         $(document).ready(function () {
+            $('#newsEditor').summernote();
             var columns = [
                 {
                     "data": "title",
                     "render": function (data, type, row) {
                         return '<a href="@Url.Content("~/news/GetNewsDetails")?id=' + row.id +'" >' + row.title + '</a>';
                     }
-                },
-                {
-                    "data": "time"
                 },
                 {
                     "data": "source"
@@ -43,12 +75,12 @@
                         var isDeleted = row.isDeleted ? "checked" : "";
                         return `<input type="checkbox" disabled ${isDeleted} >`;
                     }
-                }
-                //{
-                //    "render": function (data, type, row) {
-                //        return '<a class="btn btn-primary" href="/Manual/Edit/' + row.Id + '">Edit</a>';
-                //    }
-                //},
+                },
+                {
+                    "render": function (data, type, row) {
+                        return `<button class="btn btn-primary" onclick="Delete(${row.id})">Delete</button>`;
+                    }
+                },
             ];
 
             var columnDefs = [
@@ -81,6 +113,46 @@
                 "columnDefs": columnDefs,
                 "columns": columns,
                 "order": order
+            });
+        }
+
+
+        $('#newsEditorForm').on('submit', function (e) {
+            e.preventDefault();
+            //debugger;
+            var data = $('#newsEditorForm').serializeArray();
+            var formData = new FormData();
+            data.forEach(function (item, index) {
+                formData.append(item.name, item.value)
+            });
+
+        $.ajax({
+            method: "POST",
+            data: formData,
+            url: '@Url.Content($"~/news/add")',
+            processData: false,
+            contentType: false,
+            success: function () {
+                window.location.reload()
+            },
+            error: function (xhr, ajaxSettings, statusCode) {
+                console.log(xhr.responseText);
+            }
+        });
+    });
+
+        function Delete(id) {
+            debugger;
+            $.ajax({
+                method: "POST",
+                url: `@Url.Content($"~/news/delete")/${id}`,
+                success: function () {  
+                    window.location.reload();
+                },
+                error: function (xhr, ajaxSettings, statusCode) {
+                    debugger;
+                    console.log(xhr.responseText);
+                }
             });
         }
     </script>
