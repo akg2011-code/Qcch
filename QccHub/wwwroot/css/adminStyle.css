@@ -10210,7 +10210,7 @@ a[data-toggle="collapse"] {
   color: rgba(255, 255, 255, 0.5);
 }
 
-.form-control {
+/*.form-control {
   height: 40px !important;
   background: #fff;
   color: #000;
@@ -10219,32 +10219,19 @@ a[data-toggle="collapse"] {
   -webkit-box-shadow: none !important;
   box-shadow: none !important;
   border: transparent;
-}
+}*/
 
 .form-control:focus, .form-control:active {
   border-color: #000;
 }
 
-.form-control::-webkit-input-placeholder {
-  /* Chrome/Opera/Safari */
-  color: rgba(255, 255, 255, 0.5);
-}
-
-.form-control::-moz-placeholder {
-  /* Firefox 19+ */
-  color: rgba(255, 255, 255, 0.5);
-}
-
-.form-control:-ms-input-placeholder {
-  /* IE 10+ */
-  color: rgba(255, 255, 255, 0.5);
-}
-
-.form-control:-moz-placeholder {
-  /* Firefox 18- */
-  color: rgba(255, 255, 255, 0.5);
-}
 
 .subscribe-form .form-control {
   background: #4897fc;
+}
+.mini-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }

@@ -1,84 +1,84 @@
 ﻿@section Styles{
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
 }
-<button class="btn btn-primary" data-toggle="modal" data-target="#AddNews">Add</button>
-<!-- Modal -->
-<div class="modal fade" id="AddNews" tabindex="-1" aria-labelledby="AddNewsLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="AddNewsLabel">Add</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
+    <button class="btn btn-info" data-toggle="modal" data-target="#AddNews">Add news</button>
+    <!-- Modal -->
+    <div class="modal fade" id="AddNews" tabindex="-1" aria-labelledby="AddNewsLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="AddNewsLabel">Add</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
 
-                <form id="newsEditorForm">
-                    <div class="form-group">
-                        <input type="text" name="Title" placeholder="Title" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name="Source" placeholder="Source" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <textarea id="newsEditor" name="Details"></textarea>
-                    </div>
-                    <input type="submit" class="btn btn-danger" value="Post" />
-                </form>
+                    <form id="newsEditorForm">
+                        <div class="form-group">
+                            <input type="text" name="Title" placeholder="Title" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="Source" placeholder="Source" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <textarea id="newsEditor" name="Details"></textarea>
+                        </div>
+                        <input type="submit" class="btn btn-danger" value="Post" />
+                    </form>
 
 
+                </div>
             </div>
         </div>
     </div>
-</div>
-<table id="news">
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>Source</th>
-            <th>Created By</th>
-            <th>Created Date</th>
-            <th>Is Deleted</th>
-            <th></th>
-        </tr>
-    </thead>
-</table>
+    <table id="news" class="table table-striped table-bordered" width="100%">
+        <thead class="thead-dark">
+            <tr>
+                <th>Title</th>
+                <th>Source</th>
+                @*<th>Created By</th>*@
+                <th>Created Date</th>
+                @*<th hidden>Is Deleted</th>*@
+                <th></th>
+            </tr>
+        </thead>
+    </table>
 
 
 
-@section Scripts {
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
-    <script>
+    @section Scripts {
+        <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+        <script>
         $(document).ready(function () {
             $('#newsEditor').summernote();
             var columns = [
                 {
                     "data": "title",
                     "render": function (data, type, row) {
-                        return '<a href="@Url.Content("~/news/GetNewsDetails")?id=' + row.id +'" >' + row.title + '</a>';
+                        return '<a class="mini-text" href="@Url.Content("~/news/GetNewsDetails")?id=' + row.id +'" >' + row.title + '</a>';
                     }
                 },
                 {
                     "data": "source"
                 },
-                {
-                    "data": "createdBy"
-                },
+                //{
+                //    "data": "createdBy"
+                //},
                 {
                     "data": "createdDate"
                 },
+                //{
+                //    "data": "IsDeleted",
+                //    "autoWidth": true,
+                //    "render": function (data, type, row) {
+                //        var isDeleted = row.isDeleted ? "checked" : "";
+                //        return `<input type="checkbox" disabled hidden ${isDeleted} >`;
+                //    }
+                //},
                 {
-                    "data": "IsDeleted",
-                    "autoWidth": true,
                     "render": function (data, type, row) {
-                        var isDeleted = row.isDeleted ? "checked" : "";
-                        return `<input type="checkbox" disabled ${isDeleted} >`;
-                    }
-                },
-                {
-                    "render": function (data, type, row) {
-                        return `<button class="btn btn-primary" onclick="Delete(${row.id})">Delete</button>`;
+                        return `<button class="btn btn-danger text-center" onclick="Delete(${row.id})">Delete</button>`;
                     }
                 },
             ];
@@ -146,7 +146,7 @@
             $.ajax({
                 method: "POST",
                 url: `@Url.Content($"~/news/delete")/${id}`,
-                success: function () {  
+                success: function () {
                     window.location.reload();
                 },
                 error: function (xhr, ajaxSettings, statusCode) {
@@ -155,5 +155,6 @@
                 }
             });
         }
-    </script>
-}
+        </script>
+    }
+
