@@ -21,7 +21,7 @@ namespace QccHub.Data.Models
         public string CompanyName { get; set; }
         public virtual Gender Gender { get; set; }
         public virtual Country Country { get; set; }
-        public virtual CompanyInfo CompanyInfo { get; set; }
+        public virtual CompanyInfo CompanyInfo { get; set; } = new CompanyInfo();
         public virtual ICollection<UserJobPosition> EmployeeJobs { get; } = new List<UserJobPosition>();
         public virtual ICollection<Education> Education { get; } = new List<Education>();
         public virtual ICollection<Certificate> Certificates { get; } = new List<Certificate>();

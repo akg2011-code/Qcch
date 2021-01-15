@@ -130,7 +130,7 @@ namespace QccHub.Data
                     IsTrusted = true
                 };
 
-                IdentityResult result = userManager.CreateAsync(admin, "Admin@2020").Result;
+                IdentityResult result = Task.Run(() => userManager.CreateAsync(admin, "Admin@2020")).GetAwaiter().GetResult();
                 if (result.Succeeded)
                 {
                     Task.Run(() => userManager.AddToRoleAsync(admin, RolesEnum.Admin.ToString())).GetAwaiter().GetResult();

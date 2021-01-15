@@ -21,6 +21,8 @@ using Newtonsoft.Json;
 using QccHub.Helpers;
 using System.Net.Http.Headers;
 using Rotativa.AspNetCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 
 namespace QccHub
 {
@@ -85,24 +87,12 @@ namespace QccHub
                 opt.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             });
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddSingleton<EmailSender>();
-            services.AddScoped<IJobRepository,JobRepository>();
-            services.AddScoped<IJobPositionRepository,JobPositionRepository>();
-            services.AddScoped<IJobApplicationRepository,JobApplicationRepository>();
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IQuestionRepository,QuestionRepository>();
-            services.AddScoped<INewsRepository, NewsRepository>();
-            services.AddScoped<ICountryRepository, CountryRepository>();
-            services.AddScoped<IUnitOfWork,UnitOfWork>();
-            services.AddScoped<CurrentSession>();
-            services.AddControllersWithViews()
-                .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
-
-            services.AddAuthentication(x =>
+            
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(x =>
             {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.LoginPath = "/account/login";
+                //x.AccessDeniedPath = "/account/login";
             })
             .AddJwtBearer(options =>
             {
@@ -120,12 +110,34 @@ namespace QccHub
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"])),
                     ClockSkew = TimeSpan.Zero
                 };
-            }).AddIdentityCookies(o => { });
+            });
+
+            services.AddAuthorization(options =>
+            {
+                var defaultAuthorizationPolicyBuilder = new AuthorizationPolicyBuilder(CookieAuthenticationDefaults.AuthenticationScheme, JwtBearerDefaults.AuthenticationScheme);
+                defaultAuthorizationPolicyBuilder = defaultAuthorizationPolicyBuilder.RequireAuthenticatedUser();
+                options.DefaultPolicy = defaultAuthorizationPolicyBuilder.Build();
+            });
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<EmailSender>();
+            services.AddScoped<IJobRepository, JobRepository>();
+            services.AddScoped<IJobPositionRepository, JobPositionRepository>();
+            services.AddScoped<IJobApplicationRepository, JobApplicationRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IQuestionRepository, QuestionRepository>();
+            services.AddScoped<INewsRepository, NewsRepository>();
+            services.AddScoped<ICountryRepository, CountryRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<CurrentSession>();
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+
 
             //services.AddSwaggerGen(c =>
             //{
             //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "QccHub", Version = "v1" });
-                
+
             //    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             //    {
             //        In = ParameterLocation.Header,

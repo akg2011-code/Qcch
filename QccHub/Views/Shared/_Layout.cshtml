@@ -59,17 +59,21 @@
                             <input class="form-control form-control-sm ml-3 searchBtn2" type="text" placeholder="Search ..." aria-label="Search">
                         </div>
                     </li>
-                    <li class="active">
-                        <div class="dropdown">
-                            <button class="btn btn-secondary btnProfile dropdown-toggle" type="button" id="dropdownMenuButton"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-users"></i> Profile
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background-color: #c18989;">
-                                <a class="dropdown-item" href="@Url.Content("~/account/logout")"> <i class="fas fa-sign-out"></i> Logout</a>
+                    @if (!string.IsNullOrWhiteSpace(userId))
+                    {
+                        <li class="active">
+                            <div class="dropdown">
+                                <button class="btn btn-secondary btnProfile dropdown-toggle" type="button" id="dropdownMenuButton"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-users"></i> Profile
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background-color: #c18989;">
+                                    <a class="dropdown-item" href="@Url.Content("~/account/logout")"> <i class="fas fa-sign-out"></i> Logout</a>
+                                </div>
                             </div>
-                        </div>
-                    </li>
+                        </li>
+                    }
+
                     @if (roleName == RolesEnum.User.ToString())
                     {
                         <li><a href="@Url.Content("~/jobs/getallNonB2bjobs")"><i class="icofont-search-job"></i> Jobs</a></li>
@@ -95,13 +99,16 @@
                             <i class="icofont-alarm"></i><span class="badge badge-light notification2">9</span>&nbsp;&nbsp;
                         </a>
                     </li>
-                    <li>
-                        <a href="@Url.Content($"~/account/profile/{userId}")">
-                            <img src="/img/Profile picture.png">
-                            @*<img class="rounded-circle" src="@($"/Profile Pictures/{Model.ProfileImagePath}" ?? "/img/Profile picture.png")" onError="this.onerror=null;this.src='/img/Profile picture.png';" style="height: 41px;">*@
+                    @if (!string.IsNullOrWhiteSpace(userId))
+                    {
+                        <li>
+                            <a href="@Url.Content($"~/account/profile/{userId}")">
+                                <img src="/img/Profile picture.png">
+                                @*<img class="rounded-circle" src="@($"/Profile Pictures/{Model.ProfileImagePath}" ?? "/img/Profile picture.png")" onError="this.onerror=null;this.src='/img/Profile picture.png';" style="height: 41px;">*@
 
-                        </a>
-                    </li>
+                            </a>
+                        </li>
+                    }
                 </ul>
             </nav><!-- .nav-menu -->
 

@@ -35,6 +35,11 @@ namespace QccHub.Data.Repository
             _context.ApplicationUser.Add(company);
         }
 
+        public void Delete(ApplicationUser user)
+        {
+            _context.ApplicationUser.Remove(user);
+        }
+
         public Task<List<ApplicationUser>> GetAllUsers()
         {
             return _context.Users.ToListAsync();
@@ -42,12 +47,18 @@ namespace QccHub.Data.Repository
 
         public Task<ApplicationUser> GetCompanyByName(string name)
         {
-            return _context.Users.IncludeFilter(u => u.UserRoles.Where(ur => ur.RoleId == (int)RolesEnum.Company)).FirstOrDefaultAsync(u => u.CompanyName == name);
+            return _context.Users
+                            .Include(u => u.CompanyInfo)
+                            .Include(u => u.Country)
+                            .IncludeFilter(u => u.UserRoles.Where(ur => ur.RoleId == (int)RolesEnum.Company)).FirstOrDefaultAsync(u => u.CompanyName == name);
         }
 
         public Task<List<ApplicationUser>> GetCompanyUsers()
         {
-            return _context.Users.IncludeFilter(u => u.UserRoles.Where(ur => ur.RoleId == (int)RolesEnum.Company)).ToListAsync();
+            return _context.Users
+                            .Include(u => u.CompanyInfo)
+                            .Include(u => u.Country)
+                            .IncludeFilter(u => u.UserRoles.Where(ur => ur.RoleId == (int)RolesEnum.Company)).ToListAsync();
         }
 
         public Task<UserJobPosition> GetCurrentJobPosition(int userId)
@@ -60,7 +71,9 @@ namespace QccHub.Data.Repository
 
         public Task<List<ApplicationUser>> GetEmployeeUsers()
         {
-            return _context.Users.IncludeFilter(u => u.UserRoles.Where(ur => ur.RoleId == (int)RolesEnum.User)).ToListAsync();
+            return _context.Users
+                            .Include(u => u.Country)
+                            .IncludeFilter(u => u.UserRoles.Where(ur => ur.RoleId == (int)RolesEnum.User)).ToListAsync();
         }
 
         public Task<ApplicationUser> GetUserByIdAsync(int userId)
@@ -80,7 +93,7 @@ namespace QccHub.Data.Repository
 
         public Task<ApplicationUser> GetUserByUserNameAsync(string userName)
         {
-            return _context.Users.Include(u => u.UserRoles).FirstOrDefaultAsync(u => u.UserName == userName);
+            return _context.Users.Include(u => u.UserRoles).FirstOrDefaultAsync(u => u.Email == userName);
         }
 
         public async Task<int> GetUserRole(int userId)

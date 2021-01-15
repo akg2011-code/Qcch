@@ -347,5 +347,18 @@ namespace QccHub.Controllers.Website
             var user = JsonConvert.DeserializeObject<ApplicationUser>(result);
             return new ViewAsPdf("pdfView", user) { FileName = $"{user.CompanyName}'s Portfolio.pdf" };
         }
+
+        [HttpPost("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var httpClient = _clientFactory.CreateClient("API");
+            var response = await httpClient.DeleteAsync($"Users/Delete/{id}");
+            var result = await response.Content.ReadAsStringAsync();
+            if (!response.IsSuccessStatusCode)
+            {
+                return BadRequest(result);
+            }
+            return Ok();
+        }
     }
 }

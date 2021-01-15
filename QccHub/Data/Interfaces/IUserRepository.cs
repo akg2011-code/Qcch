@@ -19,5 +19,6 @@ namespace QccHub.Data.Interfaces
         void AddNewCompany(ApplicationUser company);
         void AddEducation(Education education);
         void AddCertificate(Certificate certificate);
+        void Delete(ApplicationUser user);
     }
 }
