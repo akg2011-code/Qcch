@@ -62,20 +62,9 @@
                 {
                     "data": "source"
                 },
-                //{
-                //    "data": "createdBy"
-                //},
                 {
                     "data": "createdDate"
                 },
-                //{
-                //    "data": "IsDeleted",
-                //    "autoWidth": true,
-                //    "render": function (data, type, row) {
-                //        var isDeleted = row.isDeleted ? "checked" : "";
-                //        return `<input type="checkbox" disabled hidden ${isDeleted} >`;
-                //    }
-                //},
                 {
                     "render": function (data, type, row) {
                         return `<button class="btn btn-danger text-center" onclick="Delete(${row.id})">Delete</button>`;
@@ -84,10 +73,16 @@
             ];
 
             var columnDefs = [
-            {
-                "orderable": true,
-                "targets": [0],
-            }];
+                {
+                    "orderable": true,
+                    "targets": [0,1,2]
+                },
+                {
+                    "orderable": false,
+                    "searchable":false,
+                    "targets": [3]
+                }
+            ];
 
             var url = '@Url.Content("~/api/news/getallnews")';
             var order = [[0, 'asc']];
@@ -142,7 +137,6 @@
     });
 
         function Delete(id) {
-            debugger;
             $.ajax({
                 method: "POST",
                 url: `@Url.Content($"~/news/delete")/${id}`,
@@ -150,7 +144,6 @@
                     window.location.reload();
                 },
                 error: function (xhr, ajaxSettings, statusCode) {
-                    debugger;
                     console.log(xhr.responseText);
                 }
             });

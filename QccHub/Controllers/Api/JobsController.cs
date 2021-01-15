@@ -40,30 +40,30 @@ namespace QccHub.Controllers.Api
 
         [HttpPost]
         //[Authorize(Roles = "Admin,company")]
-        public async Task<IActionResult> Add(Job job)    // note: should not recieve or return domain model , use DTO instead
+        public async Task<IActionResult> Add(Job job)    
         {
-            if (!ModelState.IsValid)                        // make a condition for the non-happy scenarios first to avoid code branching, this is called a guard
+            if (!ModelState.IsValid)                        
             {
                 return BadRequest("can't add , some info is wrong");
             }
 
-            _jobRepo.Add(job);                              // you should use repository pattern to decouple the database connection and logic from api
-            await _unitOfWork.SaveChangesAsync();           // you should use async when dealing with file system, databases or third-party services
-            return Created("job added", job);               // return a DTO of the created object
+            _jobRepo.Add(job);               
+            await _unitOfWork.SaveChangesAsync();
+            return Created("job added", job);
         }
 
-        [HttpDelete("{jobID}")]
-        public async Task<IActionResult> DeleteJob(int jobID)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
         {
-            Job job = await _jobRepo.GetByIdAsync(jobID);
+            Job job = await _jobRepo.GetByIdAsync(id);
             if (job == null)
             {
-                return NotFound("no job for this ID");
+                return NotFound("job was not found");
             }
 
-            _jobRepo.Delete(job); // delete will set IsDeleted to True when SaveChangesAsync is Called using shadow properties
+            _jobRepo.Delete(job);
             await _unitOfWork.SaveChangesAsync();
-            return Ok("deleted job");
+            return Ok();
         }
 
         [HttpGet("{companyID}")]

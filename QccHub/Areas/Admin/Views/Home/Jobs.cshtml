@@ -1,0 +1,204 @@
+﻿
+<button class="btn btn-primary" data-toggle="modal"
+        data-target="#AddJob">
+    Add new Job
+</button>
+<!--modal-->
+<div class="modal fade" id="AddJob" tabindex="-1" aria-labelledby="AddJobLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AddJobLabel">Add new job</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="AddJobForm">
+                    <input hidden name="IsB2b" value="false">
+                    <div class="form-group">
+                        <input type="text" name="Title" class="form-control" placeholder="Job Title">
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" name="Location" class="form-control" placeholder="Job Location">
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <textarea class="form-control" rows="2" name="Description" placeholder="Description....."
+                                      aria-label="With textarea"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md">
+                            <div class="form-group">
+                                <select name="Type" class="form-control">
+                                    <option value="@((int)JobTypesEnum.FullTime)">Full Time</option>
+                                    <option value="@((int)JobTypesEnum.PartTime)">Part Time</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md">
+                            <input type="number" name="Salary" class="form-control mb-4" placeholder="Salary">
+                        </div>
+
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md">
+                            <div class="form-group">
+                                <select name="CompanyID" class="form-control">
+                                    <option value="0">Choose a company</option>
+                                    @foreach (var company in ViewData["Companies"] as List<ApplicationUser>)
+                                    {
+                                        <option value="@company.Id">@company.CompanyName</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary"
+                                data-dismiss="modal">
+                            Close
+                        </button>
+                        <input type="submit" class="btn btn-primary" value="Add Job" />
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--modal-->
+
+<table id="news" class="table table-striped table-bordered" width="100%">
+    <thead class="thead-dark">
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Location</th>
+            <th>Salary</th>
+            <th>Company</th>
+            <th></th>
+        </tr>
+    </thead>
+</table>
+
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            var columns = [
+                {
+                    "data": "title",
+                    "render": function (data, type, row) {
+                        return '<a class="mini-text" href="@Url.Content("~/Jobs/GetJob")?id=' + row.id +'" >' + row.title + '</a>';
+                    }
+                },
+                {
+                    "data": "description"
+                },
+                {
+                    "data": "location"
+                },
+                {
+                    "data": "salary"
+                },
+                {
+                    "data": "company",
+                    "render": function (data, type, row) {
+                        return `<a class="mini-text" href="@Url.Content("~/account/profile")/${row.companyID}">${row.company.companyName}</a>`;
+                    }
+                },
+                {
+                    "render": function (data, type, row) {
+                        return `<button class="btn btn-danger text-center" onclick="Delete(${row.id})">Delete</button>`;
+                    }
+                },
+            ];
+
+            var columnDefs = [
+                {
+                    "orderable": true,
+                    "targets": [0,1,2,3,4]
+                },
+                {
+                    "orderable": false,
+                    "searchable": false,
+                    "targets": [5]
+                }
+            ];
+
+            var url = '@Url.Content("~/api/jobs/getallnonb2bjobs")';
+            var order = [[0, 'asc']];
+            PagingList('news', url, columns, columnDefs, order);
+        });
+
+        function PagingList(id,url,columns, columnDefs, order) {
+            return $(`#${id}`).DataTable({
+                "lengthChange": false,
+                "fixedHeader": true,
+                "paging": true,
+                "pageLength": 20,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": true,
+                "responsive": true,
+                "ajax": {
+                    "url": url,
+                    "dataSrc":'',
+                    "async": true
+                },
+                "columnDefs": columnDefs,
+                "columns": columns,
+                "order": order
+            });
+        }
+
+
+        $('#AddJobForm').on('submit', function (e) {
+            e.preventDefault();
+            var data = $('#AddJobForm').serializeArray();
+            var formData = new FormData();
+            data.forEach(function (item, index) {
+                formData.append(item.name, item.value)
+            });
+
+        $.ajax({
+            method: "POST",
+            data: formData,
+            url: '@Url.Content($"~/jobs/add")',
+            processData: false,
+            contentType: false,
+            success: function () {
+                window.location.reload()
+            },
+            error: function (xhr, ajaxSettings, statusCode) {
+                console.log(xhr.responseText);
+            }
+        });
+    });
+
+        function Delete(id) {
+            $.ajax({
+                method: "POST",
+                url: `@Url.Content($"~/jobs/delete")/${id}`,
+                success: function () {
+                    window.location.reload();
+                },
+                error: function (xhr, ajaxSettings, statusCode) {
+                    console.log(xhr.responseText);
+                }
+            });
+        }
+    </script>
+}
+

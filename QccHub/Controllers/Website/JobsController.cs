@@ -104,5 +104,17 @@ namespace QccHub.Controllers.Website
             return RedirectToAction("index", "home");
         }
 
+        [HttpPost("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var httpClient = _clientFactory.CreateClient("API");
+            var response = await httpClient.DeleteAsync($"Jobs/delete/{id}");
+            var result = await response.Content.ReadAsStringAsync();
+            if (!response.IsSuccessStatusCode)
+            {
+                return BadRequest(result);
+            }
+            return Ok();
+        }
     }
 }
