@@ -73,6 +73,11 @@ namespace QccHub.Controllers.Website
             HttpContext.Session.SetString("RoleName", loginResult.RoleName);
             HttpContext.Session.SetString("UserId", loginResult.UserId.ToString());
 
+            if (loginResult.RoleName == "Admin")
+            {
+                return Redirect("/admin");
+            }
+
             var decodedUrl = WebUtility.HtmlDecode(returnUrl);
             if (Url.IsLocalUrl(decodedUrl))
                 return Redirect(decodedUrl);

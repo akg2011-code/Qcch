@@ -49,10 +49,12 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#"><span class="fa fa-users mr-3"></span> Users</a>
+                    <a asp-area="Admin" asp-controller="Home" asp-action="Users">
+                        <span class="fa fa-users mr-3"></span> Users
+                    </a>
                 </li>
                 <li>
-                    <a href="#"><span class="fa fa-sign-out mr-3"></span> Sign Out</a>
+                    <a href="@Url.Content("~/account/logout")"><span class="fa fa-sign-out mr-3"></span> Sign Out</a>
                 </li>
             </ul>
 
