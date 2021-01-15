@@ -99,13 +99,22 @@
                             <i class="icofont-alarm"></i><span class="badge badge-light notification2">9</span>&nbsp;&nbsp;
                         </a>
                     </li>
-                    @if (!string.IsNullOrWhiteSpace(userId))
+                    @if (!string.IsNullOrWhiteSpace(roleName))
                     {
                         <li>
                             <a href="@Url.Content($"~/account/profile/{userId}")">
                                 <img src="/img/Profile picture.png">
                                 @*<img class="rounded-circle" src="@($"/Profile Pictures/{Model.ProfileImagePath}" ?? "/img/Profile picture.png")" onError="this.onerror=null;this.src='/img/Profile picture.png';" style="height: 41px;">*@
 
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a href="@Url.Content($"~/admin")">
+                                <img src="/img/Profile picture.png">
+                                @*<img class="rounded-circle" src="@($"/Profile Pictures/{Model.ProfileImagePath}" ?? "/img/Profile picture.png")" onError="this.onerror=null;this.src='/img/Profile picture.png';" style="height: 41px;">*@
                             </a>
                         </li>
                     }

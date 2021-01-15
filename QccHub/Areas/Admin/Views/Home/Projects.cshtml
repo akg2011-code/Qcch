@@ -82,7 +82,7 @@
                 {
                     "data": "title",
                     "render": function (data, type, row) {
-                        return '<a class="mini-text" href="@Url.Content("~/Jobs/GetJob")?id=' + row.id +'" >' + row.title + '</a>';
+                        return `<a class="mini-text" href="@Url.Content("~/Jobs/JobDetails")/${row.id}" >${row.title}</a>`;
                     }
                 },
                 {
