@@ -176,6 +176,13 @@ namespace QccHub.Controllers.Api
             {
                 user.SetCommonData(model.Email, model.PhoneNumber);
                 user.CompanyName = model.CompanyName;
+                user.CompanyInfo = new CompanyInfo
+                {
+                    Website = model.Website,
+                    Industry = model.Industry,
+                    Size = model.Size,
+                    Type = model.Type
+                };
                 user.IsTrusted = true;
             }
 

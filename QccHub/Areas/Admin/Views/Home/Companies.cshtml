@@ -15,7 +15,24 @@
                 </button>
             </div>
             <div class="modal-body">
-                
+                <form id="AddCompanyForm" role="form" class="p-5">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="RoleId" value="2" />
+                    <input type="text" name="CompanyName" class="form-control mb-4" placeholder="Company Name" required>
+
+                    <input type="email" name="Email" class="form-control mb-4" placeholder="E-mail Address" required>
+
+                    <input type="password" name="Password" class="form-control mb-4" placeholder="Password (6 or more characters)" required>
+
+                    <input type="password" name="ConfirmPassword" class="form-control mb-4" placeholder="Confirm Password" required>
+
+                    <input type="text" name="PhoneNumber" class="form-control mb-4" placeholder="Phone Number" required>
+                    <input type="text" name="Website" class="form-control mb-4" placeholder="Website" required>
+                    <input type="text" name="Industry" class="form-control mb-4" placeholder="Industry" required>
+                    <input type="text" name="Type" class="form-control mb-4" placeholder="Type" required>
+                    <input type="text" name="Size" class="form-control mb-4" placeholder="Size" required>
+                    <button class="btn btn-primary">Add Company</button>
+                </form>
             </div>
         </div>
     </div>
@@ -114,9 +131,9 @@
         }
 
 
-        $('#AddJobForm').on('submit', function (e) {
+        $('#AddCompanyForm').on('submit', function (e) {
             e.preventDefault();
-            var data = $('#AddJobForm').serializeArray();
+            var data = $('#AddCompanyForm').serializeArray();
             var formData = new FormData();
             data.forEach(function (item, index) {
                 formData.append(item.name, item.value)
@@ -125,7 +142,7 @@
         $.ajax({
             method: "POST",
             data: formData,
-            url: '@Url.Content($"~/jobs/add")',
+            url: '@Url.Content($"~/account/register")',
             processData: false,
             contentType: false,
             success: function () {

@@ -31,5 +31,9 @@ namespace QccHub.DTOS
         public string Position { get; set; }
         public int RoleId { get; set; }
 
+        public string Website { get; set; }
+        public string Industry { get; set; }
+        public string Size { get; set; }
+        public string Type { get; set; }
     }
 }
