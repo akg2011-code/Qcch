@@ -36,24 +36,14 @@
                             <h5>Main Information</h5>
                             <hr>
                             <div class="row">
-                                <div class="col-md">
-                                    <ul class="list-unstyled">
-                                        <li><i class="far fa-folder-open"></i> Position</li>
-                                        <li><i class="far fa-user"></i> Gender</li>
-                                        <li><i class="far fa-folder-open"></i> Email</li>
-                                        <li><i class="far fa-folder-open"></i> Contact no</li>
-                                        <li><i class="far fa-folder-open"></i> Nationality</li>
-                                        <li><i class="far fa-folder-open"></i> Birthday</li>
-                                    </ul>
-                                </div>
-                                <div class="col-md">
-                                    <ul class="list-unstyled">
-                                        <li> @(Model.EmployeeJobs.FirstOrDefault(p => p.IsCurrentPosition)?.JobPosition?.Name ?? "Not Specified")</li>
-                                        <li> @(Model.Gender)</li>
-                                        <li> @Model.Email</li>
-                                        <li> @Model.PhoneNumber</li>
-                                        <li> @(Model.Country?.Name ?? "Not Specified")</li>
-                                        <li> @(Model.DateOfBirth != DateTime.MinValue ? Model.DateOfBirth.ToString("dd-MM-yyyy") : "Not Specified")</li>
+                                <div class="col-md-12">
+                                    <ul class="list-unstyled list-group text-left" style="overflow-x:auto;">
+                                        <li class="list-group-item border-0"><i class="fas fa-briefcase"></i> Position: @(Model.EmployeeJobs.FirstOrDefault(p => p.IsCurrentPosition)?.JobPosition?.Name ?? "Not Specified")</li>
+                                        <li class="list-group-item border-0"><i class="far fa-user"></i> Gender: @(Model.Gender)</li>
+                                        <li class="list-group-item border-0"><i class="fas fa-envelope"></i> Email: @Model.Email</li>
+                                        <li class="list-group-item border-0"><i class="fas fa-phone-square-alt"></i> Contact: @Model.PhoneNumber</li>
+                                        <li class="list-group-item border-0"><i class="fas fa-flag"></i> Nationality: @(Model.Country?.Name ?? "Not Specified")</li>
+                                        <li class="list-group-item border-0"><i class="fas fa-calendar-alt"></i> Date of birth: @(Model.DateOfBirth != DateTime.MinValue ? Model.DateOfBirth.ToString("dd-MM-yyyy") : "Not Specified")</li>
                                     </ul>
                                 </div>
                             </div>
