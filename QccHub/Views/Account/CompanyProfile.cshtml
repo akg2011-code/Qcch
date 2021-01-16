@@ -3,6 +3,7 @@
 @inject IHttpContextAccessor HttpContextAccessor
 @{
     string userId = HttpContextAccessor.HttpContext.Session.GetString("UserId");
+    string roleName = HttpContextAccessor.HttpContext.Session.GetString("RoleName");
 }
 <div class="head">
     <div class="container-fluid">
@@ -39,9 +40,12 @@
                                 <li class="list-group-item border-0"><span style="font-size:15px;color:red"> Common Connections : </span>200</li>
                                 <li class="list-group-item border-0"><span style="font-size:15px;color:red"> All Employess : </span>191,11</li>
                             </ul>
+                            @if (roleName == RolesEnum.Company.ToString())
+                            { 
                             <div style="padding-bottom: 20px;">
                                 <a href="@Url.Content($"~/account/updateinfo/{userId}")" class="btn btn-info " style="border:none;background-color: #00c9a7;">Admin panel</a>
                             </div>
+                            }
                             <hr>
                             <div class="text-center">
                                 <h5>Overview</h5>
