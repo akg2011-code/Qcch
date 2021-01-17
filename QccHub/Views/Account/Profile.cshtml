@@ -1,4 +1,10 @@
 ﻿@model ApplicationUser
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    string userId = HttpContextAccessor.HttpContext.Session.GetString("UserId");
+    string roleName = HttpContextAccessor.HttpContext.Session.GetString("RoleName");
+}
+
 <main id="main">
     <div class="userProfileContent">
         <section class="container">
@@ -28,8 +34,14 @@
                                 </div>
                             </div>
                             <hr>
-                            <div style="padding-bottom: 20px;">
-                                <a href="@Url.Content($"~/account/updateinfo/{Model.Id}")" style="color:#e72629;">Edit Profile</a>
+                            @if (userId == Model.Id.ToString())
+                            {
+                                <div style="padding-bottom: 20px;">
+                                    <a href="@Url.Content($"~/account/updateinfo/{Model.Id}")" style="color:#e72629;">Edit Profile</a>
+                                </div>
+                            }
+                            <div>
+                                CV: <a href="@Url.Content($"~/CVs/{Model.CVFilePath}")" target="_blank">CV</a>
                             </div>
                         </div>
                         <div class="mainInfo">
@@ -60,16 +72,16 @@
                         </div>
                         <div class="postJob">
                             @*<div class="imgCompany">
-                                <img src="~/img/Rectangle 60.png" style="height:176px;">
-                            </div>
-                            <div class="CompanyName">
-                                <h4>
-                                    Swan Global WLL
-                                </h4>
-                                <p>Looking for talent?</p>
-                                <hr>
-                                <button class="btn btn-outline-info">Post A Job</button>
-                            </div>*@
+                                    <img src="~/img/Rectangle 60.png" style="height:176px;">
+                                </div>
+                                <div class="CompanyName">
+                                    <h4>
+                                        Swan Global WLL
+                                    </h4>
+                                    <p>Looking for talent?</p>
+                                    <hr>
+                                    <button class="btn btn-outline-info">Post A Job</button>
+                                </div>*@
                         </div>
                     </div>
                 </div>
@@ -83,9 +95,9 @@
                                 @Model.Bio
                             </p>
                             @*<hr>
-                            <div class="btnEdit">
-                                <button class="btn btn-primary">Edit info</button>
-                            </div>*@
+                                <div class="btnEdit">
+                                    <button class="btn btn-primary">Edit info</button>
+                                </div>*@
                         </div>
                         <!-- education-sction -->
                         <div class="Education details-Edu-Expe-Certi">
@@ -93,26 +105,26 @@
                             <hr>
                             @if (Model.Education.Count > 0)
                             {
-                        <div class="univeristy">
-                            <!-- university one -->
-                            @foreach (var edu in Model.Education)
-                            {
-                                <div class="uniDeails">
-                                    <div class="row">
-                                        <div class="col-md-9">
-                                            <h4>@edu.Institute</h4>
-                                            <h6>@edu.Major</h6>
-                                            <span>@edu.Year.ToString("MMM yyyy")</span>
+                                <div class="univeristy">
+                                    <!-- university one -->
+                                    @foreach (var edu in Model.Education)
+                                    {
+                                        <div class="uniDeails">
+                                            <div class="row">
+                                                <div class="col-md-9">
+                                                    <h4>@edu.Institute</h4>
+                                                    <h6>@edu.Major</h6>
+                                                    <span>@edu.Year.ToString("MMM yyyy")</span>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <img src="~/img/Rectangle 86.png" style="height: 46px;">
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="col-md-3">
-                                            <img src="~/img/Rectangle 86.png" style="height: 46px;">
-                                        </div>
-                                    </div>
-                                </div>
-                            }
+                                    }
 
-                            <hr>
-                        </div>
+                                    <hr>
+                                </div>
 
                             }
                             else
@@ -158,25 +170,25 @@
                             <hr>
                             @if (Model.Certificates.Count > 0)
                             {
-                        <div class="Certificates details-Edu-Expe-Certi">
-                            @foreach (var certificate in Model.Certificates)
-                            {
-                                <div class="certiDeails">
-                                    <div class="row">
-                                        <div class="col-md-9">
-                                            <h4>@certificate.Institute</h4>
-                                            <h6>@certificate.CourseName</h6>
-                                            <span>@certificate.FromDate.ToString("MMM yyyy") - @(certificate.ToDate == DateTime.MinValue ? "Present" : certificate.ToDate.ToString("MMM yyyy") ) @((int)(certificate.FromDate - DateTime.Today).TotalDays / 30 + " months" )</span>
+                                <div class="Certificates details-Edu-Expe-Certi">
+                                    @foreach (var certificate in Model.Certificates)
+                                    {
+                                        <div class="certiDeails">
+                                            <div class="row">
+                                                <div class="col-md-9">
+                                                    <h4>@certificate.Institute</h4>
+                                                    <h6>@certificate.CourseName</h6>
+                                                    <span>@certificate.FromDate.ToString("MMM yyyy") - @(certificate.ToDate == DateTime.MinValue ? "Present" : certificate.ToDate.ToString("MMM yyyy") ) @((int)(certificate.FromDate - DateTime.Today).TotalDays / 30 + " months" )</span>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <img src="~/img/Rectangle 86.png" style="height: 46px;">
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="col-md-3">
-                                            <img src="~/img/Rectangle 86.png" style="height: 46px;">
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr>
-                            }
+                                        <hr>
+                                    }
 
-                        </div>
+                                </div>
                             }
                             else
                             {

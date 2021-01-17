@@ -10,7 +10,7 @@
                             <div>
                                 <div class="row">
                                     <div class="col-md-7">
-                                        <img id="pp" src="@($"/Profile Pictures/{Model.ProfileImagePath}" ?? "/img/Ellipse 9.png")" onError="this.onerror=null;this.src='/img/Ellipse 9.png';" style="height: 130px;">
+                                       @* <img id="pp" src="@($"/Profile Pictures/{Model.ProfileImagePath}" ?? "/img/Ellipse 9.png")" onError="this.onerror=null;this.src='/img/Ellipse 9.png';" style="height: 130px;">*@
                                     </div>
                                     <div class="col-md-2">
                                         <label for="profile-picture-uploader" class="btn btn-warning" style="background-color: #00c9a7;">
@@ -52,15 +52,15 @@
                                 <hr>
                                 <div class="form-group row">
                                     <div class="custom-file col-md-10 ml-2">
-                                        <input type="file" name="File" class="custom-file-input" style="background: #00c9a7;">
+                                        <input id="cv-uploader" type="file" name="File" class="custom-file-input" style="background: #00c9a7;">
                                         <label class="custom-file-label border-0 "><u>Choose your CV file</u></label>
                                     </div>
                                 </div>
 
-                                <hr>
+                                @*<hr>
                                 <div class="btnEdit text-center">
                                     <button class="btn btn-primary border-0">Upload</button>
-                                </div>
+                                </div>*@
 
                             </div>
                         </div>
@@ -318,6 +318,27 @@
                     contentType: false,
                     success: function (picturePath) {
                         $('#pp').prop('src', `/Profile Pictures/${picturePath.replaceAll('"','')}`);
+                    },
+                    error: function (xhr, ajaxSettings, statusCode) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            }
+        });
+
+         $("#cv-uploader").change(function () {
+            if ($(this).prop('files').length > 0) {
+                var formdata = new FormData();
+                file = $(this).prop('files')[0];
+                formdata.append("file", file);
+                $.ajax({
+                    method: "POST",
+                    data: formdata,
+                    url: '@Url.Content($"~/account/uploadcv/{Model.Id}")',
+                    processData: false,
+                    contentType: false,
+                    success: function (cvPath) {
+                        alert("Uploaded: " + cvPath);
                     },
                     error: function (xhr, ajaxSettings, statusCode) {
                         console.log(xhr.responseText);

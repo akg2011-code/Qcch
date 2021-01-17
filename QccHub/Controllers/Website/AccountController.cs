@@ -72,6 +72,7 @@ namespace QccHub.Controllers.Website
             HttpContext.Session.SetString("AccessToken", loginResult.AccessToken);
             HttpContext.Session.SetString("RoleName", loginResult.RoleName);
             HttpContext.Session.SetString("UserId", loginResult.UserId.ToString());
+            HttpContext.Request.Headers.Add("Authorization", "Bearer " + loginResult.AccessToken);
 
             if (loginResult.RoleName == "Admin")
             {
@@ -164,6 +165,11 @@ namespace QccHub.Controllers.Website
         [HttpGet("{id}")]
         public async Task<IActionResult> UpdateInfo(int id)
         {
+            if (HttpContext.Session.GetString("UserId") != id.ToString())
+            {
+                return Unauthorized();
+            }
+
             var httpClient = _clientFactory.CreateClient("API");
             var response = await httpClient.GetAsync($"Account/GetUserUpdateViewModel/{id}");
             var result = await response.Content.ReadAsStringAsync();
@@ -216,6 +222,38 @@ namespace QccHub.Controllers.Website
 
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("multipart/form-data"));
             var response = await httpClient.PostAsync($"Account/ChangeProfilePicture/{id}", multipartContent);
+            var result = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return BadRequest(result);
+            }
+
+            return Ok(result);
+        }
+
+        [HttpPost("{id}")]
+        public async Task<IActionResult> UploadCv(int id, IFormFile file)
+        {
+            var httpClient = _clientFactory.CreateClient("API");
+            byte[] PPBytes;
+            var multipartContent = new MultipartFormDataContent();
+
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest("file seems to be empty");
+            }
+
+            using (var ms = new MemoryStream())
+            {
+                await file.CopyToAsync(ms);
+                PPBytes = ms.ToArray();
+                var byteArrayContent = new ByteArrayContent(PPBytes);
+                multipartContent.Add(byteArrayContent, "file", file.FileName);
+            }
+
+            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("multipart/form-data"));
+            var response = await httpClient.PostAsync($"Account/UploadCv/{id}", multipartContent);
             var result = await response.Content.ReadAsStringAsync();
 
             if (!response.IsSuccessStatusCode)

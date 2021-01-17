@@ -88,11 +88,10 @@ namespace QccHub
 
             });
             
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            .AddCookie(x =>
+            services.AddAuthentication(o => 
             {
-                x.LoginPath = "/account/login";
-                //x.AccessDeniedPath = "/account/login";
+                o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
             .AddJwtBearer(options =>
             {
@@ -110,14 +109,17 @@ namespace QccHub
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"])),
                     ClockSkew = TimeSpan.Zero
                 };
-            });
-
-            services.AddAuthorization(options =>
+            }).AddIdentityCookies(o => o.ApplicationCookie.Configure(x => 
             {
-                var defaultAuthorizationPolicyBuilder = new AuthorizationPolicyBuilder(CookieAuthenticationDefaults.AuthenticationScheme, JwtBearerDefaults.AuthenticationScheme);
-                defaultAuthorizationPolicyBuilder = defaultAuthorizationPolicyBuilder.RequireAuthenticatedUser();
-                options.DefaultPolicy = defaultAuthorizationPolicyBuilder.Build();
-            });
+                x.LoginPath = "/account/login";
+            }));
+
+            //services.AddAuthorization(options =>
+            //{
+            //    var defaultAuthorizationPolicyBuilder = new AuthorizationPolicyBuilder(CookieAuthenticationDefaults.AuthenticationScheme, JwtBearerDefaults.AuthenticationScheme);
+            //    defaultAuthorizationPolicyBuilder = defaultAuthorizationPolicyBuilder.RequireAuthenticatedUser();
+            //    options.DefaultPolicy = defaultAuthorizationPolicyBuilder.Build();
+            //});
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<EmailSender>();

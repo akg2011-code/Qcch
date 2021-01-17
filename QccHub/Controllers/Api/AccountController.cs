@@ -88,6 +88,7 @@ namespace QccHub.Controllers.Api
                     UserId = user.Id
                 };
 
+                await _signInManager.SignInWithClaimsAsync(user, true, claims);
                 return Ok(result);
 
             }
@@ -367,6 +368,37 @@ namespace QccHub.Controllers.Api
             }
 
             return Ok(user.ProfileImagePath);
+        }
+
+        [HttpPost("{id}")]
+        public async Task<IActionResult> UploadCv([FromRoute] int id, [FromForm] IFormFile file)
+        {
+            var user = await _userRepo.GetUserByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+
+            var validExtensions = new string[] { ".pdf", };
+            if (!validExtensions.Contains(Path.GetExtension(file.FileName)))
+            {
+                return BadRequest("File extension is not supported");
+            }
+
+            var directoryPath = Path.Combine(_hostingEnvironment.WebRootPath, "CVs");
+            var result = await FileUploader.Upload(directoryPath, file);
+            if (string.IsNullOrEmpty(result))
+            {
+                return BadRequest("Uploading failed");
+            }
+
+            user.CVFilePath = Path.Combine(directoryPath, result);
+            if (!(await _unitOfWork.SaveChangesAsync() > 0))
+            {
+                return BadRequest("Uploading failed");
+            }
+
+            return Ok(user.CVFilePath);
         }
 
         [HttpDelete("{id}")]
