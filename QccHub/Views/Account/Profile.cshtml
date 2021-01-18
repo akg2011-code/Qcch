@@ -40,9 +40,12 @@
                                     <a href="@Url.Content($"~/account/updateinfo/{Model.Id}")" style="color:#e72629;">Edit Profile</a>
                                 </div>
                             }
-                            <div>
-                                CV: <a href="@Url.Content($"~/CVs/{Model.CVFilePath}")" target="_blank">CV</a>
-                            </div>
+                        <div>
+                            @if (!string.IsNullOrWhiteSpace(Model.CVFilePath))
+                            {
+                                <a href="@Url.Content($"~/CVs/{Model.CVFilePath}")" target="_blank">View CV</a>
+                            }
+                        </div>
                         </div>
                         <div class="mainInfo">
                             <h5>Main Information</h5>

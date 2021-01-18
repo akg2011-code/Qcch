@@ -392,7 +392,7 @@ namespace QccHub.Controllers.Api
                 return BadRequest("Uploading failed");
             }
 
-            user.CVFilePath = Path.Combine(directoryPath, result);
+            user.CVFilePath = result;
             if (!(await _unitOfWork.SaveChangesAsync() > 0))
             {
                 return BadRequest("Uploading failed");
