@@ -122,8 +122,7 @@
                                         <div class="row">
                                             <div class="col-md-9">
                                                 <h4>@job.Title</h4>
-                                                <h6>@job.Company</h6>
-                                                <small><i class="fas fa-map-marker-alt"></i> Qatar</small>
+                                                    <a href="@Url.Content($"~/account/profile/{ job.CompanyID }")">@job.Company</a>
                                             </div>
                                             <div class="col-md-3">
                                                 <img src="~/img/Rectangle 86.png" style="height: 46px;">
