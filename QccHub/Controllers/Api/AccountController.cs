@@ -572,5 +572,28 @@ namespace QccHub.Controllers.Api
             await _unitOfWork.SaveChangesAsync();
             return Ok();
         }
+
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ApplicationUser), StatusCodes.Status200OK)]
+        public async Task<IActionResult> DownloadCv(int id)
+        {
+            var user = await _userRepo.GetUserByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound("User Not Found");
+            }
+
+            var filePath = Path.Combine(_hostingEnvironment.WebRootPath, "CVs", user.CVFilePath);
+            if (!System.IO.File.Exists(filePath))
+            {
+                return NotFound("CV Not Found");
+            }
+
+            var fileBytes = await System.IO.File.ReadAllBytesAsync(filePath);
+
+            return File(new System.IO.MemoryStream(fileBytes), "application/octet-stream",$"{user.FullName ?? "user"}'s CV.pdf");
+        }
+
     }
 }

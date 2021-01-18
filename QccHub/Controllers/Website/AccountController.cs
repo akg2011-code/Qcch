@@ -403,5 +403,19 @@ namespace QccHub.Controllers.Website
             }
             return Ok();
         }
+
+        //[HttpGet("{id}")]
+        //public async Task<IActionResult> DownloadCv(int id)
+        //{
+        //    var httpClient = _clientFactory.CreateClient("API");
+        //    var response = await httpClient.GetAsync($"Account/DownloadCv/{id}");
+        //    var result = await response.Content.ReadAsStreamAsync();
+        //    if (!response.IsSuccessStatusCode)
+        //    {
+        //        return BadRequest();
+        //    }
+        //    return File(result, "application/octet-stream");
+        //}
+
     }
 }
