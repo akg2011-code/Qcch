@@ -1,6 +1,7 @@
 ﻿@model ApplicationUser
 @inject IHttpContextAccessor HttpContextAccessor
 @{
+    ViewBag.Title = "User Profile";
     string userId = HttpContextAccessor.HttpContext.Session.GetString("UserId");
     string roleName = HttpContextAccessor.HttpContext.Session.GetString("RoleName");
 }
@@ -16,7 +17,7 @@
                             <div style="padding-bottom: 50px;padding-top:20px">
                                 <img id="pp" src="@($"/Profile Pictures/{Model.ProfileImagePath}" ?? "/img/Ellipse 9.png")" onError="this.onerror=null;this.src='/img/Ellipse 9.png';" style="height: 130px;">
                             </div>
-                            <div>
+                            <div style="overflow-x:auto;">
                                 <h3>@(!string.IsNullOrWhiteSpace(Model.FullName) ? Model.FullName : Model.UserName)</h3>
                             </div>
                             <div>
@@ -24,67 +25,37 @@
                             </div>
                             <hr>
                             <div class="row">
-                                <div class="col-md  border-right">
-                                    <h5>358</h5>
-                                    <p>Connections</p>
-                                </div>
-                                <div class="col-md border-left">
-                                    <h5>85</h5>
-                                    <p>Views</p>
+                                <div class="col-md  text-center">
+                                    @if (!string.IsNullOrWhiteSpace(Model.CVFilePath))
+                                    {
+                                        <a id="cv" href="@Url.Content($"~/CVs/{Model.CVFilePath}")" class="btn btn-info col-md-7" target="_blank" onerror="dis()"><i class="far fa-file"></i> View My CV</a>
+                                    }
+
                                 </div>
                             </div>
                             <hr>
                             @if (userId == Model.Id.ToString())
                             {
                                 <div style="padding-bottom: 20px;">
-                                    <a href="@Url.Content($"~/account/updateinfo/{Model.Id}")" style="color:#e72629;">Edit Profile</a>
+                                    <a href="@Url.Content($"~/account/updateinfo/{Model.Id}")" class="btn btn-info " style="color:#e72629;border:none;background-color: #00c9a7; ">User Panel</a>
                                 </div>
                             }
-                        <div>
-                            @if (!string.IsNullOrWhiteSpace(Model.CVFilePath))
-                            {
-                                <a href="@Url.Content($"~/CVs/{Model.CVFilePath}")" target="_blank">View CV</a>
-                            }
-                        </div>
                         </div>
                         <div class="mainInfo">
                             <h5>Main Information</h5>
                             <hr>
                             <div class="row">
-                                <div class="col-md">
-                                    <ul class="list-unstyled">
-                                        <li><i class="far fa-folder-open"></i> Position</li>
-                                        <li><i class="far fa-user"></i> Gender</li>
-                                        <li><i class="far fa-folder-open"></i> Email</li>
-                                        <li><i class="far fa-folder-open"></i> Contact no</li>
-                                        <li><i class="far fa-folder-open"></i> Nationality</li>
-                                        <li><i class="far fa-folder-open"></i> Birthday</li>
-                                    </ul>
-                                </div>
-                                <div class="col-md">
-                                    <ul class="list-unstyled">
-                                        <li> @(Model.EmployeeJobs.FirstOrDefault(p => p.IsCurrentPosition)?.JobPosition?.Name ?? "Not Specified")</li>
-                                        <li> @(Model.Gender)</li>
-                                        <li> @Model.Email</li>
-                                        <li> @Model.PhoneNumber</li>
-                                        <li> @(Model.Country?.Name ?? "Not Specified")</li>
-                                        <li> @(Model.DateOfBirth != DateTime.MinValue ? Model.DateOfBirth.ToString("dd-MM-yyyy") : "Not Specified")</li>
+                                <div class="col-md-12">
+                                    <ul class="list-unstyled list-group text-left" style="overflow-x:auto;">
+                                        <li class="list-group-item border-0"><i class="fas fa-briefcase"></i> Position: @(Model.EmployeeJobs.FirstOrDefault(p => p.IsCurrentPosition)?.JobPosition?.Name ?? "Not Specified")</li>
+                                        <li class="list-group-item border-0"><i class="far fa-user"></i> Gender: @(Model.Gender)</li>
+                                        <li class="list-group-item border-0"><i class="fas fa-envelope"></i> Email: @Model.Email</li>
+                                        <li class="list-group-item border-0"><i class="fas fa-phone-square-alt"></i> Contact: @Model.PhoneNumber</li>
+                                        <li class="list-group-item border-0"><i class="fas fa-flag"></i> Nationality: @(Model.Country?.Name ?? "Not Specified")</li>
+                                        <li class="list-group-item border-0"><i class="fas fa-calendar-alt"></i> Date of birth: @(Model.DateOfBirth != DateTime.MinValue ? Model.DateOfBirth.ToString("dd-MM-yyyy") : "Not Specified")</li>
                                     </ul>
                                 </div>
                             </div>
-                        </div>
-                        <div class="postJob">
-                            @*<div class="imgCompany">
-                                    <img src="~/img/Rectangle 60.png" style="height:176px;">
-                                </div>
-                                <div class="CompanyName">
-                                    <h4>
-                                        Swan Global WLL
-                                    </h4>
-                                    <p>Looking for talent?</p>
-                                    <hr>
-                                    <button class="btn btn-outline-info">Post A Job</button>
-                                </div>*@
                         </div>
                     </div>
                 </div>
@@ -97,10 +68,6 @@
                             <p>
                                 @Model.Bio
                             </p>
-                            @*<hr>
-                                <div class="btnEdit">
-                                    <button class="btn btn-primary">Edit info</button>
-                                </div>*@
                         </div>
                         <!-- education-sction -->
                         <div class="Education details-Edu-Expe-Certi">
@@ -120,7 +87,7 @@
                                                     <span>@edu.Year.ToString("MMM yyyy")</span>
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <img src="~/img/Rectangle 86.png" style="height: 46px;">
+                                                    @*<img src="~/img/Rectangle 86.png" style="height: 46px;">*@
                                                 </div>
                                             </div>
                                         </div>
@@ -148,12 +115,12 @@
                                         <div class="experDeails">
                                             <div class="row">
                                                 <div class="col-md-9">
-                                                    <h4>@job.Company.CompanyName</h4>
-                                                    <h6>@job.JobPosition.Name</h6>
+                                                    <h4>@job.JobPosition.Name</h4>
+                                                    <h6>@job.Company.CompanyName</h6>
                                                     <span>@job.FromDate.ToString("MMM yyyy") - @(job.ToDate == DateTime.MinValue ? "Present":job.ToDate.ToString("MMM yyyy") ) @((int)(job.FromDate - DateTime.Today).TotalDays / 30 + " months")</span>
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <img src="~/img/Rectangle 86.png" style="height: 46px;">
+                                                    @*<img src="~/img/Rectangle 86.png" style="height: 46px;">*@
                                                 </div>
                                             </div>
                                         </div>
@@ -179,12 +146,12 @@
                                         <div class="certiDeails">
                                             <div class="row">
                                                 <div class="col-md-9">
-                                                    <h4>@certificate.Institute</h4>
-                                                    <h6>@certificate.CourseName</h6>
+                                                    <h4>@certificate.CourseName</h4>
+                                                    <h6>@certificate.Institute</h6>
                                                     <span>@certificate.FromDate.ToString("MMM yyyy") - @(certificate.ToDate == DateTime.MinValue ? "Present" : certificate.ToDate.ToString("MMM yyyy") ) @((int)(certificate.FromDate - DateTime.Today).TotalDays / 30 + " months" )</span>
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <img src="~/img/Rectangle 86.png" style="height: 46px;">
+                                                    @*<img src="@certificate.File" style="height: 46px;">*@
                                                 </div>
                                             </div>
                                         </div>
@@ -266,13 +233,13 @@
                             </div>
 
                         </div>
-                        <div class="Premium">
+                        @*<div class="Premium">
                             <img src="~/img/Rectangle 60.png" style="height: 159px;">
                             <h4>Swan Global WLL</h4>
                             <p>Grow & nurture your network</p>
                             <hr>
                             <button type="button" class="btn btn-outline-danger">Activate</button>
-                        </div>
+                        </div>*@
                         <div class="peopleKnow">
                             <h5>People you might know</h5>
                             <hr>
@@ -339,3 +306,11 @@
 
 </main>
 <!-- End #main -->
+<script>
+    //var hrefCV = cv.getAttribute('href')
+    function dis() {
+        var cv = document.getElementById("cv");
+        cv.setAttribute("disabled")
+
+    }
+</script>

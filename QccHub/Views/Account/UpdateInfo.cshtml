@@ -1,4 +1,7 @@
 ﻿@model UpdateInfoVM
+@{ 
+    ViewBag.Title = "User Panel";
+}
 <main id="main">
     <div class="editUserProfileContent">
         <section class="container">
@@ -66,7 +69,7 @@
                         </div>
                     </div>
                 </div>
-            
+            </div>
             <!-- right side -->
             <div class="col-md-8">
                 <div class="center all">
@@ -189,7 +192,7 @@
                             <input hidden name="EmployeeId" value="@Model.Id" />
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <input type="email" class="form-control" name="CourseName" placeholder="Course">
+                                    <input type="text" class="form-control" name="CourseName" placeholder="Course">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <input type="text" class="form-control" name="Institute" placeholder="Institute">
@@ -206,12 +209,12 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
+                            @*<div class="form-group row">
                                 <div class="custom-file col-md-6 ml-2">
-                                <input type="file" name="File" class="custom-file-input" style="background: #00c9a7;">
-                                <label class="custom-file-label border-0 "><u>Uplaod certificate file</u></label>
-                            </div>
+                                    <input type="file" name="File" class="custom-file-input" style="background: #00c9a7;">
+                                    <label class="custom-file-label border-0 "><u>Uplaod certificate file</u></label>
                                 </div>
+                            </div>*@
 
                             <hr>
                             <div class="btnEdit">

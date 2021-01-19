@@ -2,6 +2,7 @@
 @using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor HttpContextAccessor
 @{
+    ViewBag.Title = "Company Profile";
     string userId = HttpContextAccessor.HttpContext.Session.GetString("UserId");
 }
 <div class="head">
@@ -11,16 +12,18 @@
     <div class="head-button">
         <div class="container">
             <div class="row">
-                <div class="col-md text-right">
-                    <img  class="imgCom" src="@($"/Profile Pictures/{Model.ProfileImagePath}" ?? "/img/Rectangle 60.png")" onError="this.onerror=null;this.src='/img/Rectangle 60.png';">
-                    @*<img src="~/img/Rectangle 60.png" class="imgCom">*@
-                </div>
-                <div class="col-md text-right linksCom">
+                <div class="col-md">
                     <a href="@Model.CompanyInfo?.Website" class="btn btn-danger ">visit website</a>
                     <button class="btn btn-warning ">follow</button>
                     <button class="btn btn-info ">share</button>
+                </div>
+                <div class="col-md text-right">
+                    <div class="imgCom">
+                        <img src="@($"/Profile Pictures/{Model.ProfileImagePath}" ?? "/img/Rectangle 60.png")" onError="this.onerror=null;this.src='/img/Rectangle 60.png';">
+                    </div>
+                </div>
+                <div class="col-md text-right linksCom">
                     <a href="@Url.Content($"~/account/getpdf/{Model.Id}")" class="btn btn-success btnDPdf">Download Portfolio</a>
-
                 </div>
             </div>
         </div>
@@ -36,13 +39,13 @@
                     <div class="left all">
                         <div class="nameUser">
                             <ul class="list-unstyled list-group p-2">
-                                <li class="list-group-item border-0"><span style="font-size:15px;color:red"> Common Connections : </span>200</li>
+                                <li class="list-group-item border-0"><span class="companyNameH"> @Model.CompanyName </span></li>
                                 <li class="list-group-item border-0"><span style="font-size:15px;color:red"> All Employess : </span>191,11</li>
                             </ul>
                             @if (userId == Model.Id.ToString())
                             { 
                                 <div style="padding-bottom: 20px;">
-                                    <a href="@Url.Content($"~/account/updateinfo/{userId}")" class="btn btn-info " style="border:none;background-color: #00c9a7;">Edit Info</a>
+                                    <a href="@Url.Content($"~/account/updateinfo/{userId}")" class="btn btn-info " style="border:none;background-color: #00c9a7;">Company Panel</a>
                                 </div>
                             }
                             <hr>
@@ -51,7 +54,7 @@
                             </div>
                             <hr />
                             <div>
-                                <ul class="list-unstyled list-group text-left ">
+                                <ul class="list-unstyled list-group text-left " style="overflow-x:auto;">
                                     <li class="list-group-item border-0"> <span style="font-size:15px;color:red">Website : </span><small></small> @Model.CompanyInfo?.Website</li>
                                     <li class="list-group-item border-0"> <span style="font-size:15px;color:red">Company Size : </span> @Model.CompanyInfo?.Size</li>
                                     <li class="list-group-item border-0"> <span style="font-size:15px;color:red">Mail : </span><small>@Model.Email</small> </li>
@@ -336,12 +339,15 @@
                                                                                 <h5>@project.Title</h5>
                                                                                 <small><i class="fas fa-map-marker-alt"></i> @project.Location</small>
                                                                             </div>
-                                                                            <div class="col-md-5 text-right">
-                                                                                <a href="@Url.Content($"~/jobs/jobdetails/{project.ID}")" class="btn btn-outline-warning"
-                                                                                   style="font-size: 13px;">
-                                                                                    View B2B
-                                                                                </a>
-                                                                            </div>
+                                                                            @if (userId == Model.Id.ToString())
+                                                                            { 
+                                                                                <div class="col-md-5 text-right">
+                                                                                    <a href="@Url.Content($"~/jobs/jobdetails/{project.ID}")" class="btn btn-outline-warning"
+                                                                                       style="font-size: 13px;">
+                                                                                        View B2B
+                                                                                    </a>
+                                                                                </div>
+                                                                                }
                                                                         </div>
                                                                         <div>
                                                                             <hr>
@@ -390,12 +396,15 @@
                                                                         <h5>@job.Title</h5>
                                                                         <small><i class="fas fa-map-marker-alt"></i> @job.Location</small>
                                                                     </div>
-                                                                    <div class="col-md-5 text-right">
-                                                                        <a href="@Url.Content($"~/jobs/jobdetails/{job.ID}")" class="btn btn-outline-danger" style="font-size: 13px;">
-                                                                            View Job
-                                                                        </a>
+                                                                    @if (userId == Model.Id.ToString())
+                                                                    {
+                                                                        <div class="col-md-5 text-right">
+                                                                            <a href="@Url.Content($"~/jobs/jobdetails/{job.ID}")" class="btn btn-outline-danger" style="font-size: 13px;">
+                                                                                View Job
+                                                                            </a>
+                                                                        </div>
+                                                                    }
                                                                     </div>
-                                                                </div>
                                                                 <div>
                                                                     <hr>
                                                                     <p>
@@ -513,7 +522,7 @@
                             <div class="peopleViewed">
                                 <div class="row">
                                     <div class="col-md-3">
-                                        <img src="~/img/Ellipse 18.png" style="height:40px ;">
+                                        <img src="~/img/Ellipse 18.png" style="height: 40px;">
                                     </div>
                                     <div class="col-md-6">
                                         <p>Ahmed Lotfi</p>

@@ -16,7 +16,7 @@
     }
     .imgCom {
         right: 72px !important;
-        top: 81px !important;
+        top: 60px !important;
         height: 133px !important;
         width: 162px !important;
     }
@@ -27,7 +27,11 @@
     }
     .btnDPdf {
         margin-right: 43px;
-        margin-top: 5px;
+        margin-top: 20px;
+    }
+    .imgCom img {
+        height: 109px;
+        width: 139px;
     }
 }
 

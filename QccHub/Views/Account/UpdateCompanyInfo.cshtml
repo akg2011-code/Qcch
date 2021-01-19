@@ -1,248 +1,251 @@
 ﻿@model UpdateInfoVM
-<main id="main">
-    <div class="editUserProfileContent">
-        <section class="container">
-            <div class="row">
-                <!-- left side -->
-                <div class="col-md-4">
-                    <div class="left all">
-                        <div class="nameUser">
-                            <div>
-                                <div class="row">
-                                    <div class="col-md-7">
-                                        <img id="pp" src="@($"/Profile Pictures/{Model.ProfileImagePath}" ?? "/img/Rectangle 60.png")" onError="this.onerror=null;this.src='/img/Rectangle 60.png';" style="height: 110px;">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label for="profile-picture-uploader" class="btn btn-warning" style="background-color: #00c9a7;">
-                                            <i class="far fa-images " style="color: #fff;"></i>
-                                        </label>
-                                        <input id="profile-picture-uploader" type="file" />
-                                    </div>
-                                    <div class="col-md-3">
-                                        <button type="button" id="btnDeletePP" class="btn btn-warning" style="background-color: #e72629;">
-                                            <i class="far fa-trash-alt" style="color: #fff;"></i>
-                                        </button>
+@{ 
+    ViewBag.Title = "Company Panel";
+}
+    <main id="main">
+        <div class="editUserProfileContent">
+            <section class="container">
+                <div class="row">
+                    <!-- left side -->
+                    <div class="col-md-4">
+                        <div class="left all">
+                            <div class="nameUser">
+                                <div>
+                                    <div class="row">
+                                        <div class="col-md-7">
+                                            <img id="pp" src="@($"/Profile Pictures/{Model.ProfileImagePath}" ?? "/img/Rectangle 60.png")" onError="this.onerror=null;this.src='/img/Rectangle 60.png';" style="height: 110px;">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label for="profile-picture-uploader" class="btn btn-warning" style="background-color: #00c9a7;">
+                                                <i class="far fa-images " style="color: #fff;"></i>
+                                            </label>
+                                            <input id="profile-picture-uploader" type="file" />
+                                        </div>
+                                        <div class="col-md-3">
+                                            <button type="button" id="btnDeletePP" class="btn btn-warning" style="background-color: #e72629;">
+                                                <i class="far fa-trash-alt" style="color: #fff;"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="postJob">
-                            <div class="socialProfiles">
-                                <div class="text-center">
-                                    <button class="btn btn-outline-primary col-md-9" data-toggle="modal"
-                                            data-target="#AddJob">
-                                        Add new Job
-                                    </button>
-                                    <!--modal-->
-                                    <div class="modal fade" id="AddJob" tabindex="-1" aria-labelledby="AddJobLabel"
-                                         aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="AddJobLabel">Add new job</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <form class="AddJobOrProjectForm">
-                                                        <input hidden name="IsB2b" value="false">
-                                                        <input hidden name="CompanyId" value="@Model.Id">
-                                                        <div class="form-group">
-                                                            <input type="text" name="Title" class="form-control" placeholder="Job Title">
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <input type="text" name="Location" class="form-control" placeholder="Job Location">
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                <textarea class="form-control" rows="2" name="Description" placeholder="Description....."
-                                                                          aria-label="With textarea"></textarea>
+                            <div class="postJob">
+                                <div class="socialProfiles">
+                                    <div class="text-center">
+                                        <button class="btn btn-outline-primary col-md-9" data-toggle="modal"
+                                                data-target="#AddJob">
+                                            Add new Job
+                                        </button>
+                                        <!--modal-->
+                                        <div class="modal fade" id="AddJob" tabindex="-1" aria-labelledby="AddJobLabel"
+                                             aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="AddJobLabel">Add new job</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form class="AddJobOrProjectForm">
+                                                            <input hidden name="IsB2b" value="false">
+                                                            <input hidden name="CompanyId" value="@Model.Id">
+                                                            <div class="form-group">
+                                                                <input type="text" name="Title" class="form-control" placeholder="Job Title">
                                                             </div>
-                                                        </div>
 
-                                                        <div class="row">
-                                                            <div class="col-md">
-                                                                <div class="form-group">
-                                                                    <select name="Type" class="form-control">
-                                                                        <option value="@((int)JobTypesEnum.FullTime)">Full Time</option>
-                                                                        <option value="@((int)JobTypesEnum.PartTime)">Part Time</option>
-                                                                    </select>
+                                                            <div class="form-group">
+                                                                <input type="text" name="Location" class="form-control" placeholder="Job Location">
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <div class="input-group">
+                                                                    <textarea class="form-control" rows="2" name="Description" placeholder="Description....."
+                                                                              aria-label="With textarea"></textarea>
                                                                 </div>
                                                             </div>
 
-                                                            <div class="col-md">
-                                                                <input type="number" name="Salary" class="form-control mb-4" placeholder="Salary">
+                                                            <div class="row">
+                                                                <div class="col-md">
+                                                                    <div class="form-group">
+                                                                        <select name="Type" class="form-control">
+                                                                            <option value="@((int)JobTypesEnum.FullTime)">Full Time</option>
+                                                                            <option value="@((int)JobTypesEnum.PartTime)">Part Time</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md">
+                                                                    <input type="number" name="Salary" class="form-control mb-4" placeholder="Salary">
+                                                                </div>
+
                                                             </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                        data-dismiss="modal">
+                                                                    Close
+                                                                </button>
+                                                                <input type="submit" class="btn btn-primary" value="Add Job" />
+                                                            </div>
+                                                        </form>
 
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                    data-dismiss="modal">
-                                                                Close
-                                                            </button>
-                                                            <input type="submit" class="btn btn-primary" value="Add Job" />
-                                                        </div>
-                                                    </form>
-
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <!--modal-->
+                                        <!--modal-->
 
-                                    <button class="btn btn-outline-primary col-md-9" data-toggle="modal"
-                                            data-target="#AddProject">
-                                        Add new project
-                                    </button>
-                                    <!--modal-->
-                                    <div class="modal fade" id="AddProject" tabindex="-1" aria-labelledby="AddProjectLabel"
-                                         aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="AddProjectLabel">Add new project</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <form class="AddJobOrProjectForm">
-                                                        <input hidden name="CompanyId" value="@Model.Id">
-                                                        <input hidden name="IsB2b" value="true" />
-                                                        <div class="form-group">
-                                                            <input type="text" name="Title" class="form-control" placeholder="Project Title">
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <input type="text" name="Location" class="form-control" placeholder="Job Location">
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                <textarea class="form-control" name="Description" rows="2" placeholder="Description....."
-                                                                          aria-label="With textarea"></textarea>
+                                        <button class="btn btn-outline-primary col-md-9" data-toggle="modal"
+                                                data-target="#AddProject">
+                                            Add new B2B
+                                        </button>
+                                        <!--modal-->
+                                        <div class="modal fade" id="AddProject" tabindex="-1" aria-labelledby="AddProjectLabel"
+                                             aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="AddProjectLabel">Add new project</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form class="AddJobOrProjectForm">
+                                                            <input hidden name="CompanyId" value="@Model.Id">
+                                                            <input hidden name="IsB2b" value="true" />
+                                                            <div class="form-group">
+                                                                <input type="text" name="Title" class="form-control" placeholder="Project Title">
                                                             </div>
-                                                        </div>
 
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                    data-dismiss="modal">
-                                                                Close
-                                                            </button>
-                                                            <input type="submit" class="btn btn-primary" value="Add Project" />
-                                                        </div>
-                                                    </form>
+                                                            <div class="form-group">
+                                                                <input type="text" name="Location" class="form-control" placeholder="Job Location">
+                                                            </div>
 
+                                                            <div class="form-group">
+                                                                <div class="input-group">
+                                                                    <textarea class="form-control" name="Description" rows="2" placeholder="Description....."
+                                                                              aria-label="With textarea"></textarea>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                        data-dismiss="modal">
+                                                                    Close
+                                                                </button>
+                                                                <input type="submit" class="btn btn-primary" value="Add Project" />
+                                                            </div>
+                                                        </form>
+
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <!--modal-->
+                                        <!--modal-->
 
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <!-- right side -->
-                <div class="col-md-8">
-                    <div class="center all">
-                        <div class="aboutMe">
-                            <h4>Edit Company Info</h4>
-                            <small>Edit all your important information</small>
-                            <hr>
-                            <form id="basicCompanyInfoForm">
-                                <input hidden name="Id" value="@Model.Id" />
-
-                                <div class="form-group">
-                                    <label for="my-input">Our Mission *</label>
-                                    <div class="input-group">
-                                        <textarea name="Mission" class="form-control" rows="4" placeholder="Write your Mission......"
-                                                  aria-label="With textarea">@Model.Mission</textarea>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="my-input">Our Vision *</label>
-                                    <div class="input-group">
-                                        <textarea name="Vision" class="form-control" rows="4" placeholder="Write your Vision......"
-                                                  aria-label="With textarea">@Model.Vision</textarea>
-                                    </div>
-                                </div>
-
-                                <div class="btnEdit">
-                                    <button class="btn btn-primary border-0">Update info</button>
-                                </div>
-                            </form>
-                        </div>
-                        <!-- Qualification-sction -->
-                        <div class="aboutMe">
-                            <h4>Overview</h4>
-                            <small>Edit all your important information</small>
-                            <hr>
-                            <form id="companyOverviewForm">
-                                <input hidden name="Id" value="@Model.Id" />
-                                <table class="table border-0">
-                                    <tbody>
-                                        <tr>
-                                            <td>Website</td>
-                                            <td>
-                                                <div class="form-group">
-                                                    <input name="Website" value="@Model.Website" class="form-control" type="text" placeholder="http://">
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Industry</td>
-                                            <td>
-                                                <div class="form-group">
-                                                    <input name="Industry" value="@Model.Industry" class="form-control" type="text" placeholder="write industry">
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Company size</td>
-                                            <td>
-                                                <div class="form-group">
-                                                    <input name="Size" value="@Model.Size" class="form-control" type="number" placeholder="write Company size">
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Company type</td>
-                                            <td>
-                                                <div class="form-group">
-                                                    <input name="Type" value="@Model.Type" class="form-control" type="text" placeholder="write Company type">
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Founded year</td>
-                                            <td>
-                                                <div class="form-group">
-                                                    <input name="FoundedYear" value="@Model.FoundedYear" class="form-control" type="number" placeholder="write founded year">
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                    </tbody>
-                                </table>
+                    <!-- right side -->
+                    <div class="col-md-8">
+                        <div class="center all">
+                            <div class="aboutMe">
+                                <h4>Edit Company Info</h4>
+                                <small>Edit all your important information</small>
                                 <hr>
-                                <div class="btnEdit">
-                                    <button class="btn btn-primary border-0">Update</button>
-                                </div>
-                            </form>
-                        </div>
+                                <form id="basicCompanyInfoForm">
+                                    <input hidden name="Id" value="@Model.Id" />
 
+                                    <div class="form-group">
+                                        <label for="my-input">Our Mission *</label>
+                                        <div class="input-group">
+                                            <textarea name="Mission" class="form-control" rows="4" placeholder="Write your Mission......"
+                                                      aria-label="With textarea">@Model.Mission</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="my-input">Our Vision *</label>
+                                        <div class="input-group">
+                                            <textarea name="Vision" class="form-control" rows="4" placeholder="Write your Vision......"
+                                                      aria-label="With textarea">@Model.Vision</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="btnEdit">
+                                        <button class="btn btn-primary border-0">Update info</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- Qualification-sction -->
+                            <div class="aboutMe">
+                                <h4>Overview</h4>
+                                <small>Edit all your important information</small>
+                                <hr>
+                                <form id="companyOverviewForm">
+                                    <input hidden name="Id" value="@Model.Id" />
+                                    <table class="table border-0">
+                                        <tbody>
+                                            <tr>
+                                                <td>Website</td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <input name="Website" value="@Model.Website" class="form-control" type="text" placeholder="http://">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Industry</td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <input name="Industry" value="@Model.Industry" class="form-control" type="text" placeholder="write industry">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Company size</td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <input name="Size" value="@Model.Size" class="form-control" type="number" placeholder="write Company size">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Company type</td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <input name="Type" value="@Model.Type" class="form-control" type="text" placeholder="write Company type">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Founded year</td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <input name="FoundedYear" value="@Model.FoundedYear" class="form-control" type="number" placeholder="write founded year">
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                    <hr>
+                                    <div class="btnEdit">
+                                        <button class="btn btn-primary border-0">Update</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
-        </section>
-    </div>
-
-</main>
+            </section>
+        </div>
+    </main>
 
 
 @section Scripts{
