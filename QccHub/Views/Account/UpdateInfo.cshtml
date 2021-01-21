@@ -1,308 +1,252 @@
 ﻿@model UpdateInfoVM
-@{ 
+@{
     ViewBag.Title = "User Panel";
 }
-<main id="main">
-    <div class="editUserProfileContent">
-        <section class="container">
-            <div class="row">
-                <!-- left side -->
-                <div class="col-md-4">
-                    <div class="left all">
-                        <div class="nameUser">
-                            <div>
-                                <div class="row">
-                                    <div class="col-md-7">
-                                        <img id="pp" src="@($"/Profile Pictures/{Model.ProfileImagePath}" ?? "/img/Ellipse 9.png")" onError="this.onerror=null;this.src='/img/Ellipse 9.png';" style="height: 130px;">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label for="profile-picture-uploader" class="btn btn-warning" style="background-color: #00c9a7;">
-                                            <i class="far fa-images " style="color: #fff;"></i>
-                                        </label>
-                                        <input id="profile-picture-uploader" type="file" />
-                                    </div>
-                                    <div class="col-md-3">
-                                        <button type="button" id="btnDeletePP" class="btn btn-warning" style="background-color: #e72629;">
-                                            <i class="far fa-trash-alt" style="color: #fff;"></i>
-                                        </button>
+    <main id="main">
+        <div class="editUserProfileContent">
+            <section class="container">
+                <div class="row">
+                    <!-- left side -->
+                    <div class="col-md-4">
+                        <div class="left all">
+                            <div class="nameUser">
+                                <div>
+                                    <div class="row">
+                                        <div class="col-md-7">
+                                            <img id="pp" src="@($"/Profile Pictures/{Model.ProfileImagePath}" ?? "/img/Ellipse 9.png")" onError="this.onerror=null;this.src='/img/Ellipse 9.png';" style="height: 130px;" >
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label for="profile-picture-uploader" class="btn btn-warning" style="background-color: #00c9a7;">
+                                                <i class="far fa-images " style="color: #fff;"></i>
+                                            </label>
+                                            <input id="profile-picture-uploader" type="file" accept="image/*"/>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <button type="button" id="btnDeletePP" class="btn btn-warning" style="background-color: #e72629;">
+                                                <i class="far fa-trash-alt" style="color: #fff;"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="mainInfo">
-                            <h5>About</h5>
-                            <span>Tell about yourself in two sentences</span>
-                            <hr>
-                            <small>Bio</small>
-                            <form id="bioForm">
-                                <input hidden name="Id" value="@Model.Id">
-                                <div class="input-group">
-                                    <textarea class="form-control" rows="4" name="Bio" placeholder="Write your thoughts......"
-                                              aria-label="With textarea">@Model.Bio</textarea>
-                                </div>
+                            <div class="mainInfo">
+                                <h5>About</h5>
+                                <span>Tell about yourself in two sentences</span>
                                 <hr>
-                                <div class="text-center">
-                                    <button class="btn btn-info col-md-6">Save</button>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="postJob">
-                            <div class="socialProfiles">
-                                <h4>
-                                    CV
-                                </h4>
-                                <span>Add CV to your profile</span>
-                                <hr>
-                                <div class="form-group row">
-                                    <div class="custom-file col-md-10 ml-2">
-                                        <input id="cv-uploader" type="file" name="File" class="custom-file-input" style="background: #00c9a7;">
-                                        <label class="custom-file-label border-0 "><u>Choose your CV file</u></label>
+                                <small>Bio</small>
+                                <form id="bioForm">
+                                    <input hidden name="Id" value="@Model.Id">
+                                    <div class="input-group">
+                                        <textarea class="form-control" rows="4" name="Bio" placeholder="Write your thoughts......"
+                                                  aria-label="With textarea">@Model.Bio</textarea>
                                     </div>
-                                </div>
-
-                                @*<hr>
-                                <div class="btnEdit text-center">
-                                    <button class="btn btn-primary border-0">Upload</button>
-                                </div>*@
-
+                                    <hr>
+                                    <div class="text-center">
+                                        <button class="btn btn-info col-md-6">Save</button>
+                                    </div>
+                                </form>
                             </div>
+                            <div class="postJob">
+                                <div class="socialProfiles">
+                                    <h4>
+                                        CV
+                                    </h4>
+                                    <span>Add CV to your profile</span>
+                                    <hr>
+                                    <div class="form-group row">
+                                        <div class="custom-file col-md-10 ml-2">
+                                            <input id="cv-uploader" type="file" name="File" accept="application/pdf" class="custom-file-input" style="background: #00c9a7;">
+                                            <label class="custom-file-label border-0 "><u>Choose your CV file</u></label>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- right side -->
+                    <div class="col-md-8">
+                        <div class="center all">
+                            <div class="aboutMe">
+                                <h4>Edit Basic Info</h4>
+                                <small>Edit all your important information</small>
+                                <hr>
+                                <form id="basicInfoForm">
+                                    <input hidden name="Id" value="@Model.Id" />
+                                    <div class="form-group">
+                                        <label asp-for="FullName">Full Name <span class="text-danger">*</span></label>
+                                        <input type="text" asp-for="FullName" class="form-control" placeholder="Full name">
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label asp-for="Email">Email *</label>
+                                            <input type="email" asp-for="Email" class="form-control" placeholder="Email">
+                                            <span asp-validation-for="Email"></span>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label asp-for="PhoneNumber">Phone Number *</label>
+                                            <input type="text" asp-for="PhoneNumber" class="form-control" placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label asp-for="DateOfBirth">Birthdate *</label>
+                                            <input type="date" asp-for='DateOfBirth' class="form-control">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label asp-for="Gender">Gender</label>
+                                            <select asp-for="Gender" class="form-control">
+                                                <option value="Male" selected>Male</option>
+                                                <option value="Female">Female</option>
+                                                <option value="NotSpecified">Other</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label asp-for="NationalityID">Nationality *</label>
+                                            <select asp-for="NationalityID" asp-items='ViewData["Countries"] as SelectList' class="form-control"></select>
+                                        </div>
+                                    </div>
+                                    <div class="btnEdit">
+                                        <button class="btn btn-primary border-0">Update info</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- Qualification-section -->
+                            <div class="aboutMe">
+                                <h4>Education</h4>
+                                <small>Edit all your important information</small>
+                                <hr>
+                                <form id="eduForm">
+                                    <input hidden name="EmployeeId" value="@Model.Id" />
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <input type="text" name="Institute" class="form-control" placeholder="Institute">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <input type="text" name="Major" class="form-control" placeholder="Major">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-md-4">
+                                            <input type="datetime-local" name="Year" class="form-control" placeholder="Year">
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="btnEdit">
+                                        <button class="btn btn-primary border-0">Add New</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- Expireenc-section -->
+                            <div class="aboutMe">
+                                <h4>Experience</h4>
+                                <small>Edit all your important information</small>
+                                <hr>
+                                <form id="expForm">
+                                    <input hidden name="UserId" value="@Model.Id" />
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <input type="text" name="CompanyName" class="form-control" placeholder="Company">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <input type="text" name="Role" class="form-control" placeholder="Role">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-md-6">
+                                            <label>From</label>
+                                            <input type="datetime-local" name="FromDate" class="form-control">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>To</label>
+                                            <input type="datetime-local" name="ToDate" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Is current job</label>
+                                        <input type="checkbox" name="IsCurrent" />
+                                    </div>
+                                    <hr>
+                                    <div class="btnEdit">
+                                        <button class="btn btn-primary border-0">Add New</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- Certificates-section -->
+                            <div class="aboutMe">
+                                <h4>Certificates</h4>
+                                <small>Edit all your important information</small>
+                                <hr>
+                                <form id="certificatesForm">
+                                    <input hidden name="EmployeeId" value="@Model.Id" />
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <input type="text" class="form-control" name="CourseName" placeholder="Course">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <input type="text" class="form-control" name="Institute" placeholder="Institute">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-md-6">
+                                            <label>From</label>
+                                            <input type="datetime-local" name="FromDate" class="form-control">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>To</label>
+                                            <input type="datetime-local" name="ToDate" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <hr>
+                                    <div class="btnEdit">
+                                        <button class="btn btn-primary border-0">Add New</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- Password-section -->
+                            <div class="aboutMe">
+                                <h4>Update Password</h4>
+                                <small>Edit all your important information</small>
+                                <hr>
+                                <form id="passwordForm">
+                                    <input hidden name="Id" value="@Model.Id" />
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <input type="password" class="form-control" name="password" placeholder="password">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <input type="password" class="form-control" name="confirmPassword"
+                                                   placeholder="Confirm password">
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <section class="text-right" style="margin-bottom: 30px;">
+                                        <button class="btn btn-primary border-0 col-md-2" style="background: #00c9a7;">Update now</button>
+                                    </section>
+                                </form>
+                            </div>
+
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- right side -->
-            <div class="col-md-8">
-                <div class="center all">
-                    <div class="aboutMe">
-                        <h4>Edit Basic Info</h4>
-                        <small>Edit all your important information</small>
-                        <hr>
-                        <form id="basicInfoForm">
-                            <input hidden name="Id" value="@Model.Id"/>
-                            <div class="form-group">
-                                <label asp-for="FullName">Full Name <span class="text-danger">*</span></label>
-                                <input type="text" asp-for="FullName" class="form-control" placeholder="Full name">
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label asp-for="Email">Email *</label>
-                                    <input type="email" asp-for="Email" class="form-control" placeholder="Email">
-                                    <span asp-validation-for="Email"></span>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label asp-for="PhoneNumber">Phone Number *</label>
-                                    <input type="text" asp-for="PhoneNumber" class="form-control" placeholder="">
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label asp-for="DateOfBirth">Birthdate *</label>
-                                    <input type="date" asp-for='DateOfBirth' class="form-control">
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label asp-for="Gender">Gender</label>
-                                    <select asp-for="Gender" class="form-control">
-                                        <option value="Male" selected>Male</option>
-                                        <option value="Female">Female</option>
-                                        <option value="NotSpecified">Other</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label asp-for="NationalityID">Nationality *</label>
-                                    <select asp-for="NationalityID" asp-items='ViewData["Countries"] as SelectList' class="form-control"></select>
-                                </div>
-                            </div>
-                            <div class="btnEdit">
-                                <button class="btn btn-primary border-0">Update info</button>
-                            </div>
-                        </form>
-                    </div>
-                    <!-- Qualification-section -->
-                    <div class="aboutMe">
-                        <h4>Education</h4>
-                        <small>Edit all your important information</small>
-                        <hr>
-                        <form id="eduForm">
-                            <input hidden name="EmployeeId" value="@Model.Id"/>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <input type="text" name="Institute" class="form-control" placeholder="Institute">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <input type="text" name="Major" class="form-control" placeholder="Major">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-md-4">
-                                    <input type="datetime-local" name="Year" class="form-control" placeholder="Year">
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="btnEdit">
-                                <button class="btn btn-primary border-0">Add New</button>
-                            </div>
-                        </form>
-                    </div>
-
-                    <!-- Expireenc-section -->
-                    <div class="aboutMe">
-                        <h4>Experience</h4>
-                        <small>Edit all your important information</small>
-                        <hr>
-                        <form id="expForm">
-                            <input hidden name="UserId" value="@Model.Id" />
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <input type="text" name="CompanyName" class="form-control" placeholder="Company">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <input type="text" name="Role" class="form-control" placeholder="Role">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-md-6">
-                                    <label>From</label>
-                                    <input type="datetime-local" name="FromDate" class="form-control">
-                                </div>
-                                <div class="col-md-6">
-                                    <label>To</label>
-                                    <input type="datetime-local" name="ToDate" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Is current job</label>
-                                <input type="checkbox" name="IsCurrent" />
-                            </div>
-                            <hr>
-                            <div class="btnEdit">
-                                <button class="btn btn-primary border-0">Add New</button>
-                            </div>
-                        </form>
-                    </div>
-
-                    <!-- Certificates-section -->
-                    <div class="aboutMe">
-                        <h4>Certificates</h4>
-                        <small>Edit all your important information</small>
-                        <hr>
-                        <form id="certificatesForm">
-                            <input hidden name="EmployeeId" value="@Model.Id" />
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <input type="text" class="form-control" name="CourseName" placeholder="Course">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <input type="text" class="form-control" name="Institute" placeholder="Institute">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-md-6">
-                                    <label>From</label>
-                                    <input type="datetime-local" name="FromDate" class="form-control">
-                                </div>
-                                <div class="col-md-6">
-                                    <label>To</label>
-                                    <input type="datetime-local" name="ToDate" class="form-control">
-                                </div>
-                            </div>
-
-                            @*<div class="form-group row">
-                                <div class="custom-file col-md-6 ml-2">
-                                    <input type="file" name="File" class="custom-file-input" style="background: #00c9a7;">
-                                    <label class="custom-file-label border-0 "><u>Uplaod certificate file</u></label>
-                                </div>
-                            </div>*@
-
-                            <hr>
-                            <div class="btnEdit">
-                                <button class="btn btn-primary border-0">Add New</button>
-                            </div>
-                        </form>
-                    </div>
-
-                    <!-- Cover Letter-section -->
-                    @*<div class="aboutMe">
-                        <h4>Cover Letter</h4>
-                        <small>Edit all your important information</small>
-                        <hr>
-                        <div class="input-group">
-                            <textarea class="form-control" rows="4" placeholder="Write your thoughts......"
-                                      aria-label="With textarea"></textarea>
-                        </div>
-                    </div>*@
-
-                    <!-- Gallary
-    <div class="aboutMe">
-        <h4>Gallary</h4>
-        <small>Edit all your important information</small>
-        <hr>
-        <div class="form-group row">
-            <div class="custom-file col-md-5">
-                <input type="file" class="custom-file-input" style="background: #00c9a7;" id="customFile">
-                <label class="custom-file-label border-0" for="customFile">Upload Image</label>
-            </div>
-
-            <div class="btnEdit">
-                <button class="btn btn-primary border-0">Add New</button>
-            </div>
-
+            </section>
         </div>
-        <div class="form-group row">
-            <div class="custom-file col-md-5">
-                <input type="file" class="custom-file-input" style="background: #00c9a7;" id="customFile">
-                <label class="custom-file-label border-0" for="customFile">Upload Video</label>
-            </div>
-
-            <div class="btnEdit">
-                <button class="btn btn-primary border-0">Add New</button>
-            </div>
-
-        </div>
-
-        <div class="form-group row">
-            <div class="custom-file col-md-5">
-                <input type="file" class="custom-file-input" style="background: #00c9a7;" id="customFile">
-                <label class="custom-file-label border-0" for="customFile">Upload Attachment</label>
-            </div>
-
-            <div class="btnEdit">
-                <button class="btn btn-primary border-0">Add New</button>
-            </div>
-
-        </div>
-    </div> -->
-                    <!-- Password-section -->
-                    <div class="aboutMe">
-                        <h4>Update Password</h4>
-                        <small>Edit all your important information</small>
-                        <hr>
-                        <form id="passwordForm">
-                            <input hidden name="Id" value="@Model.Id"/>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <input type="password" class="form-control" name="password" placeholder="password">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <input type="password" class="form-control" name="confirmPassword"
-                                           placeholder="Confirm password">
-                                </div>
-                            </div>
-                            <hr>
-                            <section class="text-right" style="margin-bottom: 30px;">
-                                <button class="btn btn-primary border-0 col-md-2" style="background: #00c9a7;">Update now</button>
-                            </section>
-                        </form>
-                    </div>
-                    
+        <div class="spinner">
+            <div class="loadingio-spinner-spinner-bwl2z65sri">
+                <div class="ldio-bdqwo1yrchn">
+                    <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
                 </div>
             </div>
-        </section>
-    </div>
-
-</main>
+        </div>
+    </main>
 <!-- End #main -->
 
 @section Scripts
@@ -341,7 +285,7 @@
                     processData: false,
                     contentType: false,
                     success: function (cvPath) {
-                        alert('Your CV is uploaded successfully, Check your profile');
+                        //alert('Your CV is uploaded successfully, Check your profile');
                     },
                     error: function (xhr, ajaxSettings, statusCode) {
                         console.log(xhr.responseText);
@@ -379,7 +323,7 @@
                 processData: false,
                 contentType: false,
                 success: function () {
-                window.location.reload()
+                    //$('#basicInfoForm').trigger("reset");
                 },
                 error: function (xhr, ajaxSettings, statusCode) {
                     console.log(xhr.responseText);
@@ -425,7 +369,7 @@
                 processData: false,
                 contentType: false,
                 success: function () {
-                    window.location.reload();
+                    $('#eduForm').trigger("reset");
                 },
                 error: function (xhr, ajaxSettings, statusCode) {
                     console.log(xhr.responseText);
@@ -448,7 +392,8 @@
                 processData: false,
                 contentType: false,
                 success: function () {
-                    window.location.reload();
+                    //window.location.reload();
+                    $('#certificatesForm').trigger("reset");
                 },
                 error: function (xhr, ajaxSettings, statusCode) {
                     console.log(xhr.responseText);
@@ -479,13 +424,23 @@
                 processData: false,
                 contentType: false,
                 success: function () {
-                    window.location.reload();
+                    $('#expForm').trigger("reset");
+
                 },
                 error: function (xhr, ajaxSettings, statusCode) {
                     console.log(xhr.responseText);
                 }
             });
         });
+
+        var $loading = $('.spinner').hide();
+        $(document)
+            .ajaxStart(function () {
+                $loading.show();
+            })
+            .ajaxStop(function () {
+                $loading.hide();
+            });
 
     </script>
 }
