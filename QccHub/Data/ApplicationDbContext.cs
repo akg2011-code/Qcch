@@ -49,6 +49,7 @@ namespace QccHub.Data
         public DbSet<Job> Job { get; set; }
         public DbSet<JobCategory> JobCategory { get; set; }
         public DbSet<News> News { get; set; }
+        public DbSet<MarketInfo> MarketInfo { get; set; }
         public DbSet<NewsComments> NewsComments { get; set; }
         public DbSet<Order> Order { get; set; }
         public DbSet<OrderDetails> OrderDetails { get; set; }

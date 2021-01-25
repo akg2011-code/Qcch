@@ -41,5 +41,9 @@ namespace QccHub.Areas.Admin.Controllers
         {
             return View();
         }
+        public IActionResult MarketInfo()
+        {
+            return View();
+        }
     }
 }
