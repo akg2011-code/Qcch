@@ -13,7 +13,7 @@
                                 <div>
                                     <div class="row">
                                         <div class="col-md-7">
-                                            <img id="pp" src="@($"/Profile Pictures/{Model.ProfileImagePath}" ?? "/img/Ellipse 9.png")" onError="this.onerror=null;this.src='/img/Ellipse 9.png';" style="height: 130px;" >
+                                            <img id="pp" src="@($"/Profile Pictures/{Model.ProfileImagePath}" ?? "/img/Profile picture.png")" onError="this.onerror=null;this.src='/img/Profile picture.png';" style="height: 130px;" >
                                         </div>
                                         <div class="col-md-2">
                                             <label for="profile-picture-uploader" class="btn btn-warning" style="background-color: #00c9a7;">
@@ -265,6 +265,7 @@
                     contentType: false,
                     success: function (picturePath) {
                         $('#pp').prop('src', `/Profile Pictures/${picturePath.replaceAll('"','')}`);
+                        $('#layoutPP').prop('src', `/Profile Pictures/${picturePath.replaceAll('"','')}`);
                     },
                     error: function (xhr, ajaxSettings, statusCode) {
                         console.log(xhr.responseText);

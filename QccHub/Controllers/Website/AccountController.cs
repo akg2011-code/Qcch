@@ -163,6 +163,20 @@ namespace QccHub.Controllers.Website
         }
 
         [HttpGet("{id}")]
+        public async Task<IActionResult> GetProfilePicture(int id)
+        {
+            var httpClient = _clientFactory.CreateClient("API");
+            var response = await httpClient.GetAsync($"Account/GetProfilePicture/{id}");
+            var result = await response.Content.ReadAsStringAsync();
+            if (!response.IsSuccessStatusCode)
+            {
+                return BadRequest(result);
+            }
+            return Content(result);
+        }
+
+
+        [HttpGet("{id}")]
         public async Task<IActionResult> UpdateInfo(int id)
         {
             if (HttpContext.Session.GetString("UserId") != id.ToString())

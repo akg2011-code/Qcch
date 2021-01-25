@@ -212,6 +212,21 @@ namespace QccHub.Controllers.Api
             return Ok(user);
         }
 
+
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ApplicationUser), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetProfilePicture(int id)
+        {
+            var user = await _userRepo.GetUserByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound("User Not Found");
+            }
+            return Ok(user.ProfileImagePath);
+        }
+
+
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(UpdateInfoVM), StatusCodes.Status200OK)]

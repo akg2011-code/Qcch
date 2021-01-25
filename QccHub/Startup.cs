@@ -73,7 +73,9 @@ namespace QccHub
                         .AllowAnyHeader());
             });
 
-            services.AddIdentityCore<ApplicationUser>()
+            services.AddIdentityCore<ApplicationUser>(o => {
+                o.User.RequireUniqueEmail = true;
+            })
                .AddRoles<ApplicationRole>()
                .AddEntityFrameworkStores<ApplicationDbContext>()
                .AddDefaultTokenProviders()

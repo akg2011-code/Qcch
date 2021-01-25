@@ -103,9 +103,7 @@
                     {
                         <li>
                             <a href="@Url.Content($"~/account/profile/{userId}")">
-                                <img src="/img/Profile picture.png" class="profileMini">
-                                @*<img class="rounded-circle" src="@($"/Profile Pictures/{Model.ProfileImagePath}" ?? "/img/Profile picture.png")" onError="this.onerror=null;this.src='/img/Profile picture.png';" style="height: 41px;">*@
-
+                                <img id="layoutPP" src="/img/Profile picture.png" class="profileMini">
                             </a>
                         </li>
                     }
@@ -154,7 +152,24 @@
 
     <!-- Template Main JS File -->
     <script src="~/js/main.js"></script>
+    @if (!string.IsNullOrWhiteSpace(roleName) && !string.IsNullOrWhiteSpace(userId))
+    {
+        <script>
+            $.ajax({
+                type:"GET",
+                url: "/account/getprofilepicture/@userId",
+                success: function (result) {
+                    if (result != '')
+                        $('#layoutPP').prop('src', `/Profile Pictures/${result.replaceAll('"', '')}`);
+                },
+                error: function (xhr, response, settings) {
+                    console.log(xhr.responseText);
+                }
+            })
+        </script>
+    }
     @RenderSection("Scripts", false)
+
 </body>
 
 </html>

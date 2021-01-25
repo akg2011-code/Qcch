@@ -15,7 +15,7 @@
                     <div class="left all">
                         <div class="nameUser">
                             <div style="padding-bottom: 50px;padding-top:20px">
-                                <img id="pp" src="@($"/Profile Pictures/{Model.ProfileImagePath}" ?? "/img/Ellipse 9.png")" onError="this.onerror=null;this.src='/img/Ellipse 9.png';" style="height: 130px;">
+                                <img id="pp" src="@($"/Profile Pictures/{Model.ProfileImagePath}" ?? "/img/Profile picture.png")" onError="this.onerror=null;this.src='/img/Profile picture.png';" style="height: 130px;">
                             </div>
                             <div style="overflow-x:auto;">
                                 <h3>@(!string.IsNullOrWhiteSpace(Model.FullName) ? Model.FullName : Model.UserName)</h3>
