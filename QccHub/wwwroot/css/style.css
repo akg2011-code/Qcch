@@ -2346,6 +2346,7 @@ section {
     height: 38px;
     width: 43px;
     filter: drop-shadow(2px 4px 3px #000);
+    border-radius: 35%;
 }
 .companyNameH {
     font-size: 18px;
