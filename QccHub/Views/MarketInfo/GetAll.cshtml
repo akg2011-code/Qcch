@@ -1,6 +1,53 @@
 ﻿@model IEnumerable<MarketInfo>
 
-@foreach (var item in Model)
-	{
-		 <h2>@item.Title</h2>
-	}
+<main id="main">
+    <div class="JobContent">
+        <section class="container">
+            <div class="row">
+                <!-- left side -->
+                <!-- center side -->
+                <div class="col-md-12">
+                    <div class="center all">
+                        <!-- education-sction -->
+                        <div class="Education details-Edu-Expe-Certi text-center">
+                            <h1 style="color: red;">Advertise on QCCH to get more work</h1>
+                            <h5>People come to QCCH to be inspired discover things they care about</h5>
+                        </div>
+
+                        <div class="Education details-Edu-Expe-Certi">
+                            <div class="univeristy">
+                                <!-- job one -->
+                                <div class="uniDeails">
+                                    @foreach (var item in Model)
+                                    {
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <img src="assets/img/Rectangle 127.png" style="height: 269px; width: 100%;">
+                                            </div>
+                                            <div class="col-md-8">
+                                                <h4>@item.Title</h4>
+                                                <p id="mini-news">
+                                                    @item.Details
+                                                </p>
+                                                <div class="row">
+                                                    <div class="col-md">
+                                                        <small>@item.CreatedDate</small>
+                                                    </div>
+                                                    <div class="col-md text-right">
+                                                        <a asp-action="GetMarketInfoDetails" asp-route-id="@item.ID" type="button" class="btn btn-warning">Get In Touch</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+</main>
