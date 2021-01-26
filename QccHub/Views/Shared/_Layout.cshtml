@@ -56,7 +56,7 @@
                     </li>
                     <li>
                         <div class="form-inline">
-                            <input class="form-control form-control-sm ml-3 searchBtn2" type="text" placeholder="Search ..." aria-label="Search">
+                            @*<input class="form-control form-control-sm ml-3 searchBtn2" type="text" placeholder="Search ..." aria-label="Search">*@
                         </div>
                     </li>
                     @if (!string.IsNullOrWhiteSpace(userId))
@@ -88,15 +88,10 @@
                     }
 
                     <li><a href=""><i class="icofont-info-circle"></i> Market info</a></li>
-                    <li><a href=""><i class="icofont-food-basket"></i> Store</a></li>
+                    @*<li><a href=""><i class="icofont-food-basket"></i> Store</a></li>*@
                     <li>
                         <a href="">
-                            <i class="icofont-ui-messaging"></i><span class="badge badge-light notification1">9</span>&nbsp;&nbsp;
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <i class="icofont-alarm"></i><span class="badge badge-light notification2">9</span>&nbsp;&nbsp;
+                            @*<i class="icofont-ui-messaging"></i><span class="badge badge-light notification1">9</span>&nbsp;&nbsp;*@
                         </a>
                     </li>
                     @if (!string.IsNullOrWhiteSpace(roleName))
@@ -116,6 +111,13 @@
                             </a>
                         </li>
                     }
+
+                    <li>
+                        <a href="">
+                            @*<i class="icofont-alarm"></i><span class="badge badge-light notification2">9</span>&nbsp;&nbsp;*@
+                        </a>
+                    </li>
+
                 </ul>
             </nav><!-- .nav-menu -->
 
@@ -126,7 +128,12 @@
     <nav aria-label="breadcrumb">
         <div class="container">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item active" aria-current="page"><i class="icofont-home"></i></li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    <a href="@Url.Content($"~/account/profile/{userId}")">
+                        <i class="icofont-home"></i>
+                        My Profile
+                    </a>
+                </li>
             </ol>
         </div>
     </nav>

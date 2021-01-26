@@ -5,6 +5,7 @@
     ViewBag.Title = "Company Profile";
     string userId = HttpContextAccessor.HttpContext.Session.GetString("UserId");
 }
+
 <div class="head">
     <div class="container-fluid">
         <img src="~/img/Rectangle 98.png" class="img-fluid ">
@@ -40,10 +41,10 @@
                         <div class="nameUser">
                             <ul class="list-unstyled list-group p-2">
                                 <li class="list-group-item border-0"><span class="companyNameH"> @Model.CompanyName </span></li>
-                                <li class="list-group-item border-0"><span style="font-size:15px;color:red"> All Employess : </span>191,11</li>
+                                <li class="list-group-item border-0"><span style="font-size:15px;color:red"> All Employess : </span> @Model.CompanyInfo?.Size</li>
                             </ul>
                             @if (userId == Model.Id.ToString())
-                            { 
+                            {
                                 <div style="padding-bottom: 20px;">
                                     <a href="@Url.Content($"~/account/updateinfo/{userId}")" class="btn btn-info " style="border:none;background-color: #00c9a7;">Company Panel</a>
                                 </div>
@@ -78,7 +79,7 @@
                                                 <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home"
                                                    role="tab" aria-controls="nav-home" aria-selected="true">About Us</a>
                                                 <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
-                                                   role="tab" aria-controls="nav-profile" aria-selected="false">Products</a>
+                                                   role="tab" aria-controls="nav-profile" aria-selected="false">Projects</a>
                                                 <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact"
                                                    role="tab" aria-controls="nav-contact" aria-selected="false">Services</a>
                                                 <a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab"
@@ -136,7 +137,7 @@
                                                 <div class="Education details-Edu-Expe-Certi">
                                                     <div class="row">
                                                         <div class="col-md">
-                                                            <h4>Products</h4>
+                                                            <h4>Projects</h4>
                                                         </div>
                                                     </div>
                                                     <hr>
@@ -151,10 +152,10 @@
                                                                             <small><i class="fas fa-map-marker-alt"></i> Qatar</small>
                                                                         </div>
                                                                         <div class="col-md-5 text-right">
-                                                                            <button type="button" class="btn btn-outline-warning"
+                                                                            @*<button type="button" class="btn btn-outline-warning"
                                                                                     style="font-size: 13px;">
                                                                                 view Product
-                                                                            </button>
+                                                                            </button>*@
                                                                         </div>
                                                                     </div>
                                                                     <div>
@@ -190,10 +191,10 @@
                                                                             <small><i class="fas fa-map-marker-alt"></i> Qatar</small>
                                                                         </div>
                                                                         <div class="col-md-5 text-right">
-                                                                            <button type="button" class="btn btn-outline-warning"
+                                                                            @*<button type="button" class="btn btn-outline-warning"
                                                                                     style="font-size: 13px;">
                                                                                 view Product
-                                                                            </button>
+                                                                            </button>*@
                                                                         </div>
                                                                     </div>
                                                                     <div>
@@ -245,10 +246,10 @@
                                                                             <small><i class="fas fa-map-marker-alt"></i> Qatar</small>
                                                                         </div>
                                                                         <div class="col-md-5 text-right">
-                                                                            <button type="button" class="btn btn-outline-danger"
+                                                                            @*<button type="button" class="btn btn-outline-danger"
                                                                                     style="font-size: 14px;">
                                                                                 view service
-                                                                            </button>
+                                                                            </button>*@
                                                                         </div>
                                                                     </div>
                                                                     <div>
@@ -284,10 +285,10 @@
                                                                             <small><i class="fas fa-map-marker-alt"></i> Qatar</small>
                                                                         </div>
                                                                         <div class="col-md-5 text-right">
-                                                                            <button type="button" class="btn btn-outline-danger"
+                                                                            @*<button type="button" class="btn btn-outline-danger"
                                                                                     style="font-size: 14px;">
                                                                                 view service
-                                                                            </button>
+                                                                            </button>*@
                                                                         </div>
                                                                     </div>
                                                                     <div>
@@ -340,14 +341,14 @@
                                                                                 <small><i class="fas fa-map-marker-alt"></i> @project.Location</small>
                                                                             </div>
                                                                             @if (userId == Model.Id.ToString())
-                                                                            { 
+                                                                            {
                                                                                 <div class="col-md-5 text-right">
                                                                                     <a href="@Url.Content($"~/jobs/jobdetails/{project.ID}")" class="btn btn-outline-warning"
                                                                                        style="font-size: 13px;">
                                                                                         View B2B
                                                                                     </a>
                                                                                 </div>
-                                                                                }
+                                                                            }
                                                                         </div>
                                                                         <div>
                                                                             <hr>
@@ -384,7 +385,7 @@
                                                             <h4>Careers</h4>
                                                         </div>
                                                     </div>
-                                                    
+
                                                     <hr>
                                                     <div class="univeristy">
                                                         @foreach (var job in Model.JobOffers.Where(j => !j.IsB2B))
@@ -404,7 +405,7 @@
                                                                             </a>
                                                                         </div>
                                                                     }
-                                                                    </div>
+                                                                </div>
                                                                 <div>
                                                                     <hr>
                                                                     <p>
@@ -500,8 +501,7 @@
                         <div class="people">
                             <h5>Similar Pages</h5>
                             <hr>
-                            <!-- peopleViewed  -->
-                            <div class="peopleViewed">
+                            @*<div class="peopleViewed">
                                 <div class="row">
                                     <div class="col-md-3">
                                         <img src="~/img/Ellipse 18.png" style="height:40px ;">
@@ -518,7 +518,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- peopleViewed  -->
                             <div class="peopleViewed">
                                 <div class="row">
                                     <div class="col-md-3">
@@ -536,7 +535,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- peopleViewed  -->
                             <div class="peopleViewed">
                                 <div class="row">
                                     <div class="col-md-3">
@@ -553,14 +551,27 @@
                                         </button>
                                     </div>
                                 </div>
-                            </div>
+                            </div>*@
 
                         </div>
 
                         <div class="people">
                             <h5>people also viewed</h5>
                             <hr>
-                            <!-- peopleViewed  -->
+                            @*<div class="peopleViewed">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <img src="~/img/Ellipse 18.png" style="height:40px ;">
+                                    </div>
+                                    <div class="col-md-6 text-right">
+                                        <p>Ahmed Lotfi</p>
+                                        <span>Nas Group</span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button type="button" class="btn btn-outline-danger" style="font-size: 12px;">Connect</button>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="peopleViewed">
                                 <div class="row">
                                     <div class="col-md-2">
@@ -575,7 +586,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- peopleViewed  -->
                             <div class="peopleViewed">
                                 <div class="row">
                                     <div class="col-md-2">
@@ -589,22 +599,7 @@
                                         <button type="button" class="btn btn-outline-danger" style="font-size: 12px;">Connect</button>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- peopleViewed  -->
-                            <div class="peopleViewed">
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <img src="~/img/Ellipse 18.png" style="height:40px ;">
-                                    </div>
-                                    <div class="col-md-6 text-right">
-                                        <p>Ahmed Lotfi</p>
-                                        <span>Nas Group</span>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <button type="button" class="btn btn-outline-danger" style="font-size: 12px;">Connect</button>
-                                    </div>
-                                </div>
-                            </div>
+                            </div>*@
 
                         </div>
 

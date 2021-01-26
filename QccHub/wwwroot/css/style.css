@@ -2149,7 +2149,7 @@ section {
 #header2 .nav-menu>ul>li {
   position: relative;
   white-space: nowrap;
-  padding: 7px 17px 0px 5px;
+  padding: 7px 17px 0px 37px;
 }
 
 #header2 .nav-menu a {
@@ -2157,10 +2157,10 @@ section {
     position: relative;
     color: #fff;
     transition: 0.3s;
-    font-size: 10px;
+    font-size: 15px;
     font-family: 'Montserrat', sans-serif;
     text-transform: uppercase;
-    font-weight: 500;
+    font-weight: 600;
     padding-top: 6px;
     text-shadow: 2px 2px 4px #000000a8;
 }
@@ -2343,7 +2343,8 @@ section {
 }
 /* Company Profile  */
 .profileMini {
-    height: 33px;
+    height: 38px;
+    width: 43px;
     filter: drop-shadow(2px 4px 3px #000);
 }
 .companyNameH {
