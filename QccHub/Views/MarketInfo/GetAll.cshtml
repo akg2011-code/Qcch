@@ -22,13 +22,10 @@
                                     {
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <img src="assets/img/Rectangle 127.png" style="height: 269px; width: 100%;">
+                                                <img src="@Url.Content("~/MarketInfoImages")/@item.Image" style="height: 269px; width: 100%;">
                                             </div>
                                             <div class="col-md-8">
                                                 <h4>@item.Title</h4>
-                                                <p id="mini-news">
-                                                    @item.Details
-                                                </p>
                                                 <div class="row">
                                                     <div class="col-md">
                                                         <small>@item.CreatedDate</small>
