@@ -16,7 +16,10 @@
 
                 <form id="marketInfoEditorForm">
                     <div class="form-group">
-                        <input type="text" name="Title" placeholder="Title" class="form-control" />
+                        <input type="text" name="Title" placeholder="Title" class="form-control" required/>
+                    </div>
+                    <div class="form-group">
+                        <input type="file" id="file" name="File" class="form-control" required/>
                     </div>
                     <div class="form-group">
                         <textarea id="marketInfoEditor" name="Details"></textarea>
@@ -54,7 +57,11 @@
                     }
                 },
                 {
-                    "data": "createdDate"
+                    "render": function (data, type, row) {
+                        var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                        var date = new Date(row.createdDate);
+                        return date.toLocaleString();
+                    }
                 },
                 {
                     "render": function (data, type, row) {
@@ -105,9 +112,10 @@
 
         $('#marketInfoEditorForm').on('submit', function (e) {
             e.preventDefault();
-            //debugger;
             var data = $('#marketInfoEditorForm').serializeArray();
             var formData = new FormData();
+            file = $('#file').prop('files')[0];
+            formData.append("file", file);
             data.forEach(function (item, index) {
                 formData.append(item.name, item.value)
             });
@@ -128,7 +136,9 @@
     });
 
         function Delete(id) {
-            $.ajax({
+            var confirmed = confirm("Are you sure?");
+            if (confirmed) {
+                $.ajax({
                 method: "POST",
                 url: `@Url.Content($"~/marketinfo/delete")/${id}`,
                 success: function () {
@@ -138,6 +148,7 @@
                     console.log(xhr.responseText);
                 }
             });
+            }
         }
     </script>
 }

@@ -9,6 +9,7 @@ namespace QccHub.Data.Models
     public class MarketInfo : BaseEntity, ICreationAuditable, ISoftDeletable
     {
         public string Title { get; set; }
+        public string Image { get; set; }
         public string Details { get; set; }
         public bool IsDeleted { get; set; }
         public int CreatedBy { get; set; }

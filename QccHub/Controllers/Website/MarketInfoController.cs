@@ -8,6 +8,9 @@ using Newtonsoft.Json;
 using QccHub.Data.Models;
 using Microsoft.Extensions.Configuration;
 using System.Text;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using System.Net.Http.Headers;
 
 namespace QccHub.Controllers.Website
 {
@@ -47,8 +50,13 @@ namespace QccHub.Controllers.Website
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(MarketInfo model)
+        public async Task<IActionResult> Add(MarketInfo model, IFormFile file)
         {
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest("file seems to be empty");
+            }
+
             var httpClient = _clientFactory.CreateClient("API");
             var jsonContent = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
             var response = await httpClient.PostAsync("MarketInfo/add", jsonContent);
@@ -56,6 +64,26 @@ namespace QccHub.Controllers.Website
             if (!response.IsSuccessStatusCode)
             {
                 return BadRequest(result);
+            }
+
+            var createdMarketInfo = JsonConvert.DeserializeObject<MarketInfo>(result);
+            byte[] fileBytes;
+            var multipartContent = new MultipartFormDataContent();
+
+            using (var ms = new MemoryStream())
+            {
+                await file.CopyToAsync(ms);
+                fileBytes = ms.ToArray();
+                var byteArrayContent = new ByteArrayContent(fileBytes);
+                multipartContent.Add(byteArrayContent, "file", file.FileName);
+            }
+
+            httpClient.DefaultRequestHeaders.Clear();
+            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("multipart/form-data"));
+            var response2 = await httpClient.PostAsync($"MarketInfo/AddPhoto/{createdMarketInfo.ID}", multipartContent);
+            if (!response2.IsSuccessStatusCode)
+            {
+                return BadRequest();
             }
 
             return Ok();
