@@ -152,6 +152,16 @@ namespace QccHub.Controllers.Api
 
         //}
 
+
+        [HttpPost]
+        public async Task<IActionResult> ApplyToB2bJob(JobApplication model)
+        {
+            var newJobApp = model.ToModel();
+            _jobAppRepo.Add(newJobApp);
+            await _unitOfWork.SaveChangesAsync();
+            return Ok(newJobApp.ID);
+        }
+
         [HttpPost]
         public async Task<IActionResult> ApplyToNonB2bJob(JobApplication model) 
         {

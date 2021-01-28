@@ -65,7 +65,7 @@
                                     <hr>
 
                                     <!-- form for apply job -->
-                                    @if (roleName == RolesEnum.User.ToString())
+                                    @if (Model.Job.IsB2B && roleName == RolesEnum.Company.ToString() && Model.Job.CompanyID.ToString() != userId)
                                     {
                                         <div class="applyforjobs">
                                             <h4 class="label-danger">Apply for Job</h4>
@@ -74,9 +74,12 @@
                                                     <form id="ApplyToJobForm" style="width: 100%;">
                                                         <input hidden name="UserId" value="@userId" />
                                                         <input hidden name="JobId" value="@Model.Job.ID" />
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control" name="CurrentSalary" placeholder="Current Salary">
-                                                        </div>
+                                                        @if (!Model.Job.IsB2B)
+                                                        {
+                                                            <div class="form-group">
+                                                                <input type="text" class="form-control" name="CurrentSalary" placeholder="Current Salary">
+                                                            </div>
+                                                        }
 
                                                         <div class="form-group">
                                                             <input type="text" class="form-control" name="ExpectedSalary" placeholder="Expected Salary">
@@ -95,6 +98,8 @@
                                             </div>
                                         </div>
                                     }
+
+
                                 </div>
                                 <!-- applications -->
                                 @if (roleName == RolesEnum.Company.ToString() && userId == Model.Job.CompanyID.ToString())
@@ -118,9 +123,14 @@
                                                             <i class="fas fa-money-check-alt"></i> Expected Salary:
                                                             @app.ExpectedSalary
                                                         </li>
-                                                        <li class="list-group-item border-0">
-                                                            <i class="fas fa-money-check"></i> Current Salary : @app.CurrentSalary
-                                                        </li>
+                                                        
+                                                        @if (!app.Job.IsB2B)
+	                                                    {
+                                                            <li class="list-group-item border-0">
+                                                                <i class="fas fa-money-check"></i> Current Salary : @app.CurrentSalary
+                                                            </li>
+	                                                    }
+    
                                                     </ul>
                                                     <h5>Cover Letter :</h5>
                                                     <p class="border p-3">
@@ -276,7 +286,6 @@
                 formData.append(item.name, item.value)
             })
             var url = '@(Model.Job.IsB2B ? Url.Content("~/jobs/applytob2bjob"): Url.Content("~/jobs/applytononb2bjob"))'
-            debugger;
             $.ajax({
                 method: "POST",
                 data: formData,
