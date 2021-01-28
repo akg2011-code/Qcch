@@ -1,5 +1,50 @@
 ﻿@model MarketInfo
 
-@Model.Title
-<img src="@Url.Content("~/MarketInfoImages")/@Model.Image" alt="Market info image"/>
-@Html.Raw(Model.Details)
+
+<main id="main">
+    <div class="JobContent">
+        <section class="container">
+            <div class="row">
+                <!-- left side -->
+                <!-- center side -->
+                <div class="col-md-12">
+                    <div class="center all">
+                        <!-- education-sction -->
+                        <!-- search input -->
+                        <div class="Education details-Edu-Expe-Certi">
+                            <div class="univeristy">
+                                <!-- job one -->
+                                <div class="uniDeails">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4>@Model.Title</h4>
+                                            @*<small>Arab Brureo</small>*@
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <img src="@Url.Content("~/MarketInfoImages")/@Model.Image" alt="Market info image" style="height: 269px;width: 100%;" />
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p>
+                                                @Html.Raw(Model.Details)
+                                            </p>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+</main>
