@@ -1,11 +1,13 @@
 ﻿@model MarketInfo
 
+@{
+    ViewBag.Title = "Market Info Details";
+}
 
 <main id="main">
     <div class="JobContent">
         <section class="container">
             <div class="row">
-                <!-- left side -->
                 <!-- center side -->
                 <div class="col-md-12">
                     <div class="center all">
@@ -17,7 +19,7 @@
                                 <div class="uniDeails">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <h4>@Model.Title</h4>
+                                            <h2 class="text-center text-capitalize">@Model.Title</h2>
                                             @*<small>Arab Brureo</small>*@
                                         </div>
                                     </div>
@@ -26,21 +28,14 @@
                                             <img src="@Url.Content("~/MarketInfoImages")/@Model.Image" alt="Market info image" style="height: 269px;width: 100%;" />
                                         </div>
                                         <div class="col-md-8">
-                                            <p>
+                                            <div>
                                                 @Html.Raw(Model.Details)
-                                            </p>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
-
-
                     </div>
                 </div>
             </div>
