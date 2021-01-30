@@ -1,1 +1,48 @@
-﻿
+﻿@model LibraryItem
+@{
+    ViewBag.Title = "Library Item Details";
+}
+
+<main id="main">
+    <div class="JobContent">
+        <section class="container">
+            <div class="row">
+                <!-- center side -->
+                <div class="col-md-12">
+                    <div class="center all">
+                        <!-- education-sction -->
+                        <!-- search input -->
+                        <div class="Education details-Edu-Expe-Certi">
+                            <div class="univeristy">
+                                <!-- job one -->
+                                <div class="uniDeails">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h1 class="text-capitalize" style="color:red">@Model.Title</h1>
+                                            <small>@Model.CreatedDate</small>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <img src="@Url.Content("~/LibraryImages")/@Model.Image" alt="library image" style="height: 269px;width: 100%;" />
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div>
+                                                @Html.Raw(Model.Details)
+                                            </div>
+                                            <div class="text-right mt-1">
+                                                <a href="@Url.Content("~/LibraryFiles")/@Model.File" class="btn btn-outline-primary col-md-5">Download Documentation</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+</main>
+

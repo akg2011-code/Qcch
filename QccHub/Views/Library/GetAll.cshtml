@@ -2,11 +2,36 @@
 @{
     ViewBag.Title = "Library";
 }
-@foreach (var item in Model)
-{
-    <h2>@item.Title</h2>
-    <h2>@item.Details</h2>
-    <a href="@Url.Content("~/LibraryFiles")/@item.File"></a>
-    <img src="@Url.Content("~/LibraryImages")/@item.Image"/>
-    <hr>
-}
+<main id="main">
+    <div class="JobContent">
+        <section class="container">
+            <div class="row">
+                <!-- center side -->
+                <div class="col-md-12">
+                    <div class="center all">
+                        <div class="row">
+                            @foreach (var item in Model)
+                            {
+                                <div class="col-md-4">
+                                    <div class="Education details-Edu-Expe-Certi" >
+                                        <div class="univeristy p-2" style="box-shadow: 1px 1px 8px #00000047;border-top-left-radius: 15px;border-top-right-radius: 15px;">
+                                            <!-- lib one -->
+                                            <img src="@Url.Content("~/LibraryImages")/@item.Image" style="color:red; height:204px;width:294px;border-top-right-radius: 15px;border-top-left-radius: 15px;" class="pb-2" />
+                                            <h3 class="text-capitalize">@item.Title</h3>
+                                            <small><i class="far fa-clock"></i> @item.CreatedDate</small>
+                                            <p class="mini-text-all">@item.Details</p>
+                                            <div class="text-right">
+                                                <a asp-action="GetLibraryItemDetails" asp-route-id="@item.ID" type="button" class="btn btn-warning">Read More</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+</main>

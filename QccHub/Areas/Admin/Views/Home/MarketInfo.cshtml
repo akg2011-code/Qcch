@@ -16,14 +16,15 @@
 
                 <form id="marketInfoEditorForm">
                     <div class="form-group">
-                        <input type="text" name="Title" placeholder="Title" class="form-control" required/>
+                        <input type="text" name="Title" placeholder="Title" class="form-control" required />
                     </div>
                     <div class="form-group">
-                        <input type="file" id="file" name="File" class="form-control" required/>
+                        <input type="file" id="file" name="File" class="form-control" accept="image/*" required />
                     </div>
                     <div class="form-group">
-                        <textarea id="marketInfoEditor" name="Details"></textarea>
+                        <textarea id="marketInfoEditor" class="form-control" rows="3" name="Details"></textarea>
                     </div>
+
                     <input type="submit" class="btn btn-danger" value="Post" />
                 </form>
 

@@ -17,14 +17,14 @@
                     </div>
                     <div class="form-group">
                         <label>Photo:</label>
-                        <input type="file" id="image" name="Image" class="form-control" required />
+                        <input type="file" id="image" name="Image" class="form-control" accept="image/*" required />
                     </div>
                     <div class="form-group">
                         <label>Document:</label>
-                        <input type="file" id="file" name="File" class="form-control" required />
+                        <input type="file" id="file" name="File" class="form-control" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,application/pdf," required />
                     </div>
                     <div class="form-group">
-                        <textarea id="details" name="Details"></textarea>
+                        <textarea id="details" name="Details" class="form-control" rows="3"></textarea>
                     </div>
                     <input type="submit" class="btn btn-danger" value="Post" />
                 </form>
