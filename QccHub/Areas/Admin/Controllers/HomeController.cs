@@ -45,5 +45,9 @@ namespace QccHub.Areas.Admin.Controllers
         {
             return View();
         }
+        public IActionResult Library()
+        {
+            return View();
+        }
     }
 }

@@ -1,0 +1,159 @@
+﻿<button class="btn btn-info" data-toggle="modal" data-target="#AddLibraryItem">Add</button>
+<!-- Modal -->
+<div class="modal fade" id="AddLibraryItem" tabindex="-1" aria-labelledby="AddLibraryItemLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AddLibraryItemLabel">Add</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form id="AddLibraryForm">
+                    <div class="form-group">
+                        <input type="text" name="Title" placeholder="Title" class="form-control" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Photo:</label>
+                        <input type="file" id="image" name="Image" class="form-control" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Document:</label>
+                        <input type="file" id="file" name="File" class="form-control" required />
+                    </div>
+                    <div class="form-group">
+                        <textarea id="details" name="Details"></textarea>
+                    </div>
+                    <input type="submit" class="btn btn-danger" value="Post" />
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<table id="libraryTable" class="table table-striped table-bordered" width="100%">
+    <thead class="thead-dark">
+        <tr>
+            <th>Title</th>
+            <th>Created Date</th>
+            <th></th>
+        </tr>
+    </thead>
+</table>
+
+
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var columns = [
+                {
+                    "data": "title",
+                    "render": function (data, type, row) {
+                        return '<a class="mini-text" href="@Url.Content("~/library/GetLibraryItemDetails")?id=' + row.id +'" >' + row.title + '</a>';
+                    }
+                },
+                {
+                    "render": function (data, type, row) {
+                        var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                        var date = new Date(row.createdDate);
+                        return date.toLocaleString();
+                    }
+                },
+                {
+                    "render": function (data, type, row) {
+                        return `<button class="btn btn-danger text-center" onclick="Delete(${row.id})">Delete</button>`;
+                    }
+                },
+            ];
+
+            var columnDefs = [
+                {
+                    "orderable": true,
+                    "targets": [0,1]
+                },
+                {
+                    "orderable": false,
+                    "searchable":false,
+                    "targets": [2]
+                }
+            ];
+
+            var url = '@Url.Content("~/api/library/getall")';
+            var order = [[0, 'asc']];
+            PagingList('libraryTable', url, columns, columnDefs, order);
+        });
+
+        function PagingList(id,url,columns, columnDefs, order) {
+            return $(`#${id}`).DataTable({
+                "lengthChange": false,
+                "fixedHeader": true,
+                "paging": true,
+                "pageLength": 20,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": true,
+                "responsive": true,
+                "ajax": {
+                    "url": url,
+                    "dataSrc":'',
+                    "async": true
+                },
+                "columnDefs": columnDefs,
+                "columns": columns,
+                "order": order
+            });
+        }
+
+
+        $('#AddLibraryForm').on('submit', function (e) {
+            e.preventDefault();
+            debugger;
+            var data = $('#AddLibraryForm').serializeArray();
+            var formData = new FormData();
+            file = $('#file').prop('files')[0];
+            image = $('#image').prop('files')[0];
+            formData.append("file", file);
+            formData.append("image", image);
+            data.forEach(function (item, index) {
+                formData.append(item.name, item.value)
+            });
+
+        $.ajax({
+            method: "POST",
+            data: formData,
+            url: '@Url.Content($"~/library/add")',
+            processData: false,
+            contentType: false,
+            success: function () {
+                window.location.reload()
+            },
+            error: function (xhr, ajaxSettings, statusCode) {
+                console.log(xhr.responseText);
+            }
+        });
+    });
+
+        function Delete(id) {
+            var confirmed = confirm("Are you sure?");
+            if (confirmed) {
+                $.ajax({
+                method: "POST",
+                url: `@Url.Content($"~/library/delete")/${id}`,
+                success: function () {
+                    window.location.reload();
+                },
+                error: function (xhr, ajaxSettings, statusCode) {
+                    console.log(xhr.responseText);
+                }
+            });
+            }
+        }
+    </script>
+}
+
