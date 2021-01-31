@@ -302,7 +302,7 @@
                         @if (Model.JobOffers.Where(x => !x.IsB2B).Count() > 0)
                         {
                             <h2>Jobs</h2>
-                            @foreach (var job in Model.JobOffers)
+                            @foreach (var job in Model.JobOffers.Where(x => !x.IsB2B))
                             {
                                 <div class="content">
                                     <h3>@job.CreatedDate</h3>

@@ -12,6 +12,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\Migrations\20210131230022_AddProjects.cs" />
+    <Compile Remove="Data\Migrations\20210131230022_AddProjects.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\Rotativa\" />
   </ItemGroup>
 

@@ -61,6 +61,7 @@ namespace QccHub.Data
         public DbSet<Education> Education { get; set; }
         public DbSet<Certificate> Certificates { get; set; }
         public DbSet<UserJobPosition> UserJobPositions { get; set; }
+        public DbSet<Project> Projects { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -93,6 +94,14 @@ namespace QccHub.Data
                 .HasOne(a => a.CompanyInfo)
                 .WithOne(b => b.Company)
                 .HasForeignKey<CompanyInfo>(b => b.CompanyId).OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<ApplicationUser>()
+                .HasMany(a => a.Projects)
+                .WithOne()
+                .HasForeignKey(p => p.CompanyId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
 
             #endregion
 
