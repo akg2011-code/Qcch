@@ -134,6 +134,7 @@ namespace QccHub
             services.AddScoped<ICountryRepository, CountryRepository>();
             services.AddScoped<IMarketInfoRepository, MarketInfoRepository>();
             services.AddScoped<ILibraryRepository, LibraryRepository>();
+            services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<CurrentSession>();
             services.AddControllersWithViews()
