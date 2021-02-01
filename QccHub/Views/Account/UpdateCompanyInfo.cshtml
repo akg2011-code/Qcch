@@ -48,7 +48,7 @@
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <form class="AddJobOrProjectForm">
+                                                        <form class="AddJobOrB2BForm">
                                                             <input hidden name="IsB2b" value="false">
                                                             <input hidden name="CompanyId" value="@Model.Id">
                                                             <div class="form-group">
@@ -97,22 +97,22 @@
                                         <!--modal-->
 
                                         <button class="btn btn-outline-primary col-md-9" data-toggle="modal"
-                                                data-target="#AddProject">
+                                                data-target="#AddB2b">
                                             Add new B2B
                                         </button>
                                         <!--modal-->
-                                        <div class="modal fade" id="AddProject" tabindex="-1" aria-labelledby="AddProjectLabel"
+                                        <div class="modal fade" id="AddB2b" tabindex="-1" aria-labelledby="AddB2bLabel"
                                              aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="AddProjectLabel">Add new project</h5>
+                                                        <h5 class="modal-title" id="AddB2bLabel">Add new B2B</h5>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <form class="AddJobOrProjectForm">
+                                                        <form class="AddJobOrB2BForm">
                                                             <input hidden name="CompanyId" value="@Model.Id">
                                                             <input hidden name="IsB2b" value="true" />
                                                             <div class="form-group">
@@ -147,59 +147,44 @@
 
                                         <button class="btn btn-outline-primary col-md-9" data-toggle="modal"
                                                 data-target="#AddProject">
-                                            Add new Project
+                                            Add new project
                                         </button>
                                         <!--modal-->
-                                        <div class="modal fade" id="AddProject" tabindex="-1" aria-labelledby="AddJobLabel"
+                                        <div class="modal fade" id="AddProject" tabindex="-1" aria-labelledby="AddProjectLabel"
                                              aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="AddJobLabel">Add new Project</h5>
+                                                        <h5 class="modal-title" id="AddProjectLabel">Add new Project</h5>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <form class="AddJobOrProjectForm">
-                                                            <input hidden name="IsB2b" value="false">
+                                                        <form id="AddProjectForm">
                                                             <input hidden name="CompanyId" value="@Model.Id">
+                                                            
                                                             <div class="form-group">
-                                                                <input type="text" name="Title" class="form-control" placeholder="Job Title">
+                                                                <input type="text" name="Title" class="form-control" placeholder="Project Title">
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <input type="text" name="Location" class="form-control" placeholder="Job Location">
+                                                                <input type="file" id="image" name="Image" class="form-control">
                                                             </div>
 
                                                             <div class="form-group">
                                                                 <div class="input-group">
-                                                                    <textarea class="form-control" rows="2" name="Description" placeholder="Description....."
+                                                                    <textarea class="form-control" rows="2" name="Details" placeholder="Description..."
                                                                               aria-label="With textarea"></textarea>
                                                                 </div>
                                                             </div>
 
-                                                            <div class="row">
-                                                                <div class="col-md">
-                                                                    <div class="form-group">
-                                                                        <select name="Type" class="form-control">
-                                                                            <option value="@((int)JobTypesEnum.FullTime)">Full Time</option>
-                                                                            <option value="@((int)JobTypesEnum.PartTime)">Part Time</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="col-md">
-                                                                    <input type="number" name="Salary" class="form-control mb-4" disabled placeholder="Salary">
-                                                                </div>
-
-                                                            </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary"
                                                                         data-dismiss="modal">
                                                                     Close
                                                                 </button>
-                                                                <input type="submit" class="btn btn-primary" value="Add Job" />
+                                                                <input type="submit" class="btn btn-primary" value="Add Project" />
                                                             </div>
                                                         </form>
 
@@ -208,71 +193,6 @@
                                             </div>
                                         </div>
                                         <!--modal-->
-
-                                        <button class="btn btn-outline-primary col-md-9" data-toggle="modal"
-                                                data-target="#AddService">
-                                            Add new Service
-                                        </button>
-                                        <!--modal-->
-                                        <div class="modal fade" id="AddService" tabindex="-1" aria-labelledby="AddJobLabel"
-                                             aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="AddJobLabel">Add new Service</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <form class="AddJobOrProjectForm">
-                                                            <input hidden name="IsB2b" value="false">
-                                                            <input hidden name="CompanyId" value="@Model.Id">
-                                                            <div class="form-group">
-                                                                <input type="text" name="Title" class="form-control" placeholder="Job Title">
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <input type="text" name="Location" class="form-control" placeholder="Job Location">
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <div class="input-group">
-                                                                    <textarea class="form-control" rows="2" name="Description" placeholder="Description....."
-                                                                              aria-label="With textarea"></textarea>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="row">
-                                                                <div class="col-md">
-                                                                    <div class="form-group">
-                                                                        <select name="Type" class="form-control">
-                                                                            <option value="@((int)JobTypesEnum.FullTime)">Full Time</option>
-                                                                            <option value="@((int)JobTypesEnum.PartTime)">Part Time</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="col-md">
-                                                                    <input type="number" name="Salary" class="form-control mb-4" placeholder="Salary">
-                                                                </div>
-
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary"
-                                                                        data-dismiss="modal">
-                                                                    Close
-                                                                </button>
-                                                                <input type="submit" class="btn btn-primary" disabled value="Add Job" />
-                                                            </div>
-                                                        </form>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--modal-->
-
                                     </div>
                                 </div>
                             </div>
@@ -460,7 +380,7 @@
             });
         });
 
-        $('.AddJobOrProjectForm').on('submit', function (e) {
+        $('.AddJobOrB2BForm').on('submit', function (e) {
             e.preventDefault();
             var data = $(this).serializeArray();
             var formData = new FormData();
@@ -484,5 +404,29 @@
             });
         });
 
+        $('#AddProjectForm').on('submit', function (e) {
+            e.preventDefault();
+            var data = $('#AddProjectForm').serializeArray();
+            var formData = new FormData();
+            image = $('#image').prop('files')[0];
+            formData.append("image", image);
+            data.forEach(function (item, index) {
+                formData.append(item.name, item.value)
+            });
+
+        $.ajax({
+            method: "POST",
+            data: formData,
+            url: '@Url.Content($"~/projects/add")',
+            processData: false,
+            contentType: false,
+            success: function () {
+                window.location.reload()
+            },
+            error: function (xhr, ajaxSettings, statusCode) {
+                console.log(xhr.responseText);
+            }
+        });
+    });
     </script>
 }

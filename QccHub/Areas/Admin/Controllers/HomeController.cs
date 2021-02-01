@@ -28,7 +28,7 @@ namespace QccHub.Areas.Admin.Controllers
             ViewData["Companies"] = await _userRepo.GetCompanyUsers();
             return View();
         }
-        public async Task<IActionResult> Projects()
+        public async Task<IActionResult> B2b()
         {
             ViewData["Companies"] = await _userRepo.GetCompanyUsers();
             return View();
@@ -47,6 +47,11 @@ namespace QccHub.Areas.Admin.Controllers
         }
         public IActionResult Library()
         {
+            return View();
+        }
+        public async Task<IActionResult> Projects()
+        {
+            ViewData["Companies"] = await _userRepo.GetCompanyUsers();
             return View();
         }
     }

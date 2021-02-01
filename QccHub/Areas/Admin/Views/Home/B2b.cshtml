@@ -1,49 +1,73 @@
-﻿<button class="btn btn-info" data-toggle="modal" data-target="#AddProject">Add</button>
-<!-- Modal -->
-<div class="modal fade" id="AddProject" tabindex="-1" aria-labelledby="AddProjectLabel" aria-hidden="true">
+﻿
+<button class="btn btn-primary" data-toggle="modal"
+        data-target="#AddJob">
+    Add new Job
+</button>
+<!--modal-->
+<div class="modal fade" id="AddJob" tabindex="-1" aria-labelledby="AddJobLabel"
+     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="AddProjectLabel">Add</h5>
+                <h5 class="modal-title" id="AddJobLabel">Add</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
+                <form id="AddJobForm">
+                    <input hidden name="IsB2b" value="true">
+                    <div class="form-group">
+                        <input type="text" name="Title" class="form-control" placeholder="Title">
+                    </div>
 
-                <form id="AddProjectForm">
                     <div class="form-group">
-                        <select name="CompanyID" class="form-control">
-                            <option value="0">Choose a company</option>
-                            @foreach (var company in ViewData["Companies"] as List<ApplicationUser>)
-                            {
-                                <option value="@company.Id">@company.CompanyName</option>
-                            }
-                        </select>
+                        <input type="text" name="Location" class="form-control" placeholder="Location">
                     </div>
+
                     <div class="form-group">
-                        <input type="text" name="Title" placeholder="Title" class="form-control" required />
+                        <div class="input-group">
+                            <textarea class="form-control" rows="2" name="Description" placeholder="Description....."
+                                      aria-label="With textarea"></textarea>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Photo:</label>
-                        <input type="file" id="image" name="Image" class="form-control" accept="image/*" required />
+
+                    <div class="row">
+                        <div class="col-md">
+                            <div class="form-group">
+                                <select name="CompanyID" class="form-control">
+                                    <option value="0">Choose a company</option>
+                                    @foreach (var company in ViewData["Companies"] as List<ApplicationUser>)
+                                    {
+                                        <option value="@company.Id">@company.CompanyName</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <textarea id="details" name="Details" class="form-control" rows="3" required></textarea>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary"
+                                data-dismiss="modal">
+                            Close
+                        </button>
+                        <input type="submit" class="btn btn-primary" value="Add" />
                     </div>
-                    <input type="submit" class="btn btn-danger" value="Post" />
                 </form>
-
 
             </div>
         </div>
     </div>
 </div>
-<table id="projectsTable" class="table table-striped table-bordered" width="100%">
+<!--modal-->
+
+<table id="news" class="table table-striped table-bordered" width="100%">
     <thead class="thead-dark">
         <tr>
             <th>Title</th>
-            <th>Created Date</th>
+            <th>Description</th>
+            <th>Location</th>
+            <th>Company</th>
             <th></th>
         </tr>
     </thead>
@@ -58,14 +82,19 @@
                 {
                     "data": "title",
                     "render": function (data, type, row) {
-                        return '<a class="mini-text" href="@Url.Content("~/projects/GetprojectDetails")?id=' + row.id +'" >' + row.title + '</a>';
+                        return `<a class="mini-text" href="@Url.Content("~/Jobs/JobDetails")/${row.id}" >${row.title}</a>`;
                     }
                 },
                 {
+                    "data": "description"
+                },
+                {
+                    "data": "location"
+                },
+                {
+                    "data": "company",
                     "render": function (data, type, row) {
-                        var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-                        var date = new Date(row.createdDate);
-                        return date.toLocaleString();
+                        return `<a class="mini-text" href="@Url.Content("~/account/profile")/${row.companyID}">${row.company.companyName}</a>`;
                     }
                 },
                 {
@@ -78,18 +107,18 @@
             var columnDefs = [
                 {
                     "orderable": true,
-                    "targets": [0,1]
+                    "targets": [0,1,2,3]
                 },
                 {
                     "orderable": false,
-                    "searchable":false,
-                    "targets": [2]
+                    "searchable": false,
+                    "targets": [4]
                 }
             ];
 
-            var url = '@Url.Content("~/api/projects/getall")';
+            var url = '@Url.Content("~/api/jobs/getallb2bjobs")';
             var order = [[0, 'asc']];
-            PagingList('projectsTable', url, columns, columnDefs, order);
+            PagingList('news', url, columns, columnDefs, order);
         });
 
         function PagingList(id,url,columns, columnDefs, order) {
@@ -115,12 +144,10 @@
         }
 
 
-        $('#AddProjectForm').on('submit', function (e) {
+        $('#AddJobForm').on('submit', function (e) {
             e.preventDefault();
-            var data = $('#AddProjectForm').serializeArray();
+            var data = $('#AddJobForm').serializeArray();
             var formData = new FormData();
-            image = $('#image').prop('files')[0];
-            formData.append("image", image);
             data.forEach(function (item, index) {
                 formData.append(item.name, item.value)
             });
@@ -128,7 +155,7 @@
         $.ajax({
             method: "POST",
             data: formData,
-            url: '@Url.Content($"~/projects/add")',
+            url: '@Url.Content($"~/jobs/add")',
             processData: false,
             contentType: false,
             success: function () {
@@ -141,11 +168,9 @@
     });
 
         function Delete(id) {
-            var confirmed = confirm("Are you sure?");
-            if (confirmed) {
-                $.ajax({
+            $.ajax({
                 method: "POST",
-                url: `@Url.Content($"~/projects/delete")/${id}`,
+                url: `@Url.Content($"~/jobs/delete")/${id}`,
                 success: function () {
                     window.location.reload();
                 },
@@ -153,7 +178,6 @@
                     console.log(xhr.responseText);
                 }
             });
-            }
         }
     </script>
 }

@@ -1,0 +1,9 @@
+﻿@model IEnumerable<Project>
+
+@foreach (var project in Model)
+{
+    <h2>@project.Title</h2>
+    <p>@project.Details</p>
+    <img src="@Url.Content("~/ProjectsImages")/@project.Image" />
+    <hr>
+}

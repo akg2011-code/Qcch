@@ -79,9 +79,9 @@
                                                 <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home"
                                                    role="tab" aria-controls="nav-home" aria-selected="true">About Us</a>
                                                 <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
-                                                   role="tab" aria-controls="nav-profile" aria-selected="false">Projects</a>
+                                                   role="tab" aria-controls="nav-profile" aria-selected="false">Services</a>
                                                 <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact"
-                                                   role="tab" aria-controls="nav-contact" aria-selected="false">Services</a>
+                                                   role="tab" aria-controls="nav-contact" aria-selected="false">Projects</a>
                                                 <a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab"
                                                    aria-controls="nav-about" aria-selected="false">B2B</a>
                                                 <a class="nav-item nav-link" id="nav-career-tab" data-toggle="tab" href="#nav-career"
@@ -137,7 +137,7 @@
                                                 <div class="Education details-Edu-Expe-Certi">
                                                     <div class="row">
                                                         <div class="col-md">
-                                                            <h4>Projects</h4>
+                                                            <h4>Services</h4>
                                                         </div>
                                                     </div>
                                                     <hr>
@@ -231,90 +231,49 @@
                                                 <div class="Education details-Edu-Expe-Certi">
                                                     <div class="row">
                                                         <div class="col-md">
-                                                            <h4>Services</h4>
+                                                            <h4>Projects</h4>
                                                         </div>
                                                     </div>
                                                     <hr>
                                                     <div class="univeristy">
-                                                        <!-- services one -->
-                                                        <div class="uniDeails">
-                                                            <div class="row">
-                                                                <div class="col-md-8">
-                                                                    <div class="row">
-                                                                        <div class="col-md-7">
-                                                                            <h5>Civil biulding</h5>
-                                                                            <small><i class="fas fa-map-marker-alt"></i> Qatar</small>
-                                                                        </div>
-                                                                        <div class="col-md-5 text-right">
-                                                                            @*<button type="button" class="btn btn-outline-danger"
-                                                                                    style="font-size: 14px;">
-                                                                                view service
-                                                                            </button>*@
-                                                                        </div>
-                                                                    </div>
-                                                                    <div>
-                                                                        <hr>
-                                                                        <p>
-                                                                            Find the most qualified people in the most unexpected places. Information for
-                                                                            applicants to
-                                                                            consider when applying for local positions.
-                                                                        </p>
-                                                                        <hr>
+                                                        @foreach (var project in Model.Projects)
+                                                        {
+                                                            <div class="uniDeails">
+                                                                <div class="row">
+                                                                    <div class="col-md-8">
                                                                         <div class="row">
-                                                                            <div class="col-md">
-                                                                                <small><i class="fas fa-map-marker-alt"></i> Posted 3 days ago</small>
+                                                                            <div class="col-md-7">
+                                                                                <h5>@project.Title</h5>
                                                                             </div>
-                                                                            <div class="col-md text-right">
-                                                                                18 view
+                                                                            <div class="col-md-5 text-right">
+                                                                                <a href="/projects/getprojectdetails?id=@project.ID" class="btn btn-outline-danger"
+                                                                                   style="font-size: 14px;">
+                                                                                    View
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div>
+                                                                            <hr>
+                                                                            <p>
+                                                                                @project.Details
+                                                                            </p>
+                                                                            <hr>
+                                                                            <div class="row">
+                                                                                <div class="col-md">
+                                                                                    <small><i class="fas fa-map-marker-alt"></i> @project.CreatedDate</small>
+                                                                                </div>
+                                                                                @*<div class="col-md text-right">
+                                                                                    18 view
+                                                                                </div>*@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <img src="~/img/Rectangle 82-1.png" class="imgServic">
+                                                                    <div class="col-md-4">
+                                                                        <img src="~/ProjectsImages/@project.Image" class="imgServic">
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <!-- services two -->
-                                                        <div class="uniDeails">
-                                                            <div class="row">
-                                                                <div class="col-md-8">
-                                                                    <div class="row">
-                                                                        <div class="col-md-7">
-                                                                            <h5>Civil biulding</h5>
-                                                                            <small><i class="fas fa-map-marker-alt"></i> Qatar</small>
-                                                                        </div>
-                                                                        <div class="col-md-5 text-right">
-                                                                            @*<button type="button" class="btn btn-outline-danger"
-                                                                                    style="font-size: 14px;">
-                                                                                view service
-                                                                            </button>*@
-                                                                        </div>
-                                                                    </div>
-                                                                    <div>
-                                                                        <hr>
-                                                                        <p>
-                                                                            Find the most qualified people in the most unexpected places. Information for
-                                                                            applicants to
-                                                                            consider when applying for local positions.
-                                                                        </p>
-                                                                        <hr>
-                                                                        <div class="row">
-                                                                            <div class="col-md">
-                                                                                <small><i class="fas fa-map-marker-alt"></i> Posted 3 days ago</small>
-                                                                            </div>
-                                                                            <div class="col-md text-right">
-                                                                                18 view
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <img src="~/img/Rectangle 82-1.png" class="imgServic">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
+                                                        }
                                                     </div>
                                                 </div>
                                             </div>

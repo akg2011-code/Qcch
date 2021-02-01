@@ -97,7 +97,7 @@ namespace QccHub.Data
 
             builder.Entity<ApplicationUser>()
                 .HasMany(a => a.Projects)
-                .WithOne()
+                .WithOne(p => p.Company)
                 .HasForeignKey(p => p.CompanyId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
