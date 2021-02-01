@@ -28,6 +28,7 @@ namespace QccHub.Data.Models
         public virtual ICollection<UserJobPosition> CompanyJobs { get; } = new List<UserJobPosition>();
         public virtual ICollection<ApplicationUserRole> UserRoles { get; } = new List<ApplicationUserRole>();
         public virtual ICollection<Job> JobOffers { get; } = new List<Job>();
+        public virtual ICollection<Project> Projects { get; } = new List<Project>();
 
         public void ResetJobPositions() 
         {
