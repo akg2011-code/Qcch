@@ -79,7 +79,7 @@
                         <li><a href="@Url.Content("~/jobs/getallNonB2bjobs")"><i class="icofont-search-job"></i> Jobs</a></li>
                     }
 
-                    <li><a href=""><i class="icofont-library"></i> Library</a></li>
+                    <li><a href="@Url.Content("~/Library/GetAll")"><i class="icofont-library"></i> Library</a></li>
                     <li><a href="@Url.Content("~/news/getallnews")"><i class="icofont-newspaper"></i> News</a></li>
                     <li><a href=""><i class="icofont-support-faq"></i> Q & A</a></li>
                     @if (roleName == RolesEnum.Company.ToString())
@@ -94,7 +94,7 @@
                             @*<i class="icofont-ui-messaging"></i><span class="badge badge-light notification1">9</span>&nbsp;&nbsp;*@
                         </a>
                     </li>
-                    @if (!string.IsNullOrWhiteSpace(roleName))
+                    @if (userId != "1" || userId != "7")
                     {
                         <li>
                             <a href="@Url.Content($"~/account/profile/{userId}")">
@@ -102,9 +102,9 @@
                             </a>
                         </li>
                     }
-                    else
+                    else if (userId == "1" || userId == "7")
                     {
-                        <li>
+                        <li hidden>
                             <a href="@Url.Content($"~/admin")">
                                 <img src="/img/Profile picture.png" class="profileMini">
                                 @*<img class="rounded-circle" src="@($"/Profile Pictures/{Model.ProfileImagePath}" ?? "/img/Profile picture.png")" onError="this.onerror=null;this.src='/img/Profile picture.png';" style="height: 41px;">*@
@@ -129,11 +129,21 @@
         <div class="container">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item active" aria-current="page">
-                    <a href="@Url.Content($"~/account/profile/{userId}")">
-                        <i class="icofont-home"></i>
-                        My Profile
-                    </a>
-                </li>
+                    @if (userId != "1" || userId != "7")
+                    {
+                        <a href="@Url.Content($"~/account/profile/{userId}")">
+                            <i class="icofont-home"></i>
+                            My Profile
+                        </a>
+                    }
+                    else if(userId == "1" || userId == "7")
+                    {
+                        <a href="@Url.Content($"~/admin")">
+                                <i class="icofont-home"></i>
+                                Admin Dashboard
+                            </a>
+                            }
+                    </li>
             </ol>
         </div>
     </nav>
