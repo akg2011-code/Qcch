@@ -1,4 +1,44 @@
 ﻿@model Project
-<h2>@Model.Title</h2>
-<p>@Model.Details</p>
-<img src="@Url.Content("~/ProjectsImages")/@Model.Image"/>
+@{
+    ViewBag.Title = "Project Details";
+}
+
+<main id="main">
+    <div class="JobContent">
+        <section class="container">
+            <div class="row">
+                <!-- center side -->
+                <div class="col-md-12">
+                    <div class="center all">
+                        <!-- education-sction -->
+                        <!-- search input -->
+                        <div class="Education details-Edu-Expe-Certi">
+                            <div class="univeristy">
+                                <!-- job one -->
+                                <div class="uniDeails">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h1 class="text-center text-capitalize" style="color:red">@Model.Title</h1>
+                                            @*<small>Arab Brureo</small>*@
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <img src="@Url.Content("~/ProjectsImages")/@Model.Image"   style="height: 188px;width: 100%;" />
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="text-center">
+                                                @Html.Raw(Model.Details)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+</main>
