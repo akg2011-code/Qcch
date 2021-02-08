@@ -6,10 +6,10 @@
     string userId = HttpContextAccessor.HttpContext.Session.GetString("UserId");
 }
 
-<h1>Questions</h1>
+@*<h1>Questions</h1>
 <hr />
 
-<button class="btn btn-info" data-toggle="modal" data-target="#AddQuestion">Add</button>
+<button class="btn btn-info" data-toggle="modal" data-target="#AddQuestion">Add</button>*@
 <!-- Modal -->
 <div class="modal fade" id="AddQuestion" tabindex="-1" aria-labelledby="AddQuestionLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -35,15 +35,68 @@
     </div>
 </div>
 
-@foreach (var question in Model)
-{
-    <h2>@question.Title</h2>
-    <h2>@question.CreatedDate</h2>
-    <img style="width:50px; height:50px" src="@Url.Content("~/Profile Pictures")/@question.User.ProfileImagePath" alt="Profile Picture" />
-    <h2>@question.User.FullName</h2>
+<main id="main">
+    <div class="JobContent">
+        <section class="container">
+            <div class="row">
+                <!-- center side -->
+                <div class="col-md-9">
+                    <div class="center all">
+                        <!-- education-sction -->
+                        <!-- search input -->
+                        <div class="Education details-Edu-Expe-Certi">
+                            <div class="input-group mb-3">
+                                <input type="text" readonly class="form-control col-md-6" placeholder="have a new Question ....!!" aria-label="Recipient's username"
+                                       aria-describedby="button-addon2">
+                                <div class="input-group-append">
+                                    <button class="btn btn-info ml-1" data-toggle="modal" data-target="#AddQuestion">Add</button>
+                                    @*<button class="btn btn-danger" type="button" id="button-addon2"><i class="fas fa-search"></i></button>*@
+                                </div>
+                            </div>
+                        </div>
 
-    <hr />
-}
+                        <div class="Education details-Edu-Expe-Certi">
+                            <div class="univeristy">
+                                <!-- Q one -->
+                                @foreach (var question in Model)
+                                {
+                                    <div class="uniDeails">
+                                        <div class="row">
+                                            <div class="col-md-1">
+                                                @*<img src="@Url.Content("~/Profile Pictures")/@question.User.ProfileImagePath" alt="Profile Picture" style="height:40px;border-radius: 10px;">*@
+                                                <img src="@($"/Profile Pictures/{question.User.ProfileImagePath}" ?? "/img/Rectangle 60.png")" onError="this.onerror=null;this.src='/img/Rectangle 60.png';" style="height:40px;border-radius: 10px;">
+
+                                            </div>
+                                            <div class="col-md-11">
+                                                <div>
+                                                    <h2>
+                                                        <a asp-action="QuestionDetails" asp-route-id="@question.ID" type="button" class="">
+                                                            @question.Title
+                                                        </a>
+                                                    </h2>
+                                                </div>
+                                                <div>
+                                                    <small style="padding-right: 20px;">@question.User.FullName</small>
+                                                    <small>
+                                                        @question.CreatedDate
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                }
+                                </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+</main>
+
 
 
 @section Scripts {

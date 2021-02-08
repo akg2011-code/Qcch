@@ -81,7 +81,7 @@
 
                     <li><a href="@Url.Content("~/Library/GetAll")"><i class="icofont-library"></i> Library</a></li>
                     <li><a href="@Url.Content("~/news/getallnews")"><i class="icofont-newspaper"></i> News</a></li>
-                    <li><a href=""><i class="icofont-support-faq"></i> Q & A</a></li>
+                    <li><a href="@Url.Content("~/Questions/GetAllQuestions")"><i class="icofont-support-faq"></i> Q & A</a></li>
                     @if (roleName == RolesEnum.Company.ToString())
                     {
                         <li><a href="@Url.Content("~/jobs/getallb2bjobs")"><i class="icofont-handshake-deal"></i> B2B</a></li>
