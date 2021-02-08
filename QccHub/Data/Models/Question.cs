@@ -12,9 +12,10 @@ namespace QccHub.Data.Models
         public string Title { get; set; }
         [ForeignKey("User")]
         public int UserID { get; set; }
-        public virtual ApplicationUser User { get; set; }
+        public ApplicationUser User { get; set; }
         public int CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
         public bool IsDeleted { get; set; }
+        public List<Answers> Answers { get; } = new List<Answers>();
     }
 }

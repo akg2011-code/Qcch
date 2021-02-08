@@ -13,11 +13,11 @@ using QccHub.Logic.Helpers;
 
 namespace QccHub.Controllers.Api
 {
-    public class QuestionController : BaseApiController
+    public class QuestionsController : BaseApiController
     {
         private readonly IQuestionRepository _questionRepository;
         private readonly IUnitOfWork _unitOfWork;
-        public QuestionController(IQuestionRepository questionRepository,
+        public QuestionsController(IQuestionRepository questionRepository,
                                     CurrentSession currentSession,
                                     IHttpContextAccessor contextAccessor,
                                     IUnitOfWork unitOfWork) : base(currentSession,contextAccessor)
@@ -27,7 +27,7 @@ namespace QccHub.Controllers.Api
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddQustion(QuestionDTO question)
+        public async Task<IActionResult> Add(QuestionDTO question)
         {
             if (!ModelState.IsValid)
             {
@@ -35,10 +35,7 @@ namespace QccHub.Controllers.Api
             }
             Question newQuestion = new Question
             {
-                CreatedBy = question.UserID,
                 UserID = question.UserID,
-                CreatedDate = DateTime.Now,
-                IsDeleted = false,
                 Title = question.Title
             };
             _questionRepository.Add(newQuestion);
@@ -50,13 +47,13 @@ namespace QccHub.Controllers.Api
         public async Task<IActionResult> GetAllQuestions()
         {
             var result = await _questionRepository.GetAllAsync();
-            return Ok(result); 
+            return Ok(result);
         }
 
-        [HttpGet("{questionID}")]
-        public async Task<IActionResult> GetQuestion(int questionID)
+        [HttpGet("{questionId}")]
+        public async Task<IActionResult> GetQuestion(int questionId)
         {
-            var result = await _questionRepository.GetByIdAsync(questionID);
+            var result = await _questionRepository.GetByIdAsync(questionId);
             if (result == null)
             {
                 return NotFound("No question for this ID");
@@ -79,16 +76,36 @@ namespace QccHub.Controllers.Api
             return Ok("question edited");
         }
 
-        // ------------------------------ Question Answers --------------------------------
-        [HttpPost]
-        public async Task<IActionResult> AddAnswer(Answers answers)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var question = await _questionRepository.GetByIdAsync(id);
+            if (question == null)
+            {
+                return NotFound("Question not found");
+            }
+            
+            _questionRepository.Delete(question);
+            await _unitOfWork.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        #region Answers
+
+        [HttpPost("{questionId}")]
+        public async Task<IActionResult> AddAnswer(int questionId, AnswerDTO model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
-            var result = await _questionRepository.AddAnswer(answers);
-            return Created("answer added", result);
+            var answer = new Answers { Text = model.Text, UserID = model.UserId, QuestionID = questionId };
+            _questionRepository.AddAnswer(answer);
+            await _unitOfWork.SaveChangesAsync();
+
+            answer = await _questionRepository.GetAnswerByID(answer.ID);
+            return Ok(answer);
         }
 
         [HttpGet("{questionID}")]
@@ -103,9 +120,9 @@ namespace QccHub.Controllers.Api
         }
 
         [HttpPut("{answerID}")]
-        public IActionResult EditAnswer(int answerID,Answers editedAnswer)
+        public async Task<IActionResult> EditAnswer(int answerID, Answers editedAnswer)
         {
-            var answer = _questionRepository.GetAnswerByID(answerID);
+            var answer = await _questionRepository.GetAnswerByID(answerID);
             if (answer == null)
             {
                 return NotFound("No answer for this ID");
@@ -118,7 +135,7 @@ namespace QccHub.Controllers.Api
         [HttpDelete("{answerID}")]
         public async Task<IActionResult> DeleteAnswer(int answerID)
         {
-            Answers answer = _questionRepository.GetAnswerByID(answerID);
+            var answer = await _questionRepository.GetAnswerByID(answerID);
             if (answer == null)
             {
                 return NotFound("no answer for this ID");
@@ -126,5 +143,7 @@ namespace QccHub.Controllers.Api
             var result = await _questionRepository.DeleteAnswer(answerID);
             return Ok(result);
         }
+
+        #endregion 
     }
 }

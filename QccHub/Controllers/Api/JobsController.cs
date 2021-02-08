@@ -20,7 +20,6 @@ namespace QccHub.Controllers.Api
         private readonly IJobRepository _jobRepo;
         private readonly IJobApplicationRepository _jobAppRepo;
         private readonly IUserRepository _userRepo;
-        private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IUnitOfWork _unitOfWork;
 
         public JobsController(IJobRepository jobRepo,
@@ -34,7 +33,6 @@ namespace QccHub.Controllers.Api
             _jobRepo = jobRepo;
             _jobAppRepo = jobAppRepo;
             _userRepo = userRepo;
-            _webHostEnvironment = webHostEnvironment;
             _unitOfWork = unitOfWork;
         }
 
@@ -131,28 +129,7 @@ namespace QccHub.Controllers.Api
             var jobs = await _jobRepo.SearchJobs(JobName);
             return Ok(jobs);
         }
-        // --------------------------- apply to job ------------------------------
-        //[HttpPost]
-        //public async Task<IActionResult> ApplyToJob([FromForm]JobApplication JobApplication)
-        //{
-        //    if (JobApplication.cvFile == null && JobApplication.cvFile.Length == 0)
-        //        return BadRequest();
-
-        //    string cvFileName = Guid.NewGuid().ToString() + JobApplication.cvFile.FileName;
-        //    string cvFilePath = Path.Combine(_webHostEnvironment.WebRootPath + "\\JobsAppliedCV", cvFileName);
-        //    using (var stream = new FileStream(cvFilePath, FileMode.Create))
-        //    {
-        //        JobApplication.cvFile.CopyTo(stream);
-        //    }
-
-        //    var newJobApp = JobApplication.ToModel(cvFileName);
-        //    _jobAppRepo.Add(newJobApp);
-        //    await _unitOfWork.SaveChangesAsync();
-        //    return Created($"user {JobApplication.UserID} applied to job {JobApplication.JobID}",newJobApp);
-
-        //}
-
-
+        
         [HttpPost]
         public async Task<IActionResult> ApplyToB2bJob(JobApplication model)
         {
@@ -191,7 +168,7 @@ namespace QccHub.Controllers.Api
 
             jobApplication.Approve();
             await _unitOfWork.SaveChangesAsync();
-            return Ok($"Applicant {applicant.UserName} is approved for job {jobApprove.JobID}"); // change the message to whatever you like
+            return Ok($"Applicant {applicant.UserName} is approved for job {jobApprove.JobID}");
         }
     }
 }

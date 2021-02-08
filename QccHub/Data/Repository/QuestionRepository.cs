@@ -18,12 +18,9 @@ namespace QccHub.Data.Repository
             _context = context;
         }
 
-        public async Task<Answers> AddAnswer(Answers answer)
+        public void AddAnswer(Answers answer)
         {
-            answer.CreatedBy = answer.UserID;
             _context.Answers.Add(answer);
-            await _context.SaveChangesAsync();
-            return await Task.FromResult(answer);
         }
 
         public async Task<string> DeleteAnswer(int answerID)
@@ -49,13 +46,25 @@ namespace QccHub.Data.Repository
 
         public override Task<List<Question>> GetAllAsync()
         {
-            return _context.Question.Where(a => a.IsDeleted == false).OrderByDescending(q => q.CreatedDate).Include(q => q.User).ToListAsync();
+            return _context.Question
+                            .Include(q => q.User)
+                            .OrderByDescending(q => q.CreatedDate)
+                            .ToListAsync();
         }
 
-        public Answers GetAnswerByID(int answerID)
+        public override Task<Question> GetByIdAsync(int id)
         {
-            Answers answer = _context.Answers.Find(answerID);
-            return answer;
+            return _context.Question
+                            .Include(q => q.User)
+                            .Include(q => q.Answers)
+                            .ThenInclude(q => q.User)
+                            .OrderByDescending(q => q.CreatedDate)
+                            .FirstOrDefaultAsync(q => q.ID == id);
+        }
+
+        public Task<Answers> GetAnswerByID(int answerID)
+        {
+            return _context.Answers.Include(a => a.User).FirstOrDefaultAsync(a => a.ID == answerID);
         }
 
         public async Task<IEnumerable<Answers>> GetQuestionAnswers(int questionID)

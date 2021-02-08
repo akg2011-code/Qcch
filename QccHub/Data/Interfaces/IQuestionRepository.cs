@@ -8,9 +8,9 @@ namespace QccHub.Data.Interfaces
 {
     public interface IQuestionRepository : IGenericRepository<Question>
     {
-        Answers GetAnswerByID(int answerID);
+        Task<Answers> GetAnswerByID(int answerID);
         Task<IEnumerable<Answers>> GetQuestionAnswers(int questionID);
-        Task<Answers> AddAnswer(Answers answer);
+        void AddAnswer(Answers answer);
         Task<Answers> EditAnswer(int answerID, Answers answers);
         Task<string> DeleteAnswer(int answerID);
     }

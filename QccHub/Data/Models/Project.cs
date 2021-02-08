@@ -15,6 +15,6 @@ namespace QccHub.Data.Models
         public bool IsDeleted { get ; set ; }
         public int CreatedBy { get ; set ; }
         public DateTime CreatedDate { get ; set ; }
-        public virtual ApplicationUser Company { get; set; }
+        public ApplicationUser Company { get; set; }
     }
 }

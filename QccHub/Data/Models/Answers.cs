@@ -14,8 +14,8 @@ namespace QccHub.Data.Models
         public int QuestionID { get; set; }
         [ForeignKey("User")]
         public int UserID { get; set; }
-        public virtual Question Question { get; set; }
-        public virtual ApplicationUser User { get; set; }
+        public Question Question { get; set; }
+        public ApplicationUser User { get; set; }
         public int CreatedBy { get; set; }
         public DateTime CreatedDate { get ; set; }
         public bool IsDeleted { get; set; }

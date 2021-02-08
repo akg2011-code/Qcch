@@ -1,0 +1,95 @@
+﻿
+@model List<Question>
+
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    string userId = HttpContextAccessor.HttpContext.Session.GetString("UserId");
+}
+
+<h1>Questions</h1>
+<hr />
+
+<button class="btn btn-info" data-toggle="modal" data-target="#AddQuestion">Add</button>
+<!-- Modal -->
+<div class="modal fade" id="AddQuestion" tabindex="-1" aria-labelledby="AddQuestionLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AddQuestionLabel">Add</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form id="AddQuestionForm">
+                    <input hidden name="UserID" value="@userId" />
+                    <div class="form-group">
+                        <input type="text" name="Title" placeholder="Title" class="form-control" required />
+                    </div>
+                    <input type="submit" class="btn btn-danger" value="Post" />
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@foreach (var question in Model)
+{
+    <h2>@question.Title</h2>
+    <h2>@question.CreatedDate</h2>
+    <img style="width:50px; height:50px" src="@Url.Content("~/Profile Pictures")/@question.User.ProfileImagePath" alt="Profile Picture" />
+    <h2>@question.User.FullName</h2>
+
+    <hr />
+}
+
+
+@section Scripts {
+
+    <script>
+
+    $('#AddQuestionForm').on('submit', function (e) {
+        e.preventDefault();
+
+        var data = $('#AddQuestionForm').serializeArray();
+        var formData = new FormData();
+
+        data.forEach(function (item, index) {
+            formData.append(item.name, item.value)
+        });
+
+        $.ajax({
+            method: "POST",
+            data: formData,
+            url: '@Url.Content($"~/questions/add")',
+            processData: false,
+            contentType: false,
+            success: function () {
+                window.location.reload()
+            },
+            error: function (xhr, ajaxSettings, statusCode) {
+                console.log(xhr.responseText);
+            }
+        });
+    });
+
+    function Delete(id) {
+        var confirmed = confirm("Are you sure?");
+        if (confirmed) {
+            $.ajax({
+            method: "POST",
+            url: `@Url.Content($"~/questions/delete")/${id}`,
+            success: function () {
+                window.location.reload();
+            },
+            error: function (xhr, ajaxSettings, statusCode) {
+                console.log(xhr.responseText);
+            }
+        });
+        }
+    }
+
+    </script>
+}

@@ -1,0 +1,74 @@
+﻿@model Question
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    string userId = HttpContextAccessor.HttpContext.Session.GetString("UserId");
+}
+
+<img style="width:50px; height:50px" 
+         src="@($"/Profile Pictures/{Model.User.ProfileImagePath}" ?? "/img/Profile picture.png")"
+         onError="this.onerror=null;this.src='/img/Profile picture.png';" alt="Profile Picture" />
+<h2>@Model.Title</h2>
+<hr />
+
+@foreach (var ans in Model.Answers)
+{
+<div id="Answers">
+    <h4>Text: @ans.Text</h4>
+    <h4>Name: @ans.User.FullName</h4>
+    <h4>Date: @ans.CreatedDate</h4>
+    <img style="width:50px; height:50px" 
+         src="@($"/Profile Pictures/{ans.User.ProfileImagePath}" ?? "/img/Profile picture.png")"
+         onError="this.onerror=null;this.src='/img/Profile picture.png';" alt="Profile Picture" />
+
+    <hr />
+</div>
+}
+
+@if (userId != Model.UserID.ToString())
+{
+    <form id="AddAnswerForm">
+        <input hidden name="UserId" value="@userId" />
+        <textarea name="Text" cols="20" rows="10">Answer this ...</textarea>
+        <button>Send</button>
+    </form>
+}
+
+@section Scripts
+{
+    <script>
+
+
+    $('#AddAnswerForm').on('submit', function (e) {
+        e.preventDefault();
+        debugger;
+        var data = $('#AddAnswerForm').serializeArray();
+        var formData = new FormData();
+
+        data.forEach(function (item, index) {
+            formData.append(item.name, item.value)
+        });
+
+        $.ajax({
+            method: "POST",
+            data: formData,
+            url: '@Url.Content($"~/questions/addanswer/{Model.ID}")',
+            processData: false,
+            contentType: false,
+            success: function (result) {
+                debugger;
+                $("#Answers").append(`<h4>Text: ${result.text}</h4>
+        <h4>Name: ${result.user.fullName} </h4>
+        <h4>Date: ${result.createdDate}</h4>
+        <img style="width:50px; height:50px" src="@Url.Content("~/Profile Pictures")/${result.user.ProfileImagePath}" alt="Profile Picture" />
+        <hr />`)
+            },
+            error: function (xhr, ajaxSettings, statusCode) {
+                console.log(xhr.responseText);
+            }
+        });
+    });
+
+
+    </script>
+}

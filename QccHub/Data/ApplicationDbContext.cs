@@ -102,7 +102,6 @@ namespace QccHub.Data
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
 
-
             #endregion
 
             #region ApplicationUserRoleConfiguration
@@ -119,6 +118,17 @@ namespace QccHub.Data
             builder.Entity<UserJobPosition>().HasOne(x => x.Employee).WithMany(x => x.EmployeeJobs).HasForeignKey(x => x.EmployeeId).OnDelete(DeleteBehavior.NoAction);
             builder.Entity<UserJobPosition>().HasOne(x => x.Company).WithMany(x => x.CompanyJobs).HasForeignKey(x => x.CompanyId).OnDelete(DeleteBehavior.NoAction);
             builder.Entity<UserJobPosition>().HasOne(x => x.JobPosition).WithMany(x => x.EmployeeJobs).HasForeignKey(x => x.JobPositionId).OnDelete(DeleteBehavior.NoAction);
+
+            #region QuestionsConfig
+
+            builder.Entity<Question>()
+                    .HasMany(q => q.Answers)
+                    .WithOne(a => a.Question)
+                    .HasForeignKey(q => q.QuestionID)
+                    .IsRequired()
+                    .OnDelete(DeleteBehavior.Cascade);
+
+            #endregion
 
             builder.ConfigureShadowProperties();
             builder.SetGlobalQueryFilters();
