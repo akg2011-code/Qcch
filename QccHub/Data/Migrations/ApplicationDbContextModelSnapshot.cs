@@ -962,9 +962,6 @@ namespace QccHub.Data.Migrations
                     b.Property<int>("CompanyId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CompanyId1")
-                        .HasColumnType("int");
-
                     b.Property<int>("CreatedBy")
                         .HasColumnType("int")
                         .HasMaxLength(256);
@@ -989,8 +986,6 @@ namespace QccHub.Data.Migrations
                     b.HasKey("ID");
 
                     b.HasIndex("CompanyId");
-
-                    b.HasIndex("CompanyId1");
 
                     b.ToTable("Projects");
                 });
@@ -1310,10 +1305,6 @@ namespace QccHub.Data.Migrations
                         .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("QccHub.Data.Models.ApplicationUser", "Company")
-                        .WithMany()
-                        .HasForeignKey("CompanyId1");
                 });
 
             modelBuilder.Entity("QccHub.Data.Models.Qualification", b =>

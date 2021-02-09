@@ -5,32 +5,35 @@
     string userId = HttpContextAccessor.HttpContext.Session.GetString("UserId");
 }
 
-<img style="width:50px; height:50px" 
-         src="@($"/Profile Pictures/{Model.User.ProfileImagePath}" ?? "/img/Profile picture.png")"
-         onError="this.onerror=null;this.src='/img/Profile picture.png';" alt="Profile Picture" />
+<img style="width:50px; height:50px"
+     src="@($"/Profile Pictures/{Model.User.ProfileImagePath}" ?? "/img/Profile picture.png")"
+     onError="this.onerror=null;this.src='/img/Profile picture.png';" alt="Profile Picture" />
 <h2>@Model.Title</h2>
 <hr />
-
-@foreach (var ans in Model.Answers)
-{
 <div id="Answers">
-    <h4>Text: @ans.Text</h4>
-    <h4>Name: @ans.User.FullName</h4>
-    <h4>Date: @ans.CreatedDate</h4>
-    <img style="width:50px; height:50px" 
-         src="@($"/Profile Pictures/{ans.User.ProfileImagePath}" ?? "/img/Profile picture.png")"
-         onError="this.onerror=null;this.src='/img/Profile picture.png';" alt="Profile Picture" />
 
-    <hr />
+    @foreach (var ans in Model.Answers)
+    {
+        <h4>Text: @ans.Text</h4>
+        <h4>Name: @(ans.User.FullName ?? ans.User.CompanyName)</h4>
+        <h4>Date: @ans.CreatedDate</h4>
+        <img style="width:50px; height:50px"
+             src="@($"/Profile Pictures/{ans.User.ProfileImagePath}" ?? "/img/Profile picture.png")"
+             onError="this.onerror=null;this.src='/img/Profile picture.png';" alt="Profile Picture" />
+        @if (ans.UserID.ToString() == userId)
+        {
+            <button class="btn btn-danger" onclick="Delete(@ans.ID)">Delete</button>
+        }
+        <hr />
+    }
 </div>
-}
 
 @if (userId != Model.UserID.ToString())
 {
     <form id="AddAnswerForm">
         <input hidden name="UserId" value="@userId" />
-        <textarea name="Text" cols="20" rows="10">Answer this ...</textarea>
-        <button>Send</button>
+        <textarea class="form-control" name="Text" cols="5" rows="10">Answer this ...</textarea>
+        <button class="btn btn-primary">Send</button>
     </form>
 }
 
@@ -41,7 +44,7 @@
 
     $('#AddAnswerForm').on('submit', function (e) {
         e.preventDefault();
-        debugger;
+
         var data = $('#AddAnswerForm').serializeArray();
         var formData = new FormData();
 
@@ -56,12 +59,12 @@
             processData: false,
             contentType: false,
             success: function (result) {
-                debugger;
                 $("#Answers").append(`<h4>Text: ${result.text}</h4>
-        <h4>Name: ${result.user.fullName} </h4>
-        <h4>Date: ${result.createdDate}</h4>
-        <img style="width:50px; height:50px" src="@Url.Content("~/Profile Pictures")/${result.user.ProfileImagePath}" alt="Profile Picture" />
-        <hr />`)
+                <h4>Name: ${result.user.fullName == null ? result.user.companyName : result.user.fullName} </h4>
+                <h4>Date: Just Now</h4>
+                <img style="width:50px; height:50px" src="${result.user.profileImagePath == null ? "/img/Profile picture.png" : "/Profile Pictures/" + result.user.profileImagePath}" alt="Profile Picture" />
+                <hr />`);
+                $("textarea").val('');
             },
             error: function (xhr, ajaxSettings, statusCode) {
                 console.log(xhr.responseText);
@@ -69,6 +72,17 @@
         });
     });
 
-
+        function Delete(id) {
+            $.ajax({
+                method: "POST",
+                url: `@Url.Content($"~/Questions/DeleteAnswer")/${id}`,
+                success: function () {
+                    window.location.reload();
+                },
+                error: function (xhr, ajaxSettings, statusCode) {
+                    console.log(xhr.responseText);
+                }
+            });
+        }
     </script>
 }

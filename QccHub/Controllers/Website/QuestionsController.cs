@@ -78,6 +78,19 @@ namespace QccHub.Controllers.Website
             return Ok();
         }
 
+        [HttpPost("{id}")]
+        public async Task<IActionResult> DeleteAnswer(int id)
+        {
+            var httpClient = _clientFactory.CreateClient("API");
+            var response = await httpClient.DeleteAsync($"Questions/DeleteAnswer/{id}");
+            var result = await response.Content.ReadAsStringAsync();
+            if (!response.IsSuccessStatusCode)
+            {
+                return BadRequest(result);
+            }
+            return Ok();
+        }
+
         [HttpPost("{questionId}")]
         public async Task<IActionResult> AddAnswer(int questionId, AnswerDTO model)
         {
