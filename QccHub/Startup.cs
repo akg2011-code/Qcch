@@ -23,6 +23,8 @@ using System.Net.Http.Headers;
 using Rotativa.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using QccHub.Hubs;
+using Microsoft.AspNetCore.SignalR;
 
 namespace QccHub
 {
@@ -124,6 +126,7 @@ namespace QccHub
             //});
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
             services.AddSingleton<EmailSender>();
             services.AddScoped<IJobRepository, JobRepository>();
             services.AddScoped<IJobPositionRepository, JobPositionRepository>();
@@ -139,7 +142,7 @@ namespace QccHub
             services.AddScoped<CurrentSession>();
             services.AddControllersWithViews()
                 .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
-
+            services.AddSignalR();
 
             //services.AddSwaggerGen(c =>
             //{
@@ -225,6 +228,7 @@ namespace QccHub
                     pattern: "Admin/{controller=Home}/{action=News}/{id?}");
                 endpoints.MapDefaultControllerRoute();
                 endpoints.MapControllers();
+                endpoints.MapHub<NotificationsHub>("/NotificationsHub");
             });
 
             RotativaConfiguration.Setup(env.WebRootPath);

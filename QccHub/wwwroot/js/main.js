@@ -222,5 +222,17 @@
   $(window).on('load', function() {
     aos_init();
   });
-
 })(jQuery);
+
+
+var connection = new signalR.HubConnectionBuilder().withUrl("/NotificationsHub").build();
+
+connection.start().then(function () {
+    console.log("SignalR connected")
+}).catch(function (err) {
+    console.log(err.toString());
+});
+
+connection.on("NotifyNewJob", function (link) {
+    alert(`New Job Application ${link}`);
+});

@@ -65,7 +65,8 @@
                                     <hr>
 
                                     <!-- form for apply job -->
-                                    @if (Model.Job.IsB2B && roleName == RolesEnum.Company.ToString() && Model.Job.CompanyID.ToString() != userId)
+                                    @if (((Model.Job.IsB2B && roleName == RolesEnum.Company.ToString()) || (!Model.Job.IsB2B && roleName == RolesEnum.User.ToString())) 
+                                            && Model.Job.CompanyID.ToString() != userId)
                                     {
                                         <div class="applyforjobs">
                                             <h4 class="label-danger">Apply for Job</h4>

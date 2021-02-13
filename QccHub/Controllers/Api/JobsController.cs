@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using QccHub.Data;
 using QccHub.Data.Interfaces;
 using QccHub.Data.Models;
 using QccHub.DTOS;
+using QccHub.Hubs;
 using QccHub.Logic.Helpers;
 
 namespace QccHub.Controllers.Api
@@ -20,6 +22,7 @@ namespace QccHub.Controllers.Api
         private readonly IJobRepository _jobRepo;
         private readonly IJobApplicationRepository _jobAppRepo;
         private readonly IUserRepository _userRepo;
+        private readonly IHubContext<NotificationsHub> _jobsHubContext;
         private readonly IUnitOfWork _unitOfWork;
 
         public JobsController(IJobRepository jobRepo,
@@ -27,12 +30,13 @@ namespace QccHub.Controllers.Api
                                 IUserRepository userRepo,
                                 CurrentSession currentSession,
                                 IHttpContextAccessor httpContextAccessor,
-                                IWebHostEnvironment webHostEnvironment,
+                                IHubContext<NotificationsHub> jobsHubContext,
                                 IUnitOfWork unitOfWork) : base(currentSession,httpContextAccessor)
         {
             _jobRepo = jobRepo;
             _jobAppRepo = jobAppRepo;
             _userRepo = userRepo;
+            _jobsHubContext = jobsHubContext;
             _unitOfWork = unitOfWork;
         }
 
@@ -145,6 +149,7 @@ namespace QccHub.Controllers.Api
             var newJobApp = model.ToModel();
             _jobAppRepo.Add(newJobApp);
             await _unitOfWork.SaveChangesAsync();
+            await _jobsHubContext.Clients.User(model.UserID.ToString()).SendAsync("NotifyNewJob", $"/jobs/jobdetails/{model.JobID}");
             return Ok(newJobApp.ID);
         }
 
