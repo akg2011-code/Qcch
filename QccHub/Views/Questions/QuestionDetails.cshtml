@@ -5,37 +5,84 @@
     string userId = HttpContextAccessor.HttpContext.Session.GetString("UserId");
 }
 
-<img style="width:50px; height:50px"
-     src="@($"/Profile Pictures/{Model.User.ProfileImagePath}" ?? "/img/Profile picture.png")"
-     onError="this.onerror=null;this.src='/img/Profile picture.png';" alt="Profile Picture" />
-<h2>@Model.Title</h2>
-<hr />
-<div id="Answers">
+<main id="main">
+    <div class="JobContent">
+        <section class="container">
+            <div class="row">
+                <!-- center side -->
+                <div class="col-md-9">
+                    <div class="center all">
+                        <!-- education-sction -->
 
-    @foreach (var ans in Model.Answers)
-    {
-        <h4>Text: @ans.Text</h4>
-        <h4>Name: @(ans.User.FullName ?? ans.User.CompanyName)</h4>
-        <h4>Date: @ans.CreatedDate</h4>
-        <img style="width:50px; height:50px"
-             src="@($"/Profile Pictures/{ans.User.ProfileImagePath}" ?? "/img/Profile picture.png")"
-             onError="this.onerror=null;this.src='/img/Profile picture.png';" alt="Profile Picture" />
-        @if (ans.UserID.ToString() == userId)
-        {
-            <button class="btn btn-danger" onclick="Delete(@ans.ID)">Delete</button>
-        }
-        <hr />
-    }
-</div>
+                        <div class="Education details-Edu-Expe-Certi">
+                            <div class="univeristy">
+                                <!-- Q one -->
+                                <div class="uniDeails">
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            <img style="height:40px;border-radius: 10px;"
+                                                 src="@($"/Profile Pictures/{Model.User.ProfileImagePath}" ?? "/img/Profile picture.png")"
+                                                 onError="this.onerror=null;this.src='/img/Profile picture.png';" alt="Profile Picture" />
+                                        </div>
+                                        <div class="col-md-11">
+                                            <div>
+                                                <h2>@Model.Title</h2>
+                                            </div>
+                                            <div>
+                                                <small style="padding-right: 20px;">@Model.User.FullName</small>
+                                                <small>
+                                                    @Model.CreatedDate
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div id="Answers">
 
-@if (userId != Model.UserID.ToString())
-{
-    <form id="AddAnswerForm">
-        <input hidden name="UserId" value="@userId" />
-        <textarea class="form-control" name="Text" cols="5" rows="10">Answer this ...</textarea>
-        <button class="btn btn-primary">Send</button>
-    </form>
-}
+                                    @foreach (var ans in Model.Answers)
+                                    {
+                                        <div class="row">
+                                            <div class="col-md-1">
+                                                <img style="width:50px; height:50px"
+                                                     src="@($"/Profile Pictures/{ans.User.ProfileImagePath}" ?? "/img/Profile picture.png")"
+                                                     onError="this.onerror=null;this.src='/img/Profile picture.png';" alt="Profile Picture" />
+                                            </div>
+                                            <div class="col-md-11">
+                                                <h4>@(ans.User.FullName ?? ans.User.CompanyName)</h4>
+                                                <small>@ans.CreatedDate</small>
+                                            </div>
+                                        </div>
+                                        <h5>@ans.Text</h5>
+                                        @if (ans.UserID.ToString() == userId)
+                                        {
+                                            <button class="btn btn-danger" onclick="Delete(@ans.ID)">Delete</button>
+                                        }
+                                        <hr />
+
+                                    }
+                                    @if (userId != Model.UserID.ToString())
+                                    {
+                                        <form id="AddAnswerForm">
+                                            <input hidden name="UserId" value="@userId" />
+                                            <textarea class="form-control" name="Text" cols="3" rows="2" placeholder="Answer this ..."></textarea>
+                                            <button class="btn btn-primary">Send</button>
+                                        </form>
+                                    }
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+
+
+
 
 @section Scripts
 {
@@ -59,11 +106,15 @@
             processData: false,
             contentType: false,
             success: function (result) {
-                $("#Answers").append(`<h4>Text: ${result.text}</h4>
-                <h4>Name: ${result.user.fullName == null ? result.user.companyName : result.user.fullName} </h4>
-                <h4>Date: Just Now</h4>
-                <img style="width:50px; height:50px" src="${result.user.profileImagePath == null ? "/img/Profile picture.png" : "/Profile Pictures/" + result.user.profileImagePath}" alt="Profile Picture" />
-                <hr />`);
+                $("#Answers").append(`<div class="row">
+              <div class="col-md-1">
+                <img style="width:50px; height:50px" src="${result.user.profileImagePath == null ? "/img/Profile picture.png" : "/Profile Pictures/" + result.user.profileImagePath}" alt="Profile Picture" /></div>
+                                            <div class="col-md-11">
+                                                <h4>${result.user.fullName == null ? result.user.companyName : result.user.fullName}</h4>
+                                                <small>${result.CreatedDate}</small>
+                                            </div>
+                                        </div>
+                                        <h5>${result.text}</h5>`);
                 $("textarea").val('');
             },
             error: function (xhr, ajaxSettings, statusCode) {

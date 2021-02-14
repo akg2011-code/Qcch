@@ -1,15 +1,19 @@
 ﻿
 @model List<Question>
 
+@{
+    ViewBag.Title = "Q & A";
+}
+
 @inject IHttpContextAccessor HttpContextAccessor
 @{
     string userId = HttpContextAccessor.HttpContext.Session.GetString("UserId");
 }
 
 @*<h1>Questions</h1>
-<hr />
+    <hr />
 
-<button class="btn btn-info" data-toggle="modal" data-target="#AddQuestion">Add</button>*@
+    <button class="btn btn-info" data-toggle="modal" data-target="#AddQuestion">Add</button>*@
 <!-- Modal -->
 <div class="modal fade" id="AddQuestion" tabindex="-1" aria-labelledby="AddQuestionLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -86,7 +90,7 @@
                                     </div>
                                     <hr />
                                 }
-                                </div>
+                            </div>
                         </div>
 
                     </div>
