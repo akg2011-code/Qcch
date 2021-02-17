@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using QccHub.Data.Interfaces;
 using QccHub.Data.Models;
 using QccHub.DTOS;
+using QccHub.Hubs;
 using QccHub.Logic.Helpers;
 
 namespace QccHub.Controllers.Api
@@ -15,14 +17,17 @@ namespace QccHub.Controllers.Api
     {
         private readonly INewsRepository _newsRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IHubContext<NotificationsHub> _hubContext;
 
         public NewsController(INewsRepository newsRepository,
             IUnitOfWork unitOfWork,
             CurrentSession currentSession,
-            IHttpContextAccessor contextAccessor) : base(currentSession, contextAccessor)
+            IHttpContextAccessor contextAccessor,
+            IHubContext<NotificationsHub> hubContext) : base(currentSession, contextAccessor)
         {
             _newsRepository = newsRepository;
             _unitOfWork = unitOfWork;
+            _hubContext = hubContext;
         }
 
         [HttpPost]
@@ -35,6 +40,14 @@ namespace QccHub.Controllers.Api
 
             _newsRepository.Add(news);
             await _unitOfWork.SaveChangesAsync();
+
+            await _hubContext.Clients.All.SendCoreAsync("Notify",
+                new Object[]
+                { new {
+                    text = $"News added. Click to see details",
+                    link = $"/News/GetNewsDetails?id={news.ID}"
+                }
+            });
             return Created("news added", news);
         }
 

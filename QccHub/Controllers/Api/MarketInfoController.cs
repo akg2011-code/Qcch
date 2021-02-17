@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using QccHub.Data.Interfaces;
 using QccHub.Data.Models;
 using QccHub.Helpers;
+using QccHub.Hubs;
 using QccHub.Logic.Helpers;
 using System;
 using System.Collections.Generic;
@@ -18,16 +20,19 @@ namespace QccHub.Controllers.Api
         private readonly IMarketInfoRepository _marketInfoRepo;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _hostEnv;
+        private readonly IHubContext<NotificationsHub> _hubContext;
 
         public MarketInfoController(IMarketInfoRepository marketRepository,
             IUnitOfWork unitOfWork,
             CurrentSession currentSession,
             IWebHostEnvironment hostEnv,
-            IHttpContextAccessor contextAccessor) : base(currentSession, contextAccessor)
+            IHttpContextAccessor contextAccessor,
+            IHubContext<NotificationsHub> hubContext) : base(currentSession, contextAccessor)
         {
             _marketInfoRepo = marketRepository;
             _unitOfWork = unitOfWork;
             _hostEnv = hostEnv;
+            _hubContext = hubContext;
         }
 
         [HttpPost]
@@ -40,6 +45,13 @@ namespace QccHub.Controllers.Api
 
             _marketInfoRepo.Add(marketInfo);
             await _unitOfWork.SaveChangesAsync();
+            await _hubContext.Clients.All.SendCoreAsync("Notify",
+                new Object[]
+                { new {
+                    text = $"New Market Info Added. Click to see details",
+                    link = $"/MarketInfo/GetMarketInfoDetails?id={marketInfo.ID}"
+                }
+            });
             return Created("marketInfo added", marketInfo);
         }
 
