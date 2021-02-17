@@ -234,7 +234,6 @@ var connection = new signalR.HubConnectionBuilder()
 connection.serverTimeoutInMilliseconds = 100000;
 
 connection.on("NotifyNewJob", function (job) {
-    debugger;
     console.log(job);
     $('.notification-count').html(parseInt($('.notification-count').html()) + 1);
     $('#notification-list').append(`<a href="/jobs/jobdetails/${job.id}" class="list-group-item list-group-item-action list-group-item-dark">New job application for ${job.title}</a>`);

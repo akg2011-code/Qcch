@@ -280,7 +280,6 @@
 @section Scripts {
     <script>
         $('#ApplyToJobForm').on('submit', function (e) {
-            debugger;
             e.preventDefault();
             var data = $('#ApplyToJobForm').serializeArray();
             var formData = new FormData();
@@ -295,17 +294,7 @@
                 processData: false,
                 contentType: false,
                 success: function () {
-                    debugger;
-                    connection.invoke("NotifyNewJobApplication", parseInt(data[1].value))
-                        .then((value) => {
-                            debugger;
-                            //location.reload();
-                            console.log(value);
-                        })
-                        .catch((error) => {
-                            debugger;
-                            console.error(error);
-                        });
+                    alert("Application sent successfully");
                 },
                 error: function (xhr, ajaxSettings, statusCode) {
                     console.log(xhr.responseText);
