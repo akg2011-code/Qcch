@@ -152,7 +152,13 @@ namespace QccHub.Controllers.Api
 
             var job = await _jobRepo.GetByIdAsync(model.JobID);
 
-            await _hubContext.Clients.User(job.CompanyID.ToString()).SendCoreAsync("NotifyNewJob", new[] { job });
+            await _hubContext.Clients.User(job.CompanyID.ToString()).SendCoreAsync("Notify",
+                new Object[]
+                { new {
+                    text = $"New job application for {job.Title}",
+                    link = $"/jobs/jobdetails/{job.ID}"
+                }
+            });
             return Ok();
         }
 

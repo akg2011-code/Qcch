@@ -231,12 +231,10 @@ var connection = new signalR.HubConnectionBuilder()
     .withAutomaticReconnect()
     .build();
 
-connection.serverTimeoutInMilliseconds = 100000;
+connection.on("Notify", function (data) {
 
-connection.on("NotifyNewJob", function (job) {
-    console.log(job);
     $('.notification-count').html(parseInt($('.notification-count').html()) + 1);
-    $('#notification-list').append(`<a href="/jobs/jobdetails/${job.id}" class="list-group-item list-group-item-action list-group-item-dark">New job application for ${job.title}</a>`);
+    $('#notification-list').append(`<a href="${data.link}" class="list-group-item list-group-item-action list-group-item-dark">${data.text}</a>`);
 
 });
 
