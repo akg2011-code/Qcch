@@ -225,14 +225,24 @@
 })(jQuery);
 
 
-var connection = new signalR.HubConnectionBuilder().withUrl("/NotificationsHub").build();
+
+var connection = new signalR.HubConnectionBuilder()
+    .withUrl("/NotificationsHub")
+    .withAutomaticReconnect()
+    .build();
+
+connection.serverTimeoutInMilliseconds = 100000;
+
+connection.on("NotifyNewJob", function (job) {
+    debugger;
+    console.log(job);
+    $('.notification-count').html(parseInt($('.notification-count').html()) + 1);
+    $('#notification-list').append(`<a href="/jobs/jobdetails/${job.id}" class="list-group-item list-group-item-action list-group-item-dark">New job application for ${job.title}</a>`);
+
+});
 
 connection.start().then(function () {
     console.log("SignalR connected")
 }).catch(function (err) {
     console.log(err.toString());
-});
-
-connection.on("NotifyNewJob", function (link) {
-    alert(`New Job Application ${link}`);
 });

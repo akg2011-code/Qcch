@@ -67,11 +67,10 @@ namespace QccHub
             
             services.AddCors(options =>
             {
-                options.AddPolicy("CorsPolicy",
+                options.AddDefaultPolicy(
                     builder => builder
                         .AllowAnyMethod()
-                        .AllowCredentials()
-                        .SetIsOriginAllowed((host) => true)
+                        .AllowAnyOrigin()
                         .AllowAnyHeader());
             });
 
@@ -142,7 +141,8 @@ namespace QccHub
             services.AddScoped<CurrentSession>();
             services.AddControllersWithViews()
                 .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
-            services.AddSignalR();
+            services.AddSignalR(c => c.EnableDetailedErrors = true)
+                    .AddNewtonsoftJsonProtocol(options => options.PayloadSerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
             //services.AddSwaggerGen(c =>
             //{
@@ -213,7 +213,7 @@ namespace QccHub
             app.UseStaticFiles();
 
             app.UseCookiePolicy();
-            app.UseCors("CorsPolicy");
+            app.UseCors();
             app.UseSession();
             app.UseRouting();
             app.UseAuthentication();

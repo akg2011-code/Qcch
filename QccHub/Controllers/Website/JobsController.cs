@@ -89,8 +89,13 @@ namespace QccHub.Controllers.Website
             var jsonContent = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
             var response = await httpClient.PostAsync("Jobs/ApplyToNonB2bJob", jsonContent);
             var result = await response.Content.ReadAsStringAsync();
-            
-            return RedirectToAction("index", "home");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return BadRequest(result);
+            }
+
+            return Ok();
         }
 
         [HttpPost]

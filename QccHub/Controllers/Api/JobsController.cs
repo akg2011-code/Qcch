@@ -22,22 +22,22 @@ namespace QccHub.Controllers.Api
         private readonly IJobRepository _jobRepo;
         private readonly IJobApplicationRepository _jobAppRepo;
         private readonly IUserRepository _userRepo;
-        private readonly IHubContext<NotificationsHub> _jobsHubContext;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IHubContext<NotificationsHub> _hubContext;
 
         public JobsController(IJobRepository jobRepo,
                                 IJobApplicationRepository jobAppRepo,
                                 IUserRepository userRepo,
                                 CurrentSession currentSession,
                                 IHttpContextAccessor httpContextAccessor,
-                                IHubContext<NotificationsHub> jobsHubContext,
-                                IUnitOfWork unitOfWork) : base(currentSession,httpContextAccessor)
+                                IUnitOfWork unitOfWork,
+                                IHubContext<NotificationsHub> hubContext) : base(currentSession,httpContextAccessor)
         {
             _jobRepo = jobRepo;
             _jobAppRepo = jobAppRepo;
             _userRepo = userRepo;
-            _jobsHubContext = jobsHubContext;
             _unitOfWork = unitOfWork;
+            _hubContext = hubContext;
         }
 
         [HttpPost]
@@ -149,8 +149,11 @@ namespace QccHub.Controllers.Api
             var newJobApp = model.ToModel();
             _jobAppRepo.Add(newJobApp);
             await _unitOfWork.SaveChangesAsync();
-            await _jobsHubContext.Clients.User(model.UserID.ToString()).SendAsync("NotifyNewJob", $"/jobs/jobdetails/{model.JobID}");
-            return Ok(newJobApp.ID);
+
+            var job = await _jobRepo.GetByIdAsync(model.JobID);
+
+            await _hubContext.Clients.User(job.CompanyID.ToString()).SendCoreAsync("NotifyNewJob", new[] { job });
+            return Ok();
         }
 
         [HttpGet("{jobID}")]
