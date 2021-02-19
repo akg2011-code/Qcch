@@ -24,6 +24,7 @@ namespace QccHub.Controllers.Api
         private readonly IUserRepository _userRepo;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IHubContext<NotificationsHub> _hubContext;
+        private readonly INotificationRepository _notificationRepo;
 
         public JobsController(IJobRepository jobRepo,
                                 IJobApplicationRepository jobAppRepo,
@@ -31,13 +32,15 @@ namespace QccHub.Controllers.Api
                                 CurrentSession currentSession,
                                 IHttpContextAccessor httpContextAccessor,
                                 IUnitOfWork unitOfWork,
-                                IHubContext<NotificationsHub> hubContext) : base(currentSession,httpContextAccessor)
+                                IHubContext<NotificationsHub> hubContext,
+                                INotificationRepository notificationRepository) : base(currentSession,httpContextAccessor)
         {
             _jobRepo = jobRepo;
             _jobAppRepo = jobAppRepo;
             _userRepo = userRepo;
             _unitOfWork = unitOfWork;
             _hubContext = hubContext;
+            _notificationRepo = notificationRepository;
         }
 
         [HttpPost]
@@ -141,14 +144,15 @@ namespace QccHub.Controllers.Api
             _jobAppRepo.Add(newJobApp);
             await _unitOfWork.SaveChangesAsync();
             var job = await _jobRepo.GetByIdAsync(model.JobID);
+            var notification = new Notification
+            {
+                Text = $"New job application for {job.Title}",
+                Link = $"/jobs/jobdetails/{job.ID}",
+                UserId = job.CompanyID
+            };
 
             await _hubContext.Clients.User(job.CompanyID.ToString()).SendCoreAsync("Notify",
-                new Object[]
-                { new {
-                    text = $"New job application for {job.Title}",
-                    link = $"/jobs/jobdetails/{job.ID}"
-                }
-            });
+                new Object[] { notification });
             return Ok(newJobApp.ID);
         }
 
