@@ -234,7 +234,7 @@ var connection = new signalR.HubConnectionBuilder()
 connection.on("Notify", function (data) {
 
     $('.notification-count').html(parseInt($('.notification-count').html()) + 1);
-    $('#notification-list').append(`<a href="${data.link}" class="list-group-item list-group-item-action list-group-item-dark">${data.text}</a>`);
+    $('#notification-list').prepend(`<a href="${data.link}" class="list-group-item list-group-item-action list-group-item-dark notification-not-seen">${data.text} <small>(just now)</small></a>`);
 
 });
 
@@ -243,3 +243,10 @@ connection.start().then(function () {
 }).catch(function (err) {
     console.log(err.toString());
 });
+
+function MarkAsSeen(notificationId)
+{
+    debugger;
+    $.get("/api/notifications/markasseen/" + notificationId);
+    console.log(this);
+}

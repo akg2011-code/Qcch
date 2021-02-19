@@ -1,10 +1,12 @@
-﻿<div class="dropdown ">
+﻿@model List<Notification>
     <a href="" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="icofont-alarm"></i><span class="badge badge-light notification-count">0</span>&nbsp;&nbsp;
+        <i class="icofont-alarm"></i><span class="badge badge-light notification-count">@Model.Where(n => !n.IsSeen).Count()</span>&nbsp;&nbsp;
     </a>
     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton2">
         <div id="notification-list" class="list-group" style="overflow:scroll;height:200px">
-            @*<a href="#" class="list-group-item list-group-item-action list-group-item-dark">This is a dark list group item</a>*@
+            @foreach (var notification in Model)
+            {
+                <a href="@notification.Link" onclick="MarkAsSeen(@notification.ID)" class="list-group-item list-group-item-action list-group-item-dark @(notification.IsSeen ? "" : "notification-not-seen")">@notification.Text <small>(@notification.CreatedDate)</small></a>
+            }
         </div>
     </div>
-</div>

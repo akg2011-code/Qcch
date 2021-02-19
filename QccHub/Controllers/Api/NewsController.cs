@@ -39,15 +39,17 @@ namespace QccHub.Controllers.Api
             }
 
             _newsRepository.Add(news);
+
+            var notification = new Notification 
+            {
+                Text = $"News added. Click to see details",
+                Link = $"/News/GetNewsDetails?id={news.ID}",
+            };
+            
             await _unitOfWork.SaveChangesAsync();
 
-            await _hubContext.Clients.All.SendCoreAsync("Notify",
-                new Object[]
-                { new {
-                    text = $"News added. Click to see details",
-                    link = $"/News/GetNewsDetails?id={news.ID}"
-                }
-            });
+            await _hubContext.Clients.All.SendCoreAsync("Notify", new Object[]{ notification });
+
             return Created("news added", news);
         }
 

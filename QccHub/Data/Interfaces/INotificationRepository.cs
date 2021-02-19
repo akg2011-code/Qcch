@@ -8,5 +8,6 @@ namespace QccHub.Data.Interfaces
 {
     public interface INotificationRepository : IGenericRepository<Notification>
     {
+        Task<List<Notification>> GetNotificationsByUserId(int userId);
     }
 }

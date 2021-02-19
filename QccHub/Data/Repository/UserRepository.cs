@@ -84,7 +84,7 @@ namespace QccHub.Data.Repository
                                     .Include(u => u.Education)
                                     .Include(u => u.Projects)
                                     .Include(u => u.Certificates)
-                                    //.ThenInclude(jo => jo.JobCategory)
+                                    .Include(u => u.Notifications)
                                     .Include(u => u.CompanyInfo)
                                     .Include(u => u.EmployeeJobs)
                                     .Include("EmployeeJobs.Company")

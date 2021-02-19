@@ -1,4 +1,5 @@
-﻿using QccHub.Data.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using QccHub.Data.Interfaces;
 using QccHub.Data.Models;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,15 @@ namespace QccHub.Data.Repository
     {
         public NotificationRepository(ApplicationDbContext context) : base(context)
         {
+        }
+
+        public Task<List<Notification>> GetNotificationsByUserId(int userId)
+        {
+            return context.Notifications.Where(u => u.UserId == userId || u.UserId == 0)
+                                        .Take(10)
+                                        .OrderBy(n => n.IsSeen)
+                                        .OrderByDescending(n => n.CreatedDate)
+                                        .ToListAsync();
         }
     }
 }

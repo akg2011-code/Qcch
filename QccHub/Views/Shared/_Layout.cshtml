@@ -89,7 +89,7 @@
 
                     <li><a href="@Url.Content("~/MarketInfo/GetAll")"><i class="icofont-info-circle"></i> Market info</a></li>
                 <li>
-                    @await Html.PartialAsync("_NotificationPartial")
+                    <div id="notifications-container" class="dropdown"></div>
                 </li>
                     @if (userId != "1" || userId != "7")
                     {
@@ -180,6 +180,8 @@
                     console.log(xhr.responseText);
                 }
             })
+
+            $("#notifications-container").load("/notifications/get?userid=" + @userId);
         </script>
     }
     @RenderSection("Scripts", false)

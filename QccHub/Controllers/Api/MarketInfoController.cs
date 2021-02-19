@@ -21,18 +21,21 @@ namespace QccHub.Controllers.Api
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _hostEnv;
         private readonly IHubContext<NotificationsHub> _hubContext;
+        private readonly INotificationRepository _notificationRepo;
 
         public MarketInfoController(IMarketInfoRepository marketRepository,
             IUnitOfWork unitOfWork,
             CurrentSession currentSession,
             IWebHostEnvironment hostEnv,
             IHttpContextAccessor contextAccessor,
-            IHubContext<NotificationsHub> hubContext) : base(currentSession, contextAccessor)
+            IHubContext<NotificationsHub> hubContext,
+            INotificationRepository notificationRepository) : base(currentSession, contextAccessor)
         {
             _marketInfoRepo = marketRepository;
             _unitOfWork = unitOfWork;
             _hostEnv = hostEnv;
             _hubContext = hubContext;
+            _notificationRepo = notificationRepository;
         }
 
         [HttpPost]
@@ -44,14 +47,18 @@ namespace QccHub.Controllers.Api
             }
 
             _marketInfoRepo.Add(marketInfo);
+
+            var notification = new Notification 
+            {
+                Text = $"New Market Info Added. Click to see details",
+                Link = $"/MarketInfo/GetMarketInfoDetails?id={marketInfo.ID}"
+            };
+
+            _notificationRepo.Add(notification);
             await _unitOfWork.SaveChangesAsync();
-            await _hubContext.Clients.All.SendCoreAsync("Notify",
-                new Object[]
-                { new {
-                    text = $"New Market Info Added. Click to see details",
-                    link = $"/MarketInfo/GetMarketInfoDetails?id={marketInfo.ID}"
-                }
-            });
+
+            await _hubContext.Clients.All.SendCoreAsync("Notify", new Object[]{ notification });
+
             return Created("marketInfo added", marketInfo);
         }
 

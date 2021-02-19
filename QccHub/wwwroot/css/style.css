@@ -2204,6 +2204,10 @@ section {
   position: relative;
   right: 9px;
 }
+
+.notification-not-seen {
+    background-color: red !important;
+}
 .breadcrumb{
   background-color: #fff;
 }

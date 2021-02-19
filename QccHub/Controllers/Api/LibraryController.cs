@@ -21,18 +21,21 @@ namespace QccHub.Controllers.Api
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _hostEnv;
         private readonly IHubContext<NotificationsHub> _hubContext;
+        private readonly INotificationRepository _notificationRepo;
 
         public LibraryController(ILibraryRepository libraryRepository,
             IUnitOfWork unitOfWork,
             CurrentSession currentSession,
             IWebHostEnvironment hostEnv,
             IHttpContextAccessor contextAccessor,
-            IHubContext<NotificationsHub> hubContext) : base(currentSession, contextAccessor)
+            IHubContext<NotificationsHub> hubContext,
+            INotificationRepository notificationRepository) : base(currentSession, contextAccessor)
         {
             _libraryRepo = libraryRepository;
             _unitOfWork = unitOfWork;
             _hostEnv = hostEnv;
             _hubContext = hubContext;
+            _notificationRepo = notificationRepository;
         }
 
         [HttpPost]
@@ -44,14 +47,16 @@ namespace QccHub.Controllers.Api
             }
 
             _libraryRepo.Add(libraryItem);
+            var notification = new Notification
+            {
+                Text = $"New item was added to the library. Click to see details",
+                Link = $"/Library/GetLibraryItemDetails?id={libraryItem.ID}"
+            };
+            _notificationRepo.Add(notification);
+
             await _unitOfWork.SaveChangesAsync();
-            await _hubContext.Clients.All.SendCoreAsync("Notify",
-                new Object[]
-                { new {
-                    text = $"New item was added to the library. Click to see details",
-                    link = $"/Library/GetLibraryItemDetails?id={libraryItem.ID}"
-                }
-            });
+            await _hubContext.Clients.All.SendCoreAsync("Notify",new Object[]{ notification });
+            
             return Created("item added", libraryItem);
         }
 

@@ -142,7 +142,7 @@ namespace QccHub.Controllers.Api
         {
             var newJobApp = model.ToModel();
             _jobAppRepo.Add(newJobApp);
-            await _unitOfWork.SaveChangesAsync();
+
             var job = await _jobRepo.GetByIdAsync(model.JobID);
             var notification = new Notification
             {
@@ -151,9 +151,13 @@ namespace QccHub.Controllers.Api
                 UserId = job.CompanyID
             };
 
+            _notificationRepo.Add(notification);
+            await _unitOfWork.SaveChangesAsync();
+
             await _hubContext.Clients.User(job.CompanyID.ToString()).SendCoreAsync("Notify",
                 new Object[] { notification });
-            return Ok(newJobApp.ID);
+
+            return Ok();
         }
 
         [HttpPost]
@@ -165,13 +169,19 @@ namespace QccHub.Controllers.Api
 
             var job = await _jobRepo.GetByIdAsync(model.JobID);
 
+            var notification = new Notification
+            {
+                Text = $"New job application for {job.Title}",
+                Link = $"/jobs/jobdetails/{job.ID}",
+                UserId = job.CompanyID
+            };
+
+            _notificationRepo.Add(notification);
+            await _unitOfWork.SaveChangesAsync();
+
             await _hubContext.Clients.User(job.CompanyID.ToString()).SendCoreAsync("Notify",
-                new Object[]
-                { new {
-                    text = $"New job application for {job.Title}",
-                    link = $"/jobs/jobdetails/{job.ID}"
-                }
-            });
+                new Object[] { notification });
+
             return Ok();
         }
 
