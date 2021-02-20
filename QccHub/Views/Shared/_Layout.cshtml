@@ -95,7 +95,7 @@
                     {
                         <li>
                             <a href="@Url.Content($"~/account/profile/{userId}")">
-                                <img id="layoutPP" src="/img/Profile picture.png" class="profileMini">
+                                <img id="layoutPP" src="/img/Profile picture.png" onError="this.onerror=null;this.src='/img/Profile picture.png';" class="profileMini">
                             </a>
                         </li>
                     }

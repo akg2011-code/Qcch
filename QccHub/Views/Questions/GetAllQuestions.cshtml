@@ -68,7 +68,7 @@
                                         <div class="row">
                                             <div class="col-md-1">
                                                 @*<img src="@Url.Content("~/Profile Pictures")/@question.User.ProfileImagePath" alt="Profile Picture" style="height:40px;border-radius: 10px;">*@
-                                                <img src="@($"/Profile Pictures/{question.User.ProfileImagePath}" ?? "/img/Rectangle 60.png")" onError="this.onerror=null;this.src='/img/Rectangle 60.png';" style="height:40px;border-radius: 10px;">
+                                                <img src="@(!string.IsNullOrWhiteSpace(question.User.ProfileImagePath) ? $"/Profile Pictures/{question.User.ProfileImagePath}" : "/img/Profile picture.png")" onError="this.onerror=null;this.src='/img/Profile picture.png';" style="height:40px;border-radius: 10px;">
 
                                             </div>
                                             <div class="col-md-11">
@@ -80,7 +80,22 @@
                                                     </h2>
                                                 </div>
                                                 <div>
-                                                    <small style="padding-right: 20px;">@question.User.FullName</small>
+                                                    <small style="padding-right: 20px;">
+                                                        @{
+                                                            if (!string.IsNullOrWhiteSpace(question.User.FullName))
+                                                            {
+                                                                <text>@question.User.FullName</text>
+                                                            }
+                                                            else if (!string.IsNullOrWhiteSpace(question.User.CompanyName))
+                                                            {
+                                                                <text>@question.User.CompanyName</text>
+                                                            }
+                                                            else
+                                                            {
+                                                                <text>@question.User.Email</text>
+                                                            }
+                                                        }
+                                                    </small>
                                                     <small>
                                                         @question.CreatedDate
                                                     </small>

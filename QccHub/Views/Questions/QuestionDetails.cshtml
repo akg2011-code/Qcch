@@ -49,7 +49,24 @@
                                                      onError="this.onerror=null;this.src='/img/Profile picture.png';" alt="Profile Picture" />
                                             </div>
                                             <div class="col-md-11">
-                                                <h4>@(ans.User.FullName ?? ans.User.CompanyName)</h4>
+                                                <h4>
+                                                    @{
+                                                        if (!string.IsNullOrWhiteSpace(ans.User.FullName))
+                                                        {
+                                                            <text>@ans.User.FullName</text>
+                                                        }
+                                                        else if (!string.IsNullOrWhiteSpace(ans.User.CompanyName))
+                                                        {
+                                                            <text>@ans.User.CompanyName</text>
+
+                                                        }
+                                                        else
+                                                        {
+                                                            <text>@ans.User.Email</text>
+                                                        }
+                                                    }
+
+                                                </h4>
                                                 <small>@ans.CreatedDate</small>
                                             </div>
                                         </div>
@@ -61,16 +78,16 @@
                                         <hr />
 
                                     }
-                                    @if (userId != Model.UserID.ToString())
-                                    {
-                                        <form id="AddAnswerForm">
-                                            <input hidden name="UserId" value="@userId" />
-                                            <textarea class="form-control" name="Text" cols="3" rows="2" placeholder="Answer this ..."></textarea>
-                                            <button class="btn btn-primary">Send</button>
-                                        </form>
-                                    }
 
                                 </div>
+                                @if (userId != Model.UserID.ToString())
+                                {
+                                    <form id="AddAnswerForm">
+                                        <input hidden name="UserId" value="@userId" />
+                                        <textarea class="form-control" name="Text" cols="3" rows="2" placeholder="Answer this ..."></textarea>
+                                        <button class="btn btn-primary">Send</button>
+                                    </form>
+                                }
 
                             </div>
                         </div>
@@ -106,12 +123,26 @@
             processData: false,
             contentType: false,
             success: function (result) {
+                var name = '';
+                if (result.user.fullName && result.user.fullName != '')
+                {
+                    name = result.user.fullName;
+                }
+                else if (result.user.companyName && result.user.companyName != '')
+                {
+                    name = result.user.companyName;
+                }
+                else
+                {
+                    name = result.user.email;
+                }
+
                 $("#Answers").append(`<div class="row">
               <div class="col-md-1">
-                <img style="width:50px; height:50px" src="${result.user.profileImagePath == null ? "/img/Profile picture.png" : "/Profile Pictures/" + result.user.profileImagePath}" alt="Profile Picture" /></div>
+                <img style="width:50px; height:50px" src="${result.user.profileImagePath == null ? "/img/Profile picture.png" : "/Profile Pictures/" + result.user.profileImagePath}" onError="this.onerror=null;this.src='/img/Profile picture.png';" alt="Profile Picture" /></div>
                                             <div class="col-md-11">
-                                                <h4>${result.user.fullName == null ? result.user.companyName : result.user.fullName}</h4>
-                                                <small>${result.CreatedDate}</small>
+                                                <h4>${name}</h4>
+                                                <small>Just now</small>
                                             </div>
                                         </div>
                                         <h5>${result.text}</h5>`);

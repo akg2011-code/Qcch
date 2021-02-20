@@ -102,7 +102,15 @@ namespace QccHub.Controllers.Api
             }
             var answer = new Answers { Text = model.Text, UserID = model.UserId, QuestionID = questionId };
             _questionRepository.AddAnswer(answer);
-            await _unitOfWork.SaveChangesAsync();
+            try
+            {
+                await _unitOfWork.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
 
             answer = await _questionRepository.GetAnswerByID(answer.ID);
             return Ok(answer);
