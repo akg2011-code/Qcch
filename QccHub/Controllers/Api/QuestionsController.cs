@@ -102,15 +102,8 @@ namespace QccHub.Controllers.Api
             }
             var answer = new Answers { Text = model.Text, UserID = model.UserId, QuestionID = questionId };
             _questionRepository.AddAnswer(answer);
-            try
-            {
-                await _unitOfWork.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
+    
+            await _unitOfWork.SaveChangesAsync();    
 
             answer = await _questionRepository.GetAnswerByID(answer.ID);
             return Ok(answer);
